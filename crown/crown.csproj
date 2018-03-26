@@ -38,9 +38,16 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="camera2D.cs" />
+    <Compile Include="Drawing.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpriteSheets\SpriteFrame.cs" />
+    <Compile Include="SpriteSheets\SpriteRender.cs" />
+    <Compile Include="SpriteSheets\SpriteSheet.cs" />
+    <Compile Include="SpriteSheets\SpriteSheetLoader.cs" />
+    <Compile Include="SpriteSheets\tileAtlas.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

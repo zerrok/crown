@@ -23,3 +23,5 @@ D:\game projects\crown\crown\crown\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
 D:\game projects\crown\crown\crown\obj\x86\Debug\crown.csprojResolveAssemblyReference.cache
 D:\game projects\crown\crown\crown\obj\x86\Debug\crown.exe
 D:\game projects\crown\crown\crown\obj\x86\Debug\crown.pdb
+D:\game projects\crown\crown\crown\bin\Windows\x86\Debug\Content\tiles\tileAtlas.xnb
+D:\game projects\crown\crown\crown\bin\Windows\x86\Debug\Content\tiles\tileAtlas.txt
