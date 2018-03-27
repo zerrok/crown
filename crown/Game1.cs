@@ -17,8 +17,8 @@ namespace crown {
         public static SpriteSheet tileAtlas;
 
         // TODO: In Generator oder Map Klasse auslagern
-        int height = 200;
-        int width = 200;
+        int height = 500;
+        int width = 500;
         Vector2[,] map;
 
         public Game1() {
