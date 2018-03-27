@@ -13,9 +13,9 @@ namespace crown {
         public static void drawTerrain(SpriteRender spriteRender) {
             int startCol, endCol, startRow, endRow;
             GetRenderableTilesAndCenterTile(out startCol, out endCol, out startRow, out endRow);
-            for (int x = startCol; x < endCol && x < tileMap.GetLength(0); x++)
-                for (int y = startRow; y < endRow && y < tileMap.GetLength(1); y++) {
-                    Vector2 coord = new Vector2(x * 16, y * 16);
+            for (int x = startCol; x < endCol && x < tileMap.GetUpperBound(0); x++)
+                for (int y = startRow; y < endRow && y < tileMap.GetUpperBound(1); y++) {
+                    Vector2 coord = new Vector2(x * tileSize, y * tileSize);
                     spriteRender.Draw(mapTileSheet.Sprite(tileMap[x, y].Type), coord);
                 }
         }
@@ -24,7 +24,6 @@ namespace crown {
             var width = graphics.GraphicsDevice.Viewport.Width;
             var height = graphics.GraphicsDevice.Viewport.Height;
             Rectangle renderTangle = new Rectangle((int)Math.Ceiling(cam.Pos.X) - width / 2, (int)Math.Ceiling(cam.Pos.Y) - height / 2, width, height);
-            int tileSize = 16;
 
             startCol = (int)(renderTangle.X / tileSize) - 3 < 1 ? 0 : (int)(renderTangle.X / tileSize) - 3;
             endCol = (int)((renderTangle.X + renderTangle.Width) / tileSize) + 3;

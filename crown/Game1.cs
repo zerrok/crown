@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using TexturePackerLoader;
 
 namespace crown {
@@ -16,8 +17,11 @@ namespace crown {
         // Textures
         public static SpriteRender spriteRender;
         public static SpriteSheet mapTileSheet;
-
+        public static int tileSize = 16;
         public static Tile[,] tileMap;
+
+        // Seed for Random Generation
+        public static Random random = new Random();
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -34,7 +38,7 @@ namespace crown {
             cam.Zoom = 1f;
 
             // TODO: Auslagern in Update wenn Menü eingebaut
-            tileMap = new MapGenerator().GetMap(50, 50);
+            tileMap = new MapGenerator().GetMap(100, 100);
         }
 
         protected override void LoadContent() {
