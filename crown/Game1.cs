@@ -37,11 +37,10 @@ namespace crown {
 
             IsMouseVisible = true;
 
-            cam.Pos = new Vector2(0, 0);
+            cam.Pos = new Vector2(500, 500);
             cam.Zoom = 1f;
 
-            // TODO: Auslagern in Update wenn Menü eingebaut
-            tileMap = new MapGenerator().GetMap(250, 250);
+            tileMap = new Tile[1, 1];
         }
 
         protected override void LoadContent() {
@@ -62,7 +61,7 @@ namespace crown {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) {
                 UnloadContent();
                 Exit();
-                System.Environment.Exit(0);
+                Environment.Exit(0);
             }
 
             // Camera Movement
@@ -77,6 +76,18 @@ namespace crown {
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D)) {
                 cam.Move(new Vector2(camSpeed, 0));
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.N)) {
+                if (cam.Zoom > 0.9f)
+                    cam.Zoom -= 0.01f;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.M)) {
+                if(cam.Zoom < 3f)
+                cam.Zoom += 0.01f;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Q)) {
+                // TODO: Auslagern in Menü 
+                tileMap = new MapGenerator().GetMap(250, 250);
             }
 
             // Mouse Controls

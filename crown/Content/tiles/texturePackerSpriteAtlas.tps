@@ -202,7 +202,9 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">dirt1.png</key>
             <key type="filename">grass1.png</key>
+            <key type="filename">sand1.png</key>
             <key type="filename">stone1.png</key>
             <key type="filename">water1.png</key>
             <struct type="IndividualSpriteSettings">
@@ -223,6 +225,8 @@
             <filename>grass1.png</filename>
             <filename>stone1.png</filename>
             <filename>water1.png</filename>
+            <filename>dirt1.png</filename>
+            <filename>sand1.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

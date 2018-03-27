@@ -4,14 +4,16 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:99e1b5e05c9d60895fb6f3c51df6cb8b:13fdde370e3bc586b0c764b426066e09:15e80e53d973510bcd3d7c2616e35315$
+ * $TexturePacker:SmartUpdate:9813cf7b0908f74e79a5dcf966f812bf:53bf70f8922aa55228b8abd1274e4bac:15e80e53d973510bcd3d7c2616e35315$
  *
  */
 namespace TexturePackerMonoGameDefinitions
 {
 	public class texturePackerSpriteAtlas
 	{
+		public const string Dirt1 = "dirt1";
 		public const string Grass1 = "grass1";
+		public const string Sand1 = "sand1";
 		public const string Stone1 = "stone1";
 		public const string Water1 = "water1";
 	}
