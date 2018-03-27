@@ -24,7 +24,7 @@ namespace crown.Terrain {
 
         private static void GrowWaterBodies(Tile[,] tileMap) {
             // Now iterate over the map and add to the size of the water spots
-            int lakeSize = random.Next(50, 80);
+            int lakeSize = 80;
             for (int count = 0; count < lakeSize; count++) {
                 for (int x = 1; x < tileMap.GetUpperBound(0); x++) {
                     for (int y = 1; y < tileMap.GetUpperBound(1); y++) {
@@ -34,7 +34,7 @@ namespace crown.Terrain {
                             tileMap[x - 1, y].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Water1 ||
                             tileMap[x, y - 1].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Water1) {
                             // Low chance of lake getting bigger
-                            if (random.Next(0, 100) > 90) {
+                            if (random.Next(0, 1000) > 910) {
                                 tileMap[x, y].IsClear = false;
                                 tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Water1;
                             }

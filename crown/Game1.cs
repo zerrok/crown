@@ -57,6 +57,8 @@ namespace crown {
         }
 
         protected override void Update(GameTime gameTime) {
+            // TODO: New Class which overrides Update so game1 does not get cluttered
+
             // Exit the game
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) {
                 UnloadContent();
@@ -78,12 +80,12 @@ namespace crown {
                 cam.Move(new Vector2(camSpeed, 0));
             }
             if (Keyboard.GetState().IsKeyDown(Keys.N)) {
-                if (cam.Zoom > 0.9f)
+                if (cam.Zoom >= 1f)
                     cam.Zoom -= 0.01f;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.M)) {
-                if(cam.Zoom < 3f)
-                cam.Zoom += 0.01f;
+                if (cam.Zoom < 3f)
+                    cam.Zoom += 0.01f;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Q)) {
                 // TODO: Auslagern in Menü 
