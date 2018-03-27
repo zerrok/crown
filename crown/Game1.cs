@@ -26,8 +26,9 @@ namespace crown {
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
             graphics.IsFullScreen = false;
-            graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
+            graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+            Window.IsBorderless = true;
             Content.RootDirectory = "Content";
         }
 
@@ -40,7 +41,7 @@ namespace crown {
             cam.Zoom = 1f;
 
             // TODO: Auslagern in Update wenn Menü eingebaut
-            tileMap = new MapGenerator().GetMap(100, 100);
+            tileMap = new MapGenerator().GetMap(250, 250);
         }
 
         protected override void LoadContent() {
@@ -78,9 +79,27 @@ namespace crown {
                 cam.Move(new Vector2(camSpeed, 0));
             }
 
+            // Mouse Controls
+            MouseState mouseState;
+            Vector2 mousePositionInWorld;
+            GetMouseState(out mouseState, out mousePositionInWorld);
+
+            // Tile interaction
+            if (mouseState.LeftButton == ButtonState.Pressed) {
+                foreach (Tile tile in tileMap)
+                    if (tile.Rect.Contains(mousePositionInWorld)) {
+                        int doSomething = 0; // TODO: Do Something! Like build a house!
+                    }
+            }
+
             base.Update(gameTime);
         }
 
+        private static void GetMouseState(out MouseState mouseState, out Vector2 mousePositionInWorld) {
+            mouseState = Mouse.GetState();
+            var mousePoint = new Point(mouseState.X, mouseState.Y);
+            mousePositionInWorld = Vector2.Transform(mousePoint.ToVector2(), Matrix.Invert(cam.GetTransformation(graphics.GraphicsDevice)));
+        }
 
         protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.Black);

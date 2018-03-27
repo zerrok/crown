@@ -24,7 +24,7 @@ namespace crown.Terrain {
 
         private static void GrowWaterBodies(Tile[,] tileMap) {
             // Now iterate over the map and add to the size of the water spots
-            int lakeSize = random.Next(20, 40);
+            int lakeSize = random.Next(50, 80);
             for (int count = 0; count < lakeSize; count++) {
                 for (int x = 1; x < tileMap.GetUpperBound(0); x++) {
                     for (int y = 1; y < tileMap.GetUpperBound(1); y++) {
@@ -48,7 +48,7 @@ namespace crown.Terrain {
             int xStart = 0;
             int yStart = 0;
             // Put some random starting points for lakes on the map
-            for (int i = 0; i < random.Next(10, 20); i++) {
+            for (int i = 0; i < random.Next(20, 30); i++) {
                 xStart = random.Next(0, tileMap.GetUpperBound(0));
                 yStart = random.Next(0, tileMap.GetUpperBound(1));
                 if (tileMap[xStart, yStart].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1) {
@@ -62,10 +62,7 @@ namespace crown.Terrain {
             // First, fill everything with grassland
             for (int x = 0; x <= tileMap.GetUpperBound(0); x++) {
                 for (int y = 0; y <= tileMap.GetUpperBound(1); y++) {
-                    tileMap[x, y] = new Tile();
-                    // The grassland is clear so you can build on it, and people can walk on it
-                    tileMap[x, y].IsClear = true;
-                    tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1;
+                    tileMap[x, y] = new Tile(x, y, tileSize);
                 }
             }
         }

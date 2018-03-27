@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,13 @@ namespace crown.Terrain {
     public class Tile {
         String type;
         bool isClear;
+        Rectangle rect;
+
+        public Tile(int x, int y, int tileSize) {            
+            IsClear = true;
+            Type = texturePackerSpriteAtlas.Grass1;
+            rect = new Rectangle(x * tileSize, y * tileSize, tileSize, tileSize);        
+        }
 
         public bool IsClear {
             get {
@@ -27,6 +35,16 @@ namespace crown.Terrain {
 
             set {
                 type = value;
+            }
+        }
+
+        public Rectangle Rect {
+            get {
+                return rect;
+            }
+
+            set {
+                rect = value;
             }
         }
     }
