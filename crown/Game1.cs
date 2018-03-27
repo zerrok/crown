@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using crown.Terrain;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using TexturePackerLoader;
@@ -14,12 +15,9 @@ namespace crown {
 
         // Textures
         public static SpriteRender spriteRender;
-        public static SpriteSheet tileAtlas;
+        public static SpriteSheet mapTileSheet;
 
-        // TODO: In Generator oder Map Klasse auslagern
-        int height = 500;
-        int width = 500;
-        Vector2[,] map;
+        public static Tile[,] tileMap;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -35,13 +33,8 @@ namespace crown {
             cam.Pos = new Vector2(0, 0);
             cam.Zoom = 1f;
 
-            //TODO: Auslagern: Mapgenerator - statt vector natürlich eigenes Tileobjekt mit Informationen über Grafik
-            map = new Vector2[width, height];
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    map[x, y] = new Vector2(16 * x, 16 * y);
-                }
-            }
+            // TODO: Auslagern in Update wenn Menü eingebaut
+            tileMap = new MapGenerator().GetMap(50, 50);
         }
 
         protected override void LoadContent() {
@@ -50,7 +43,7 @@ namespace crown {
             spriteRender = new SpriteRender(spriteBatch);
 
             var spriteSheetLoader = new SpriteSheetLoader(this.Content);
-            tileAtlas = spriteSheetLoader.Load("tiles/tileAtlas");
+            mapTileSheet = spriteSheetLoader.Load("tiles/tileAtlas");
         }
 
         protected override void UnloadContent() {
@@ -87,7 +80,7 @@ namespace crown {
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, cam.GetTransformation(graphics.GraphicsDevice));
-            Drawing.drawTerrain(spriteRender, map);
+            Drawing.drawTerrain(spriteRender);
             spriteBatch.End();
 
             base.Draw(gameTime);
