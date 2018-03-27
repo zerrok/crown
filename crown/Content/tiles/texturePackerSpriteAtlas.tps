@@ -150,7 +150,7 @@
             <key>classfile</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename></filename>
+                <filename>../../SpriteSheets/tileAtlas.cs</filename>
             </struct>
             <key>datafile</key>
             <struct type="DataFile">
