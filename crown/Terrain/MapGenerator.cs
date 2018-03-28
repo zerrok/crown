@@ -7,6 +7,7 @@ using static crown.Game1;
 
 namespace crown.Terrain {
   class MapGenerator {
+
     public Tile[,] GetMap(int xDimension, int yDimension) {
       Tile[,] tileMap = new Tile[xDimension, yDimension];
 
@@ -45,24 +46,26 @@ namespace crown.Terrain {
     }
 
     private static void PutTerrainOnMap(Tile[,] tileMap, GeneratorParameters parameters, string sourceTexture, string[] forbiddenTextures) {
-      PutTerrainSources(tileMap, sourceTexture, parameters.MinSourceAmount, parameters.MaxSourceAmount);
+      PutTerrainSources(tileMap, sourceTexture, parameters.MinSourceAmount, parameters.MaxSourceAmount, forbiddenTextures);
       GrowTerrainType(tileMap, parameters.Size, parameters.GrowChance, sourceTexture, forbiddenTextures);
 
       for (int i = 0; i < 2; i++)
         SmoothTerrain(tileMap, sourceTexture);
     }
 
-    private static void PutTerrainSources(Tile[,] tileMap, string texture, int lowBound, int upBound) {
+    private static void PutTerrainSources(Tile[,] tileMap, string texture, int lowBound, int upBound, string[] forbiddenTextures) {
       int xStart = 0;
       int yStart = 0;
 
-      // Put some random starting points for lakes on the map
+      // Put some random starting points for sources on the map
       for (int i = 0; i < random.Next(lowBound, upBound); i++) {
         xStart = random.Next(0, tileMap.GetUpperBound(0));
         yStart = random.Next(0, tileMap.GetUpperBound(1));
-        if (tileMap[xStart, yStart].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1) {
+        if (tileMap[xStart, yStart].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1 && !forbiddenTextures.Contains(tileMap[xStart, yStart].Type)) {
           tileMap[xStart, yStart].IsClear = false;
           tileMap[xStart, yStart].Type = texture;
+        } else {
+          i--;
         }
       }
     }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace crown.Terrain {
   class GeneratorParameters {
+
     int size;
     int growChance;
     int minSourceAmount;
