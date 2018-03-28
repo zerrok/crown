@@ -56,9 +56,7 @@ namespace crown {
     protected override void UnloadContent() {
       Content.Unload();
     }
-
-    bool mouse1WasPressed = false;
-
+    
     protected override void Update(GameTime gameTime) {
       // Exit the game
       if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) {
@@ -100,7 +98,6 @@ namespace crown {
 
       // Tile interaction
       if (mouseState.LeftButton == ButtonState.Pressed) {
-        mouse1WasPressed = true;
         foreach (Tile tile in tileMap)
           if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
             // TODO this is for debug/mouse testing purposes
@@ -108,8 +105,6 @@ namespace crown {
             tile.IsClear = true;
           }
       }
-      if (mouseState.LeftButton == ButtonState.Released)
-        mouse1WasPressed = false;
 
       base.Update(gameTime);
     }
