@@ -10,13 +10,14 @@ using static crown.Game1;
 
 namespace crown {
   class Drawing {
-
     public static void drawTerrain(SpriteRender spriteRender) {
       int startCol, endCol, startRow, endRow;
       GetRenderableTilesAndCenterTile(out startCol, out endCol, out startRow, out endRow);
       for (int x = startCol; x < endCol && x < tileMap.GetUpperBound(0); x++)
         for (int y = startRow; y < endRow && y < tileMap.GetUpperBound(1); y++) {
-          Vector2 coord = new Vector2(x * tileSize, y * tileSize);
+          int ySize = tileMap[x, y].Type != TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1 ? y * tileSize : y * tileSize - 64;
+          int xSize = x * tileSize;
+          Vector2 coord = new Vector2(xSize, ySize);
           spriteRender.Draw(mapTileSheet.Sprite(tileMap[x, y].Type), coord);
         }
     }

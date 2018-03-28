@@ -18,7 +18,7 @@ namespace crown {
     // Textures
     public static SpriteRender spriteRender;
     public static SpriteSheet mapTileSheet;
-    public static int tileSize = 16;
+    public static int tileSize = 32;
     public static Tile[,] tileMap;
 
     // Seed for Random Generation
@@ -57,6 +57,8 @@ namespace crown {
       Content.Unload();
     }
 
+    bool mouse1WasPressed = false;
+
     protected override void Update(GameTime gameTime) {
       // Exit the game
       if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) {
@@ -80,11 +82,11 @@ namespace crown {
       }
       if (Keyboard.GetState().IsKeyDown(Keys.N)) {
         if (cam.Zoom >= 1f)
-          cam.Zoom -= 0.01f;
+          cam.Zoom -= 0.05f;
       }
       if (Keyboard.GetState().IsKeyDown(Keys.M)) {
-        if (cam.Zoom < 3f)
-          cam.Zoom += 0.01f;
+        if (cam.Zoom <= 3f)
+          cam.Zoom += 0.05f;
       }
       if (Keyboard.GetState().IsKeyDown(Keys.Q)) {
         // TODO: Auslagern in Menü 
@@ -98,11 +100,17 @@ namespace crown {
 
       // Tile interaction
       if (mouseState.LeftButton == ButtonState.Pressed) {
+        mouse1WasPressed = true;
         foreach (Tile tile in tileMap)
-          if (tile.Rect.Contains(mousePositionInWorld)) {
-            int doSomething = 0; // TODO: Do Something! Like build a house!
+          if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
+            // TODO this is for debug/mouse testing purposes
+            tile.Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Dirt1;
+            tile.IsClear = true;
           }
       }
+      if (mouseState.LeftButton == ButtonState.Released)
+        mouse1WasPressed = false;
+
       base.Update(gameTime);
     }
 
