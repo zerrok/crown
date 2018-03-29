@@ -27,6 +27,8 @@ namespace crown {
         spriteframe = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Townhall);
       if (mouseAction == MouseAction.HOUSE)
         spriteframe = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House);
+      if (mouseAction == MouseAction.FARMLAND)
+        spriteframe = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.DirtGrassAll);
 
       foreach (Tile tile in tileMap)
         if (tile != null && tile.Rect.Contains(mousePosition)) {

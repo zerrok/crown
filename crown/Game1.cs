@@ -98,6 +98,7 @@ namespace crown {
         tileMap = new MapGenerator().GetMap(250, 250);
       }
 
+      // Mouse Controls
       MouseControls();
 
       base.Update(gameTime);
@@ -105,18 +106,19 @@ namespace crown {
 
     private void MouseControls() {
       MouseState mouseState = Mouse.GetState();
+      mousePositionInWorld = GetMouseWorldPosition(mouseState);
+      Point mousePoint = new Point(mouseState.X, mouseState.Y);
 
-      GetMouseState(mouseState, out mousePositionInWorld);
-      // Mouse Controls
       // Mouse interaction with the world
-      if (mouseState.LeftButton == ButtonState.Pressed && !menu.MainRect.Contains(new Point(mouseState.X, mouseState.Y))) {
+      if (mouseState.LeftButton == ButtonState.Pressed && !menu.MainRect.Contains(mousePoint)) {
         MapInteraction();
 
         // Mouse interaction with the menu
-      } else if (mouseState.LeftButton == ButtonState.Pressed && menu.MainRect.Contains(new Point(mouseState.X, mouseState.Y))) {
-        mouseState = MenuControls(mouseState);
+      } else if (mouseState.LeftButton == ButtonState.Pressed && menu.MainRect.Contains(mousePoint)) {
+        MenuControls(mousePoint);
       }
 
+      // Cancel current action
       if (mouseState.RightButton == ButtonState.Pressed)
         mouseAction = MouseAction.NOTHING;
     }
@@ -127,57 +129,35 @@ namespace crown {
           if (mouseAction == MouseAction.FARMLAND) {
             Controls.MakeFarmableLand(tileMap, tile);
           }
-          Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, 64, 64);
-          Rectangle rectSmall = new Rectangle(tile.Rect.X, tile.Rect.Y, 32, 32);
-          bool isAllowed = true;
+
           if (mouseAction == MouseAction.TOWNHALL) {
-            int tilePosX = (tile.Rect.X + 1) / tileSize;
-            int tilePosY = (tile.Rect.Y + 1) / tileSize;
-            foreach (Building building in buildings) {
-              if (building.Rect.Intersects(rectangle))
-                isAllowed = false;
-            }
-            if (tile.Type.Contains("grass")
-                && tileMap[tilePosX, tile.Rect.Y / tileSize].Type.Contains("grass")
-                && tileMap[tilePosX, tilePosY].Type.Contains("grass")
-                && tileMap[tile.Rect.X / tileSize, tilePosY].Type.Contains("grass")
-                && isAllowed) {
-              buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Townhall)
-                          , new Vector2(tile.Rect.X, tile.Rect.Y)
-                          , rectangle));
-            }
+            Controls.BuildTownHall(tile);
           }
+
           if (mouseAction == MouseAction.HOUSE) {
-            foreach (Building building in buildings) {
-              if (building.Rect.Intersects(rectSmall))
-                isAllowed = false;
-            }
-            if (tile.Type.Contains("grass") && isAllowed) {
-              buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House)
-                          , new Vector2(tile.Rect.X, tile.Rect.Y)
-                          , rectSmall));
-            }
+            Controls.BuildHouse(tile);
+          }
+          // Cancel building when left shift is not pressed
+          if (!Keyboard.GetState().IsKeyDown(Keys.LeftShift)) {
+            mouseAction = MouseAction.NOTHING;
           }
         }
     }
 
-    private MouseState MenuControls(MouseState mouseState) {
-      if (menu.HallRect.Contains(new Point(mouseState.X, mouseState.Y))) {
+    private void MenuControls(Point mousePoint) {
+      if (menu.HallRect.Contains(mousePoint)) {
         mouseAction = MouseAction.TOWNHALL;
-      } else if (menu.HouseRect.Contains(new Point(mouseState.X, mouseState.Y))) {
+      } else if (menu.HouseRect.Contains(mousePoint)) {
         mouseAction = MouseAction.HOUSE;
-      } else if (menu.FarmlandRect.Contains(new Point(mouseState.X, mouseState.Y))) {
+      } else if (menu.FarmlandRect.Contains(mousePoint)) {
         mouseAction = MouseAction.FARMLAND;
       } else {
         mouseAction = MouseAction.NOTHING;
       }
-
-      return mouseState;
     }
 
-    private static void GetMouseState(MouseState mouseState, out Vector2 mousePositionInWorld) {
-      var mousePoint = new Point(mouseState.X, mouseState.Y);
-      mousePositionInWorld = Vector2.Transform(mousePoint.ToVector2(), Matrix.Invert(cam.GetTransformation(graphics.GraphicsDevice)));
+    private static Vector2 GetMouseWorldPosition(MouseState mouseState) {
+      return Vector2.Transform(new Point(mouseState.X, mouseState.Y).ToVector2(), Matrix.Invert(cam.GetTransformation(graphics.GraphicsDevice)));
     }
 
     protected override void Draw(GameTime gameTime) {

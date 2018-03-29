@@ -1,9 +1,47 @@
 ﻿using crown.Terrain;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using static crown.Game1;
 
 namespace crown {
   class Controls {
+
+    public static void BuildTownHall(Tile tile) {
+      bool isAllowed = true;
+      Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, 64, 64);
+      int tilePosX = (tile.Rect.X) / tileSize + 1;
+      int tilePosY = (tile.Rect.Y) / tileSize + 1;
+
+      foreach (Building building in buildings) {
+        if (building.Rect.Intersects(rectangle))
+          isAllowed = false;
+      }
+
+      if (tile.Type.Contains("grass")
+          && tileMap[tilePosX, tile.Rect.Y / tileSize].Type.Contains("grass")
+          && tileMap[tilePosX, tilePosY].Type.Contains("grass")
+          && tileMap[tile.Rect.X / tileSize, tilePosY].Type.Contains("grass")
+          && isAllowed) {
+        buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Townhall)
+                    , new Vector2(tile.Rect.X, tile.Rect.Y)
+                    , rectangle));
+      }
+    }
+
+    public static void BuildHouse(Tile tile) {
+      bool isAllowed = true;
+      Rectangle rectSmall = new Rectangle(tile.Rect.X, tile.Rect.Y, 32, 32);
+      foreach (Building building in buildings) {
+        if (building.Rect.Intersects(rectSmall))
+          isAllowed = false;
+      }
+
+      if (tile.Type.Contains("grass") && isAllowed) {
+        buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House)
+                    , new Vector2(tile.Rect.X, tile.Rect.Y)
+                    , rectSmall));
+      }
+    }
 
     public static void MakeFarmableLand(Tile[,] tileMap, Tile tile) {
       int tileX = tile.Rect.X / 32;
