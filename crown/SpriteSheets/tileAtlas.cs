@@ -4,7 +4,7 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:a65a611d594052b6bb0b17cae7ff10d6:bcc8c0e4be54d1e8afc49197cf521d18:15e80e53d973510bcd3d7c2616e35315$
+ * $TexturePacker:SmartUpdate:05e9eed5755a94623c9d7a39741c35e6:cde7171b15e5e8e302fa7cda6847f196:15e80e53d973510bcd3d7c2616e35315$
  *
  */
 namespace TexturePackerMonoGameDefinitions
@@ -12,8 +12,52 @@ namespace TexturePackerMonoGameDefinitions
 	public class texturePackerSpriteAtlas
 	{
 		public const string Dirt1 = "dirt1";
+		public const string DirtGrassAll = "dirtGrassAll";
+		public const string DirtGrassDown = "dirtGrassDown";
+		public const string DirtGrassDownLeft = "dirtGrassDownLeft";
+		public const string DirtGrassDownLeftRight = "dirtGrassDownLeftRight";
+		public const string DirtGrassDownRight = "dirtGrassDownRight";
+		public const string DirtGrassLeft = "dirtGrassLeft";
+		public const string DirtGrassRight = "dirtGrassRight";
+		public const string DirtGrassTop = "dirtGrassTop";
+		public const string DirtGrassTopDownLeft = "dirtGrassTopDownLeft";
+		public const string DirtGrassTopDownRight = "dirtGrassTopDownRight";
+		public const string DirtGrassTopLeft = "dirtGrassTopLeft";
+		public const string DirtGrassTopLeftRight = "dirtGrassTopLeftRight";
+		public const string DirtGrassTopRight = "dirtGrassTopRight";
+		public const string DirtStoneLeft = "dirtStoneLeft";
+		public const string DirtStoneRight = "dirtStoneRight";
+		public const string DirtStoneTop = "dirtStoneTop";
+		public const string DirtStoneTopLeft = "dirtStoneTopLeft";
+		public const string DirtStoneTopRight = "dirtStoneTopRight";
+		public const string DirtStoneTopRightLeft = "dirtStoneTopRightLeft";
 		public const string Grass1 = "grass1";
+		public const string GrassStoneLeft = "grassStoneLeft";
+		public const string GrassStoneRight = "grassStoneRight";
+		public const string GrassStoneTop = "grassStoneTop";
+		public const string GrassStoneTopLeft = "grassStoneTopLeft";
+		public const string GrassStoneTopRight = "grassStoneTopRight";
+		public const string GrassStoneTopRightLeft = "grassStoneTopRightLeft";
 		public const string Sand1 = "sand1";
+		public const string SandGrassAll = "sandGrassAll";
+		public const string SandGrassDown = "sandGrassDown";
+		public const string SandGrassDownLeft = "sandGrassDownLeft";
+		public const string SandGrassDownLeftRight = "sandGrassDownLeftRight";
+		public const string SandGrassDownRight = "sandGrassDownRight";
+		public const string SandGrassLeft = "sandGrassLeft";
+		public const string SandGrassRight = "sandGrassRight";
+		public const string SandGrassTop = "sandGrassTop";
+		public const string SandGrassTopDownLeft = "sandGrassTopDownLeft";
+		public const string SandGrassTopDownRight = "sandGrassTopDownRight";
+		public const string SandGrassTopLeft = "sandGrassTopLeft";
+		public const string SandGrassTopLeftRight = "sandGrassTopLeftRight";
+		public const string SandGrassTopRight = "sandGrassTopRight";
+		public const string SandStoneLeft = "sandStoneLeft";
+		public const string SandStoneRight = "sandStoneRight";
+		public const string SandStoneTop = "sandStoneTop";
+		public const string SandStoneTopLeft = "sandStoneTopLeft";
+		public const string SandStoneTopRight = "sandStoneTopRight";
+		public const string SandStoneTopRightLeft = "sandStoneTopRightLeft";
 		public const string Stone1 = "stone1";
 		public const string Water1 = "water1";
 		public const string WaterDirtTop = "waterDirtTop";

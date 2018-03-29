@@ -63,7 +63,6 @@ namespace crown {
       if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) {
         UnloadContent();
         Exit();
-        Environment.Exit(0);
       }
 
       // Camera Movement
@@ -103,9 +102,25 @@ namespace crown {
       if (mouseState.LeftButton == ButtonState.Pressed) {
         foreach (Tile tile in tileMap)
           if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
-            // TODO this is for debug/mouse testing purposes
-            tile.Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Dirt1;
-            tile.IsClear = true;
+            int tileX = tile.Rect.X / 32;
+            int tileY = tile.Rect.Y / 32;
+
+            // Make farmable land
+            int upperX = tileX + 1 >= tileMap.GetUpperBound(0) - 1 ? tileMap.GetUpperBound(0) - 1 : tileX + 1;
+            int lowerX = tileX - 1 < 1 ? 1 : tileX - 1;
+            int upperY = tileY + 1 >= tileMap.GetUpperBound(1) - 1 ? tileMap.GetUpperBound(1) - 1 : tileY + 1;
+            int lowerY = tileY - 1 < 1 ? 1 : tileY - 1;
+            if (tile.Type.Contains("grass")
+              && tileX != 0
+              && tileY != 0
+              && (tileMap[upperX, tileY].Type.Contains("grass") || tileMap[upperX, tileY].Type.Contains("dirt"))&& !tileMap[upperX, tileY].Type.Contains("tone")
+              && (tileMap[lowerX, tileY].Type.Contains("grass") || tileMap[lowerX, tileY].Type.Contains("dirt"))&& !tileMap[lowerX, tileY].Type.Contains("tone")
+              && (tileMap[tileX, upperY].Type.Contains("grass") || tileMap[tileX, upperY].Type.Contains("dirt"))&& !tileMap[tileX, upperY].Type.Contains("tone")
+              && (tileMap[tileX, lowerY].Type.Contains("grass") || tileMap[tileX, lowerY].Type.Contains("dirt"))&& !tileMap[tileX, lowerY].Type.Contains("tone")) {
+              tile.Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Dirt1;
+              MapGenerator.AddDirtBorders(tileMap);
+            }
+
           }
       }
 
