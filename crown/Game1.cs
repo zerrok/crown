@@ -18,6 +18,7 @@ namespace crown {
     // Textures
     public static SpriteRender spriteRender;
     public static SpriteSheet mapTileSheet;
+    public static SpriteSheet buildingTileSheet;
     public static SpriteSheet menuTileSheet;
     public static int tileSize = 32;
     public static Tile[,] tileMap;
@@ -28,7 +29,8 @@ namespace crown {
       FARMLAND, HOUSE, TOWNHALL, NOTHING
     }
 
-    MouseAction mouseAction = MouseAction.NOTHING;
+    public MouseAction mouseAction = MouseAction.NOTHING;
+    Vector2 mousePositionInWorld;
 
     // Seed for Random Generation
     public static Random random = new Random();
@@ -53,6 +55,7 @@ namespace crown {
 
       tileMap = new Tile[1, 1];
 
+      // TODO initialize after map is loaded
       menu = new Menu(menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols)
         , menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonhouse)
         , menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttontownhall)
@@ -67,6 +70,7 @@ namespace crown {
       var spriteSheetLoader = new SpriteSheetLoader(this.Content);
       mapTileSheet = spriteSheetLoader.Load("tiles/tileAtlas");
       menuTileSheet = spriteSheetLoader.Load("menu/menuAtlas");
+      buildingTileSheet = spriteSheetLoader.Load("buildings/buildingAtlas");
     }
 
     protected override void UnloadContent() {
@@ -88,11 +92,11 @@ namespace crown {
         tileMap = new MapGenerator().GetMap(250, 250);
       }
 
-      // Mouse Controls
-      MouseState mouseState;
-      Vector2 mousePositionInWorld;
-      GetMouseState(out mouseState, out mousePositionInWorld);
 
+      MouseState mouseState = Mouse.GetState();
+      
+      GetMouseState(mouseState, out mousePositionInWorld);
+      // Mouse Controls
       // Mouse interaction with the world
       if (mouseState.LeftButton == ButtonState.Pressed && !menu.MainRect.Contains(new Point(mouseState.X, mouseState.Y))) {
         if (mouseAction == MouseAction.FARMLAND) {
@@ -106,12 +110,12 @@ namespace crown {
       } else if (mouseState.LeftButton == ButtonState.Pressed && menu.MainRect.Contains(new Point(mouseState.X, mouseState.Y))) {
         if (menu.HallRect.Contains(new Point(mouseState.X, mouseState.Y))) {
           mouseAction = MouseAction.TOWNHALL;
-        }
-        if (menu.HouseRect.Contains(new Point(mouseState.X, mouseState.Y))) {
+        } else if (menu.HouseRect.Contains(new Point(mouseState.X, mouseState.Y))) {
           mouseAction = MouseAction.HOUSE;
-        }
-        if (menu.FarmlandRect.Contains(new Point(mouseState.X, mouseState.Y))) {
+        } else if (menu.FarmlandRect.Contains(new Point(mouseState.X, mouseState.Y))) {
           mouseAction = MouseAction.FARMLAND;
+        } else {
+          mouseAction = MouseAction.NOTHING;
         }
       }
 
@@ -121,8 +125,7 @@ namespace crown {
       base.Update(gameTime);
     }
 
-    private static void GetMouseState(out MouseState mouseState, out Vector2 mousePositionInWorld) {
-      mouseState = Mouse.GetState();
+    private static void GetMouseState(MouseState mouseState, out Vector2 mousePositionInWorld) {
       var mousePoint = new Point(mouseState.X, mouseState.Y);
       mousePositionInWorld = Vector2.Transform(mousePoint.ToVector2(), Matrix.Invert(cam.GetTransformation(graphics.GraphicsDevice)));
     }
@@ -132,6 +135,7 @@ namespace crown {
 
       spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, cam.GetTransformation(graphics.GraphicsDevice));
       Drawing.drawTerrain(spriteRender);
+      Drawing.drawMouseSelection(spriteRender, mousePositionInWorld, mouseAction);
       spriteBatch.End();
 
       spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);

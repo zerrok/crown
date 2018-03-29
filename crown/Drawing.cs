@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TexturePackerLoader;
 using static crown.Game1;
 
@@ -23,7 +18,21 @@ namespace crown {
         }
     }
 
+    public static void drawMouseSelection(SpriteRender spriteRender, Vector2 mousePosition, MouseAction mouseAction) {
+      SpriteFrame spriteframe = null;
+
+      if (mouseAction == MouseAction.TOWNHALL)
+        spriteframe = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Townhall);
+      if (mouseAction == MouseAction.HOUSE)
+        spriteframe = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House);
+
+      if (spriteframe != null)
+        spriteRender.Draw(spriteframe, mousePosition);
+
+    }
+
     public static void drawMenu(SpriteRender spriteRender, Menu menu) {
+      // TODO: Muss noch skaliert werden für verschiedene auflösungen
       spriteRender.Draw(menu.MainControls, menu.MainPos);
       spriteRender.Draw(menu.ButtonTownHall, menu.HallPos);
       spriteRender.Draw(menu.ButtonHouse, menu.HousePos);

@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
 using TexturePackerLoader;
+using static crown.Game1;
 
 namespace crown {
   public class Menu {
@@ -32,12 +27,12 @@ namespace crown {
 
 
       int xPos = 0;
-      int yPos = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - (int)this.mainControls.Size.Y;
+      int yPos = graphics.GraphicsDevice.Viewport.Height - (int)this.mainControls.Size.Y;
       mainPos = new Vector2(xPos, yPos);
 
-      hallPos = new Vector2(xPos + 50, yPos + 25);
-      housePos = new Vector2(xPos + 220, yPos + 25);
-      farmlandPos = new Vector2(xPos + 390, yPos + 25);
+      hallPos = new Vector2(xPos + 20, yPos + 20);
+      housePos = new Vector2(xPos + 180, yPos + 20);
+      farmlandPos = new Vector2(xPos + 340, yPos + 20);
 
       MainRect = new Rectangle((int)mainPos.X, (int)mainPos.Y, (int)mainControls.Size.X, (int)mainControls.Size.Y);
       HouseRect = new Rectangle((int)housePos.X, (int)housePos.Y, (int)buttonHouse.Size.X, (int)buttonHouse.Size.Y);

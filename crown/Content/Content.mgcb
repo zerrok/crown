@@ -43,3 +43,18 @@
 #begin menu/menuAtlas.txt
 /copy:menu/menuAtlas.txt
 
+#begin buildings/buildingAtlas.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:buildings/buildingAtlas.png
+
+#begin buildings/buildingAtlas.txt
+/copy:buildings/buildingAtlas.txt
+

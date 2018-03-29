@@ -49,3 +49,7 @@
 /crown/Content/obj/Windows/menu/menuAtlas.mgcontent
 /crown/bin/Windows/x86/Debug/Content/menu/menuAtlas.txt
 /crown/bin/Windows/x86/Debug/Content/menu/menuAtlas.xnb
+/crown/Content/obj/Windows/buildings/buildingAtlas.mgcontent
+/crown/bin/Windows/x86/Debug/Content/buildings/buildingAtlas.txt
+/crown/bin/Windows/x86/Debug/Content/buildings/buildingAtlas.xnb
+/crown/Content/buildings/*.tps
