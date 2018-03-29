@@ -2,6 +2,8 @@
 using System;
 using TexturePackerLoader;
 using static crown.Game1;
+using System.Collections.Generic;
+using crown.Terrain;
 
 namespace crown {
   class Drawing {
@@ -26,9 +28,18 @@ namespace crown {
       if (mouseAction == MouseAction.HOUSE)
         spriteframe = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House);
 
-      if (spriteframe != null)
-        spriteRender.Draw(spriteframe, mousePosition);
+      foreach (Tile tile in tileMap)
+        if (tile != null && tile.Rect.Contains(mousePosition)) {
+          if (spriteframe != null)
+            spriteRender.Draw(spriteframe, new Vector2(tile.Rect.X, tile.Rect.Y));
+        }
 
+    }
+
+    public static void drawBuildings(SpriteRender spriteRender, List<Building> buildings) {
+      foreach (Building building in buildings) {
+        spriteRender.Draw(building.SpriteFrame, building.Position);
+      }
     }
 
     public static void drawMenu(SpriteRender spriteRender, Menu menu) {

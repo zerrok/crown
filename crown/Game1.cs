@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using TexturePackerLoader;
+using System.Collections.Generic;
 
 namespace crown {
   public class Game1 : Game {
@@ -32,6 +33,9 @@ namespace crown {
     public MouseAction mouseAction = MouseAction.NOTHING;
     Vector2 mousePositionInWorld;
 
+    // Game relevant objects
+    public static List<Building> buildings;
+
     // Seed for Random Generation
     public static Random random = new Random();
 
@@ -54,6 +58,8 @@ namespace crown {
       cam.Zoom = 1f;
 
       tileMap = new Tile[1, 1];
+
+      buildings = new List<Building>();
 
       // TODO initialize after map is loaded
       menu = new Menu(menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols)
@@ -92,37 +98,81 @@ namespace crown {
         tileMap = new MapGenerator().GetMap(250, 250);
       }
 
+      MouseControls();
 
+      base.Update(gameTime);
+    }
+
+    private void MouseControls() {
       MouseState mouseState = Mouse.GetState();
-      
+
       GetMouseState(mouseState, out mousePositionInWorld);
       // Mouse Controls
       // Mouse interaction with the world
       if (mouseState.LeftButton == ButtonState.Pressed && !menu.MainRect.Contains(new Point(mouseState.X, mouseState.Y))) {
-        if (mouseAction == MouseAction.FARMLAND) {
-          foreach (Tile tile in tileMap)
-            if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
-              Controls.MakeFarmableLand(tileMap, tile);
-            }
-        }
+        MapInteraction();
 
         // Mouse interaction with the menu
       } else if (mouseState.LeftButton == ButtonState.Pressed && menu.MainRect.Contains(new Point(mouseState.X, mouseState.Y))) {
-        if (menu.HallRect.Contains(new Point(mouseState.X, mouseState.Y))) {
-          mouseAction = MouseAction.TOWNHALL;
-        } else if (menu.HouseRect.Contains(new Point(mouseState.X, mouseState.Y))) {
-          mouseAction = MouseAction.HOUSE;
-        } else if (menu.FarmlandRect.Contains(new Point(mouseState.X, mouseState.Y))) {
-          mouseAction = MouseAction.FARMLAND;
-        } else {
-          mouseAction = MouseAction.NOTHING;
-        }
+        mouseState = MenuControls(mouseState);
       }
 
       if (mouseState.RightButton == ButtonState.Pressed)
         mouseAction = MouseAction.NOTHING;
+    }
 
-      base.Update(gameTime);
+    private void MapInteraction() {
+      foreach (Tile tile in tileMap)
+        if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
+          if (mouseAction == MouseAction.FARMLAND) {
+            Controls.MakeFarmableLand(tileMap, tile);
+          }
+          Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, 64, 64);
+          Rectangle rectSmall = new Rectangle(tile.Rect.X, tile.Rect.Y, 32, 32);
+          bool isAllowed = true;
+          if (mouseAction == MouseAction.TOWNHALL) {
+            int tilePosX = (tile.Rect.X + 1) / tileSize;
+            int tilePosY = (tile.Rect.Y + 1) / tileSize;
+            foreach (Building building in buildings) {
+              if (building.Rect.Intersects(rectangle))
+                isAllowed = false;
+            }
+            if (tile.Type.Contains("grass")
+                && tileMap[tilePosX, tile.Rect.Y / tileSize].Type.Contains("grass")
+                && tileMap[tilePosX, tilePosY].Type.Contains("grass")
+                && tileMap[tile.Rect.X / tileSize, tilePosY].Type.Contains("grass")
+                && isAllowed) {
+              buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Townhall)
+                          , new Vector2(tile.Rect.X, tile.Rect.Y)
+                          , rectangle));
+            }
+          }
+          if (mouseAction == MouseAction.HOUSE) {
+            foreach (Building building in buildings) {
+              if (building.Rect.Intersects(rectSmall))
+                isAllowed = false;
+            }
+            if (tile.Type.Contains("grass") && isAllowed) {
+              buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House)
+                          , new Vector2(tile.Rect.X, tile.Rect.Y)
+                          , rectSmall));
+            }
+          }
+        }
+    }
+
+    private MouseState MenuControls(MouseState mouseState) {
+      if (menu.HallRect.Contains(new Point(mouseState.X, mouseState.Y))) {
+        mouseAction = MouseAction.TOWNHALL;
+      } else if (menu.HouseRect.Contains(new Point(mouseState.X, mouseState.Y))) {
+        mouseAction = MouseAction.HOUSE;
+      } else if (menu.FarmlandRect.Contains(new Point(mouseState.X, mouseState.Y))) {
+        mouseAction = MouseAction.FARMLAND;
+      } else {
+        mouseAction = MouseAction.NOTHING;
+      }
+
+      return mouseState;
     }
 
     private static void GetMouseState(MouseState mouseState, out Vector2 mousePositionInWorld) {
@@ -136,6 +186,7 @@ namespace crown {
       spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, cam.GetTransformation(graphics.GraphicsDevice));
       Drawing.drawTerrain(spriteRender);
       Drawing.drawMouseSelection(spriteRender, mousePositionInWorld, mouseAction);
+      Drawing.drawBuildings(spriteRender, buildings);
       spriteBatch.End();
 
       spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
