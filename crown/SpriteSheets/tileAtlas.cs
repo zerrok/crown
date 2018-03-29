@@ -4,7 +4,7 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:84dd02d80933d2b16d100e171c5d7d79:eee0ac918a90e83fb476af07e758822d:15e80e53d973510bcd3d7c2616e35315$
+ * $TexturePacker:SmartUpdate:a65a611d594052b6bb0b17cae7ff10d6:bcc8c0e4be54d1e8afc49197cf521d18:15e80e53d973510bcd3d7c2616e35315$
  *
  */
 namespace TexturePackerMonoGameDefinitions
@@ -16,5 +16,11 @@ namespace TexturePackerMonoGameDefinitions
 		public const string Sand1 = "sand1";
 		public const string Stone1 = "stone1";
 		public const string Water1 = "water1";
+		public const string WaterDirtTop = "waterDirtTop";
+		public const string WaterGrassLeft = "waterGrassLeft";
+		public const string WaterGrassRight = "waterGrassRight";
+		public const string WaterGrassTop = "waterGrassTop";
+		public const string WaterSandTop = "waterSandTop";
+		public const string WaterStoneTop = "waterStoneTop";
 	}
 }

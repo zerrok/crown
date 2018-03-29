@@ -33,7 +33,44 @@ namespace crown.Terrain {
       string[] forbiddenForSand = { TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Water1, TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1 };
       PutTerrainOnMap(tileMap, sandParameters, TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Sand1, forbiddenForSand);
 
+      SetTerrainBorders(tileMap);
+
       return tileMap;
+    }
+
+    private void SetTerrainBorders(Tile[,] tileMap) {
+      for (int x = 0; x < tileMap.GetUpperBound(0); x++) {
+        for (int y = 0; y < tileMap.GetUpperBound(1); y++) {
+          // Set water borders
+          if (tileMap[x, y].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Water1) {
+            // Grass borders
+            if (tileMap[x + 1, y].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1) {
+              tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.WaterGrassRight;
+            }
+            if (x != 0 && tileMap[x - 1, y].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1) {
+              tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.WaterGrassLeft;
+            }
+            if (y != 0 && tileMap[x, y - 1].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1) {
+              tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.WaterGrassTop;
+            }
+
+            // Sand borders
+            if (y != 0 && tileMap[x, y - 1].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Sand1) {
+              tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.WaterSandTop;
+            }
+
+            // Dirt borders
+            if (y != 0 && tileMap[x, y - 1].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Dirt1) {
+              tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.WaterDirtTop;
+            }
+
+            // Stone borders
+            if (y != 0 && tileMap[x, y - 1].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1) {
+              tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.WaterStoneTop;
+            }
+          }
+        }
+      }
     }
 
     private static void InitializeMap(Tile[,] tileMap) {

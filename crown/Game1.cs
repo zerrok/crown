@@ -95,7 +95,9 @@ namespace crown {
       }
 
       // Mouse Controls
-      GetMouseState(out MouseState mouseState, out Vector2 mousePositionInWorld);
+      MouseState mouseState;
+      Vector2 mousePositionInWorld;
+      GetMouseState(out mouseState, out mousePositionInWorld);
 
       // Tile interaction
       if (mouseState.LeftButton == ButtonState.Pressed) {
