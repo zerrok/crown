@@ -46,3 +46,6 @@
 /crown/Content/bin/Windows/tiles/tileAtlas.txt
 /crown/Content/bin/Windows/tiles/tileAtlas.xnb
 /crown/Content/bin
+/crown/Content/obj/Windows/menu/menuAtlas.mgcontent
+/crown/bin/Windows/x86/Debug/Content/menu/menuAtlas.txt
+/crown/bin/Windows/x86/Debug/Content/menu/menuAtlas.xnb

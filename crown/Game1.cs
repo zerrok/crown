@@ -18,8 +18,10 @@ namespace crown {
     // Textures
     public static SpriteRender spriteRender;
     public static SpriteSheet mapTileSheet;
+    public static SpriteSheet menuTileSheet;
     public static int tileSize = 32;
     public static Tile[,] tileMap;
+    public static Menu menu;
 
     // Seed for Random Generation
     public static Random random = new Random();
@@ -43,6 +45,11 @@ namespace crown {
       cam.Zoom = 1f;
 
       tileMap = new Tile[1, 1];
+
+      menu = new Menu(menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols)
+        , menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonhouse)
+        , menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttontownhall)
+        , menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland));
     }
 
     protected override void LoadContent() {
@@ -52,6 +59,7 @@ namespace crown {
 
       var spriteSheetLoader = new SpriteSheetLoader(this.Content);
       mapTileSheet = spriteSheetLoader.Load("tiles/tileAtlas");
+      menuTileSheet = spriteSheetLoader.Load("menu/menuAtlas");
     }
 
     protected override void UnloadContent() {
@@ -65,6 +73,7 @@ namespace crown {
         Exit();
       }
 
+      // Keyboard Controls
       Controls.CameraControls(cam, camSpeed);
 
       if (Keyboard.GetState().IsKeyDown(Keys.Q)) {
@@ -77,12 +86,15 @@ namespace crown {
       Vector2 mousePositionInWorld;
       GetMouseState(out mouseState, out mousePositionInWorld);
 
-      // Tile interaction
-      if (mouseState.LeftButton == ButtonState.Pressed) {
+      // Mouse interaction with the world
+      if (mouseState.LeftButton == ButtonState.Pressed && !menu.MainRect.Contains(new Point(mouseState.X, mouseState.Y))) {
         foreach (Tile tile in tileMap)
           if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
             Controls.MakeFarmableLand(tileMap, tile);
           }
+        // Mouse interaction with the menu
+      }else if(mouseState.LeftButton == ButtonState.Pressed && menu.MainRect.Contains(new Point(mouseState.X, mouseState.Y))) {
+
       }
 
       base.Update(gameTime);
@@ -99,6 +111,10 @@ namespace crown {
 
       spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, cam.GetTransformation(graphics.GraphicsDevice));
       Drawing.drawTerrain(spriteRender);
+      spriteBatch.End();
+
+      spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
+      Drawing.drawMenu(spriteRender, menu);
       spriteBatch.End();
 
       base.Draw(gameTime);

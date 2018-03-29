@@ -28,3 +28,18 @@
 #begin tiles/tileAtlas.txt
 /copy:tiles/tileAtlas.txt
 
+#begin menu/menuAtlas.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:menu/menuAtlas.png
+
+#begin menu/menuAtlas.txt
+/copy:menu/menuAtlas.txt
+
