@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="camera2D.cs" />
+    <Compile Include="Controls\Controls.cs" />
     <Compile Include="Drawing.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
