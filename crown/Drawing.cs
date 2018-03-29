@@ -24,9 +24,6 @@ namespace crown {
     }
 
     public static void drawMenu(SpriteRender spriteRender, Menu menu) {
-      int xPos = 0;
-      int yPos = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height - (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols).Size.Y;
-      Vector2 coord = new Vector2(xPos, yPos);
       spriteRender.Draw(menu.MainControls, menu.MainPos);
       spriteRender.Draw(menu.ButtonTownHall, menu.HallPos);
       spriteRender.Draw(menu.ButtonHouse, menu.HousePos);

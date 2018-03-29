@@ -23,6 +23,13 @@ namespace crown {
     public static Tile[,] tileMap;
     public static Menu menu;
 
+    // Which action is the mouse currently doing
+    public enum MouseAction {
+      FARMLAND, HOUSE, TOWNHALL, NOTHING
+    }
+
+    MouseAction mouseAction = MouseAction.NOTHING;
+
     // Seed for Random Generation
     public static Random random = new Random();
 
@@ -88,14 +95,28 @@ namespace crown {
 
       // Mouse interaction with the world
       if (mouseState.LeftButton == ButtonState.Pressed && !menu.MainRect.Contains(new Point(mouseState.X, mouseState.Y))) {
-        foreach (Tile tile in tileMap)
-          if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
-            Controls.MakeFarmableLand(tileMap, tile);
-          }
-        // Mouse interaction with the menu
-      }else if(mouseState.LeftButton == ButtonState.Pressed && menu.MainRect.Contains(new Point(mouseState.X, mouseState.Y))) {
+        if (mouseAction == MouseAction.FARMLAND) {
+          foreach (Tile tile in tileMap)
+            if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
+              Controls.MakeFarmableLand(tileMap, tile);
+            }
+        }
 
+        // Mouse interaction with the menu
+      } else if (mouseState.LeftButton == ButtonState.Pressed && menu.MainRect.Contains(new Point(mouseState.X, mouseState.Y))) {
+        if (menu.HallRect.Contains(new Point(mouseState.X, mouseState.Y))) {
+          mouseAction = MouseAction.TOWNHALL;
+        }
+        if (menu.HouseRect.Contains(new Point(mouseState.X, mouseState.Y))) {
+          mouseAction = MouseAction.HOUSE;
+        }
+        if (menu.FarmlandRect.Contains(new Point(mouseState.X, mouseState.Y))) {
+          mouseAction = MouseAction.FARMLAND;
+        }
       }
+
+      if (mouseState.RightButton == ButtonState.Pressed)
+        mouseAction = MouseAction.NOTHING;
 
       base.Update(gameTime);
     }
