@@ -25,10 +25,11 @@ namespace crown {
     public static Random random = new Random();
 
     public Game1() {
-      graphics = new GraphicsDeviceManager(this);
-      graphics.IsFullScreen = false;
-      graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-      graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+      graphics = new GraphicsDeviceManager(this) {
+        IsFullScreen = false,
+        PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width,
+        PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height
+      };
       Window.IsBorderless = true;
       Content.RootDirectory = "Content";
     }
@@ -56,7 +57,7 @@ namespace crown {
     protected override void UnloadContent() {
       Content.Unload();
     }
-    
+
     protected override void Update(GameTime gameTime) {
       // Exit the game
       if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) {
@@ -81,6 +82,8 @@ namespace crown {
       if (Keyboard.GetState().IsKeyDown(Keys.N)) {
         if (cam.Zoom >= 1f)
           cam.Zoom -= 0.05f;
+        if (cam.Zoom < 1f)
+          cam.Zoom = 1f;
       }
       if (Keyboard.GetState().IsKeyDown(Keys.M)) {
         if (cam.Zoom <= 3f)
@@ -92,9 +95,7 @@ namespace crown {
       }
 
       // Mouse Controls
-      MouseState mouseState;
-      Vector2 mousePositionInWorld;
-      GetMouseState(out mouseState, out mousePositionInWorld);
+      GetMouseState(out MouseState mouseState, out Vector2 mousePositionInWorld);
 
       // Tile interaction
       if (mouseState.LeftButton == ButtonState.Pressed) {
