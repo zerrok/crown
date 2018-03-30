@@ -14,7 +14,7 @@ namespace crown.Terrain {
       InitializeMap(tileMap);
 
       // Stone
-      GeneratorParameters stoneParameters = new GeneratorParameters(300, 950, 5, 10);
+      GeneratorParameters stoneParameters = new GeneratorParameters(220, 950, 10, 15);
       string[] forbiddenForStone = { TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1 };
       PutTerrainOnMap(tileMap, stoneParameters, TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1, forbiddenForStone);
 
@@ -24,7 +24,7 @@ namespace crown.Terrain {
       PutTerrainOnMap(tileMap, waterParameters, TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Water1, forbiddenForWater);
 
       // Sand
-      GeneratorParameters sandParameters = new GeneratorParameters(350, 920, 1, 1);
+      GeneratorParameters sandParameters = new GeneratorParameters(290, 920, 2, 3);
       string[] forbiddenForSand = { TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Water1, TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1 };
       PutTerrainOnMap(tileMap, sandParameters, TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Sand1, forbiddenForSand);
 
