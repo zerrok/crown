@@ -324,7 +324,7 @@ namespace crown.Terrain {
           if (sum >= 3) {
             tileMap[x, y].IsClear = false;
             tileMap[x, y].Type = texture;
-          }
+          } // TODO: Kann nicht stimmen
           // The same for lonely bits of terrain sticking out - turn em into grass again
           sum = 0;
           if (tileMap[x + 1, y].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1)
