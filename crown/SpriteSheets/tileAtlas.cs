@@ -4,7 +4,7 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:05e9eed5755a94623c9d7a39741c35e6:cde7171b15e5e8e302fa7cda6847f196:15e80e53d973510bcd3d7c2616e35315$
+ * $TexturePacker:SmartUpdate:9cc3eb0f680fd2651eb32867157ee354:8dcefc7f33715b725c92c67fae0a218f:15e80e53d973510bcd3d7c2616e35315$
  *
  */
 namespace TexturePackerMonoGameDefinitions
@@ -18,19 +18,15 @@ namespace TexturePackerMonoGameDefinitions
 		public const string DirtGrassDownLeftRight = "dirtGrassDownLeftRight";
 		public const string DirtGrassDownRight = "dirtGrassDownRight";
 		public const string DirtGrassLeft = "dirtGrassLeft";
+		public const string DirtGrassLeftRight = "dirtGrassLeftRight";
 		public const string DirtGrassRight = "dirtGrassRight";
 		public const string DirtGrassTop = "dirtGrassTop";
+		public const string DirtGrassTopDown = "dirtGrassTopDown";
 		public const string DirtGrassTopDownLeft = "dirtGrassTopDownLeft";
 		public const string DirtGrassTopDownRight = "dirtGrassTopDownRight";
 		public const string DirtGrassTopLeft = "dirtGrassTopLeft";
 		public const string DirtGrassTopLeftRight = "dirtGrassTopLeftRight";
 		public const string DirtGrassTopRight = "dirtGrassTopRight";
-		public const string DirtStoneLeft = "dirtStoneLeft";
-		public const string DirtStoneRight = "dirtStoneRight";
-		public const string DirtStoneTop = "dirtStoneTop";
-		public const string DirtStoneTopLeft = "dirtStoneTopLeft";
-		public const string DirtStoneTopRight = "dirtStoneTopRight";
-		public const string DirtStoneTopRightLeft = "dirtStoneTopRightLeft";
 		public const string Grass1 = "grass1";
 		public const string GrassStoneLeft = "grassStoneLeft";
 		public const string GrassStoneRight = "grassStoneRight";
@@ -60,7 +56,6 @@ namespace TexturePackerMonoGameDefinitions
 		public const string SandStoneTopRightLeft = "sandStoneTopRightLeft";
 		public const string Stone1 = "stone1";
 		public const string Water1 = "water1";
-		public const string WaterDirtTop = "waterDirtTop";
 		public const string WaterGrassLeft = "waterGrassLeft";
 		public const string WaterGrassRight = "waterGrassRight";
 		public const string WaterGrassTop = "waterGrassTop";

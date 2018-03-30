@@ -90,9 +90,9 @@
         <key>maxTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>4096</int>
+            <int>1024</int>
             <key>height</key>
-            <int>4096</int>
+            <int>1024</int>
         </QSize>
         <key>fixedTextureSize</key>
         <QSize>
@@ -104,7 +104,7 @@
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
             <key>algorithm</key>
-            <enum type="AlgorithmSettings::AlgorithmId">MaxRects</enum>
+            <enum type="AlgorithmSettings::AlgorithmId">Basic</enum>
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
@@ -209,19 +209,15 @@
             <key type="filename">single/dirtGrassDownLeftRight.png</key>
             <key type="filename">single/dirtGrassDownRight.png</key>
             <key type="filename">single/dirtGrassLeft.png</key>
+            <key type="filename">single/dirtGrassLeftRight.png</key>
             <key type="filename">single/dirtGrassRight.png</key>
             <key type="filename">single/dirtGrassTop.png</key>
+            <key type="filename">single/dirtGrassTopDown.png</key>
             <key type="filename">single/dirtGrassTopDownLeft.png</key>
             <key type="filename">single/dirtGrassTopDownRight.png</key>
             <key type="filename">single/dirtGrassTopLeft.png</key>
             <key type="filename">single/dirtGrassTopLeftRight.png</key>
             <key type="filename">single/dirtGrassTopRight.png</key>
-            <key type="filename">single/dirtStoneLeft.png</key>
-            <key type="filename">single/dirtStoneRight.png</key>
-            <key type="filename">single/dirtStoneTop.png</key>
-            <key type="filename">single/dirtStoneTopLeft.png</key>
-            <key type="filename">single/dirtStoneTopRight.png</key>
-            <key type="filename">single/dirtStoneTopRightLeft.png</key>
             <key type="filename">single/grass1.png</key>
             <key type="filename">single/grassStoneLeft.png</key>
             <key type="filename">single/grassStoneRight.png</key>
@@ -250,7 +246,6 @@
             <key type="filename">single/sandStoneTopRight.png</key>
             <key type="filename">single/sandStoneTopRightLeft.png</key>
             <key type="filename">single/water1.png</key>
-            <key type="filename">single/waterDirtTop.png</key>
             <key type="filename">single/waterGrassLeft.png</key>
             <key type="filename">single/waterGrassRight.png</key>
             <key type="filename">single/waterGrassTop.png</key>
@@ -285,18 +280,33 @@
         <key>fileList</key>
         <array>
             <filename>single/dirt1.png</filename>
+            <filename>single/dirtGrassAll.png</filename>
+            <filename>single/dirtGrassDown.png</filename>
+            <filename>single/dirtGrassDownLeft.png</filename>
+            <filename>single/dirtGrassDownLeftRight.png</filename>
+            <filename>single/dirtGrassDownRight.png</filename>
+            <filename>single/dirtGrassLeft.png</filename>
+            <filename>single/dirtGrassLeftRight.png</filename>
+            <filename>single/dirtGrassRight.png</filename>
+            <filename>single/dirtGrassTop.png</filename>
+            <filename>single/dirtGrassTopDown.png</filename>
+            <filename>single/dirtGrassTopDownLeft.png</filename>
+            <filename>single/dirtGrassTopDownRight.png</filename>
+            <filename>single/dirtGrassTopLeft.png</filename>
+            <filename>single/dirtGrassTopLeftRight.png</filename>
+            <filename>single/dirtGrassTopRight.png</filename>
             <filename>single/grass1.png</filename>
+            <filename>single/grassStoneLeft.png</filename>
+            <filename>single/grassStoneRight.png</filename>
+            <filename>single/grassStoneTop.png</filename>
+            <filename>single/grassStoneTopLeft.png</filename>
+            <filename>single/grassStoneTopRight.png</filename>
+            <filename>single/grassStoneTopRightLeft.png</filename>
             <filename>single/sand1.png</filename>
-            <filename>single/stone1.png</filename>
-            <filename>single/water1.png</filename>
-            <filename>single/waterDirtTop.png</filename>
-            <filename>single/waterGrassLeft.png</filename>
-            <filename>single/waterGrassRight.png</filename>
-            <filename>single/waterGrassTop.png</filename>
-            <filename>single/waterSandTop.png</filename>
-            <filename>single/waterStoneTop.png</filename>
+            <filename>single/sandGrassAll.png</filename>
             <filename>single/sandGrassDown.png</filename>
             <filename>single/sandGrassDownLeft.png</filename>
+            <filename>single/sandGrassDownLeftRight.png</filename>
             <filename>single/sandGrassDownRight.png</filename>
             <filename>single/sandGrassLeft.png</filename>
             <filename>single/sandGrassRight.png</filename>
@@ -312,33 +322,13 @@
             <filename>single/sandStoneTopLeft.png</filename>
             <filename>single/sandStoneTopRight.png</filename>
             <filename>single/sandStoneTopRightLeft.png</filename>
-            <filename>single/sandGrassDownLeftRight.png</filename>
-            <filename>single/sandGrassAll.png</filename>
-            <filename>single/grassStoneLeft.png</filename>
-            <filename>single/grassStoneRight.png</filename>
-            <filename>single/grassStoneTop.png</filename>
-            <filename>single/grassStoneTopLeft.png</filename>
-            <filename>single/grassStoneTopRight.png</filename>
-            <filename>single/grassStoneTopRightLeft.png</filename>
-            <filename>single/dirtGrassAll.png</filename>
-            <filename>single/dirtGrassDown.png</filename>
-            <filename>single/dirtGrassDownLeft.png</filename>
-            <filename>single/dirtGrassDownLeftRight.png</filename>
-            <filename>single/dirtGrassDownRight.png</filename>
-            <filename>single/dirtGrassLeft.png</filename>
-            <filename>single/dirtGrassRight.png</filename>
-            <filename>single/dirtGrassTop.png</filename>
-            <filename>single/dirtGrassTopDownLeft.png</filename>
-            <filename>single/dirtGrassTopDownRight.png</filename>
-            <filename>single/dirtGrassTopLeft.png</filename>
-            <filename>single/dirtGrassTopLeftRight.png</filename>
-            <filename>single/dirtGrassTopRight.png</filename>
-            <filename>single/dirtStoneLeft.png</filename>
-            <filename>single/dirtStoneRight.png</filename>
-            <filename>single/dirtStoneTop.png</filename>
-            <filename>single/dirtStoneTopLeft.png</filename>
-            <filename>single/dirtStoneTopRight.png</filename>
-            <filename>single/dirtStoneTopRightLeft.png</filename>
+            <filename>single/stone1.png</filename>
+            <filename>single/water1.png</filename>
+            <filename>single/waterGrassLeft.png</filename>
+            <filename>single/waterGrassRight.png</filename>
+            <filename>single/waterGrassTop.png</filename>
+            <filename>single/waterSandTop.png</filename>
+            <filename>single/waterStoneTop.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

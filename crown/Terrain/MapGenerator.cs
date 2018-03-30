@@ -53,22 +53,17 @@ namespace crown.Terrain {
         if (x != 0 && tileMap[x - 1, y].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1) {
           tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.WaterGrassLeft;
         }
-        if (y != 0 && tileMap[x, y - 1].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1) {
+        if (y != 0 && tileMap[x, y - 1].Type.Contains("grass")) {
           tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.WaterGrassTop;
         }
 
         // Sand borders
-        if (y != 0 && tileMap[x, y - 1].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Sand1) {
+        if (y != 0 && tileMap[x, y - 1].Type.Contains("sand")) {
           tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.WaterSandTop;
         }
 
-        // Dirt borders
-        if (y != 0 && tileMap[x, y - 1].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Dirt1) {
-          tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.WaterDirtTop;
-        }
-
         // Stone borders
-        if (y != 0 && tileMap[x, y - 1].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1) {
+        if (y != 0 && tileMap[x, y - 1].Type.Contains("stone")) {
           tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.WaterStoneTop;
         }
       }
@@ -135,6 +130,12 @@ namespace crown.Terrain {
             if (x != 0 && tileMap[x - 1, y].Type == grass1 && y != 0 && tileMap[x, y - 1].Type == grass1) {
               tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.DirtGrassTopLeft;
             }
+            if (x != 0 && tileMap[x - 1, y].Type == grass1 && tileMap[x + 1, y].Type == grass1) {
+              tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.DirtGrassLeftRight;
+            }
+            if (tileMap[x, y + 1].Type == grass1 && y != 0 && tileMap[x, y - 1].Type == grass1) {
+              tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.DirtGrassTopDown;
+            }
 
             // Grass on 3 sides
             if (x != 0 && tileMap[x - 1, y].Type == grass1 && tileMap[x + 1, y].Type == grass1 && tileMap[x, y + 1].Type == grass1) {
@@ -152,31 +153,6 @@ namespace crown.Terrain {
 
             if (x != 0 && tileMap[x - 1, y].Type == grass1 && y != 0 && tileMap[x, y - 1].Type == grass1 && tileMap[x, y + 1].Type == grass1 && tileMap[x + 1, y].Type == grass1) {
               tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.DirtGrassAll;
-            }
-
-            // Stone on 1 side
-            const string stone1 = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1;
-            if (tileMap[x + 1, y].Type == stone1) {
-              tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.DirtStoneRight;
-            }
-            if (x != 0 && tileMap[x - 1, y].Type == stone1) {
-              tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.DirtStoneLeft;
-            }
-            if (y != 0 && tileMap[x, y - 1].Type == stone1) {
-              tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.DirtStoneTop;
-            }
-
-            // Stone on 2 sides
-            if (tileMap[x + 1, y].Type == stone1 && y != 0 && tileMap[x, y - 1].Type == stone1) {
-              tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.DirtStoneTopRight;
-            }
-            if (x != 0 && tileMap[x - 1, y].Type == stone1 && y != 0 && tileMap[x, y - 1].Type == stone1) {
-              tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.DirtStoneTopLeft;
-            }
-
-            // Stone on 3 sides
-            if (x != 0 && tileMap[x - 1, y].Type == stone1 && tileMap[x + 1, y].Type == stone1 && y != 0 && tileMap[x, y - 1].Type == stone1) {
-              tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.DirtStoneTopRightLeft;
             }
 
             // Dirt on all sides
