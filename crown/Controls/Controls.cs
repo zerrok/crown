@@ -81,10 +81,10 @@ namespace crown {
         cam.Move(new Vector2(camSpeed, 0));
       }
       if (Keyboard.GetState().IsKeyDown(Keys.N)) {
-        if (cam.Zoom >= 1f)
+        if (cam.Zoom >= 0.5f)
           cam.Zoom -= 0.05f;
-        if (cam.Zoom < 1f)
-          cam.Zoom = 1f;
+        if (cam.Zoom < 0.5f)
+          cam.Zoom = 0.5f;
       }
       if (Keyboard.GetState().IsKeyDown(Keys.M)) {
         if (cam.Zoom <= 3f)

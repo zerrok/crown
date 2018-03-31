@@ -55,7 +55,7 @@ namespace crown {
     public static void GetRenderableTilesAndCenterTile(out int startCol, out int endCol, out int startRow, out int endRow) {
       var width = graphics.GraphicsDevice.Viewport.Width;
       var height = graphics.GraphicsDevice.Viewport.Height;
-      Rectangle renderTangle = new Rectangle((int)Math.Ceiling(cam.Pos.X) - width / 2, (int)Math.Ceiling(cam.Pos.Y) - height / 2, width, height);
+      Rectangle renderTangle = new Rectangle((int)Math.Ceiling(cam.Pos.X) - width, (int)Math.Ceiling(cam.Pos.Y) - height, width * 2, height * 2);
 
       startCol = (int)(renderTangle.X / tileSize) - 3 < 1 ? 0 : (int)(renderTangle.X / tileSize) - 3;
       endCol = (int)((renderTangle.X + renderTangle.Width) / tileSize) + 3;

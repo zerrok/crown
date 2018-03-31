@@ -5,8 +5,8 @@
 # http://www.codeandweb.com/texturepacker/monogame
 #
 # Sprite sheet: buildingAtlas.png (68 x 100)
-# $TexturePacker:SmartUpdate:ab64f9f9e9ccfa708cd1445bd0fd1fec:012c66d56f70b9739f0bf78f4222ce61:905072b72ea92acf8fa5b0216a681f3c$
+# $TexturePacker:SmartUpdate:9e54df51a1ce52e9ad18437fff9edb2c:92c93c8649aa79043c7853ccb31c0418:905072b72ea92acf8fa5b0216a681f3c$
 #
 
-house;0;1;67;32;30;32;32;0.5;0.4666666666666667
+house;0;1;67;31;30;32;32;0.4838709677419355;0.4666666666666667
 townhall;0;1;1;63;64;64;64;0.49206349206349204;0.5
