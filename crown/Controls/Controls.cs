@@ -8,7 +8,7 @@ namespace crown {
 
     public static void BuildTownHall(Tile tile) {
       bool isAllowed = true;
-      Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, 64, 64);
+      Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, 128, 128);
       int tilePosX = (tile.Rect.X) / tileSize + 1;
       int tilePosY = (tile.Rect.Y) / tileSize + 1;
 
@@ -30,7 +30,7 @@ namespace crown {
 
     public static void BuildHouse(Tile tile) {
       bool isAllowed = true;
-      Rectangle rectSmall = new Rectangle(tile.Rect.X, tile.Rect.Y, 32, 32);
+      Rectangle rectSmall = new Rectangle(tile.Rect.X, tile.Rect.Y, 64, 64);
       foreach (Building building in buildings) {
         if (building.Rect.Intersects(rectSmall))
           isAllowed = false;

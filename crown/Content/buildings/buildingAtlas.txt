@@ -4,9 +4,9 @@
 # To learn how to import these sprites into your MonoGame project visit:
 # http://www.codeandweb.com/texturepacker/monogame
 #
-# Sprite sheet: buildingAtlas.png (68 x 100)
-# $TexturePacker:SmartUpdate:9e54df51a1ce52e9ad18437fff9edb2c:92c93c8649aa79043c7853ccb31c0418:905072b72ea92acf8fa5b0216a681f3c$
+# Sprite sheet: buildingAtlas.png (196 x 132)
+# $TexturePacker:SmartUpdate:66e0ed567586938accd800a9e91222ce:ed8922f72e2a45bb65e7d0bbb22e18d5:905072b72ea92acf8fa5b0216a681f3c$
 #
 
-house;0;1;67;31;30;32;32;0.4838709677419355;0.4666666666666667
-townhall;0;1;1;63;64;64;64;0.49206349206349204;0.5
+house;0;1;1;63;61;64;64;0.49206349206349204;0.47540983606557374
+townhall;0;66;1;127;128;128;128;0.49606299212598426;0.5
