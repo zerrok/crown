@@ -8,7 +8,7 @@ using crown.Terrain;
 namespace crown {
   class Drawing {
 
-    public static void drawTerrain(SpriteRender spriteRender) {
+    public static void DrawTerrain(SpriteRender spriteRender) {
       int startCol, endCol, startRow, endRow;
       GetRenderableTilesAndCenterTile(out startCol, out endCol, out startRow, out endRow);
       for (int x = startCol; x < endCol && x < tileMap.GetUpperBound(0); x++)
@@ -20,7 +20,7 @@ namespace crown {
         }
     }
 
-    public static void drawMouseSelection(SpriteRender spriteRender, Vector2 mousePosition, MouseAction mouseAction) {
+    public static void DrawMouseSelection(SpriteRender spriteRender, Vector2 mousePosition, MouseAction mouseAction) {
       SpriteFrame spriteframe = null;
 
       if (mouseAction == MouseAction.TOWNHALL)
@@ -38,13 +38,13 @@ namespace crown {
 
     }
 
-    public static void drawBuildings(SpriteRender spriteRender, List<Building> buildings) {
+    public static void DrawBuildings(SpriteRender spriteRender, List<Building> buildings) {
       foreach (Building building in buildings) {
         spriteRender.Draw(building.SpriteFrame, building.Position);
       }
     }
 
-    public static void drawMenu(SpriteRender spriteRender, Menu menu) {
+    public static void DrawMenu(SpriteRender spriteRender, Menu menu) {
       // TODO: Muss noch skaliert werden für verschiedene auflösungen
       spriteRender.Draw(menu.MainControls, menu.MainPos);
       spriteRender.Draw(menu.ButtonTownHall, menu.HallPos);
@@ -63,5 +63,11 @@ namespace crown {
       endRow = (int)((renderTangle.Y + renderTangle.Height) / tileSize + 3);
     }
 
+    internal static void DrawInteractives(SpriteRender spriteRender, List<Interactive> interactives) {
+      foreach (Interactive interactive in interactives) {
+        if (interactive.Type == Interactive.IntType.TREE)
+          spriteRender.Draw(interactiveTileSheet.Sprite(TexturePackerMonoGameDefinitions.interactiveAtlas.Tree), interactive.Coords);
+      }
+    }
   }
 }

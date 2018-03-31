@@ -21,6 +21,7 @@ namespace crown {
     public static SpriteSheet mapTileSheet;
     public static SpriteSheet buildingTileSheet;
     public static SpriteSheet menuTileSheet;
+    public static SpriteSheet interactiveTileSheet;
     public static int tileSize = 32;
     public static Tile[,] tileMap;
     public static Menu menu;
@@ -35,6 +36,7 @@ namespace crown {
 
     // Game relevant objects
     public static List<Building> buildings;
+    public static List<Interactive> interactives;
 
     // Seed for Random Generation
     public static Random random = new Random();
@@ -60,6 +62,7 @@ namespace crown {
       tileMap = new Tile[1, 1];
 
       buildings = new List<Building>();
+      interactives = new List<Interactive>();
 
       // TODO initialize after map is loaded
       menu = new Menu(menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols)
@@ -77,6 +80,7 @@ namespace crown {
       mapTileSheet = spriteSheetLoader.Load("tiles/tileAtlas");
       menuTileSheet = spriteSheetLoader.Load("menu/menuAtlas");
       buildingTileSheet = spriteSheetLoader.Load("buildings/buildingAtlas");
+      interactiveTileSheet = spriteSheetLoader.Load("interactives/interactiveAtlas");
     }
 
     protected override void UnloadContent() {
@@ -96,6 +100,7 @@ namespace crown {
       if (Keyboard.GetState().IsKeyDown(Keys.Q)) {
         // TODO: Auslagern in Menü 
         tileMap = new MapGenerator().GetMap(250, 250);
+        InteractiveGenerator.PlaceInteractives(tileMap);
       }
 
       // Mouse Controls
@@ -164,13 +169,14 @@ namespace crown {
       GraphicsDevice.Clear(Color.Black);
 
       spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, cam.GetTransformation(graphics.GraphicsDevice));
-      Drawing.drawTerrain(spriteRender);
-      Drawing.drawMouseSelection(spriteRender, mousePositionInWorld, mouseAction);
-      Drawing.drawBuildings(spriteRender, buildings);
+      Drawing.DrawTerrain(spriteRender);
+      Drawing.DrawMouseSelection(spriteRender, mousePositionInWorld, mouseAction);
+      Drawing.DrawBuildings(spriteRender, buildings);
+      Drawing.DrawInteractives(spriteRender, interactives);
       spriteBatch.End();
 
       spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
-      Drawing.drawMenu(spriteRender, menu);
+      Drawing.DrawMenu(spriteRender, menu);
       spriteBatch.End();
 
       base.Draw(gameTime);

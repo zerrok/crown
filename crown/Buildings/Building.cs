@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using TexturePackerLoader;
 
 namespace crown {
   public class Building {
 
+    // TODO: Statt spriteFrame reingeben, einen Enum anlegen mit allen gebäudetypen und dann entsprechend die werte füllen - factory-artig
     SpriteFrame spriteFrame;
     Vector2 position;
     Rectangle rect;

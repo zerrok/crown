@@ -53,3 +53,8 @@
 /crown/bin/Windows/x86/Debug/Content/buildings/buildingAtlas.txt
 /crown/bin/Windows/x86/Debug/Content/buildings/buildingAtlas.xnb
 /crown/Content/buildings/*.tps
+/crown/Content/interactives/*.tps
+/crown/Content/interactives/tree.png
+/crown/Content/obj/Windows/interactives/interactiveAtlas.mgcontent
+/crown/bin/Windows/x86/Debug/Content/interactives/interactiveAtlas.txt
+/crown/bin/Windows/x86/Debug/Content/interactives/interactiveAtlas.xnb
