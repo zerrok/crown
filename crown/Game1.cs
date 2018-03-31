@@ -58,11 +58,10 @@ namespace crown {
 
       cam.Pos = new Vector2(500, 500);
       cam.Zoom = 1f;
-
-      tileMap = new Tile[1, 1];
-
+      
       buildings = new List<Building>();
       interactives = new List<Interactive>();
+      tileMap = new Tile[1, 1];
 
       // TODO initialize after map is loaded
       menu = new Menu(menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols)
@@ -98,7 +97,12 @@ namespace crown {
       Controls.CameraControls(cam, camSpeed);
 
       if (Keyboard.GetState().IsKeyDown(Keys.Q)) {
-        // TODO: Auslagern in Menü 
+        // Reset everything
+        buildings = new List<Building>();
+        interactives = new List<Interactive>();
+        tileMap = new Tile[1, 1];
+        
+        // Regenerate everything
         tileMap = new MapGenerator().GetMap(250, 250);
         InteractiveGenerator.PlaceInteractives(tileMap);
       }
