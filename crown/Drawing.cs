@@ -13,7 +13,7 @@ namespace crown {
       GetRenderableTilesAndCenterTile(out startCol, out endCol, out startRow, out endRow);
       for (int x = startCol; x < endCol && x < tileMap.GetUpperBound(0); x++)
         for (int y = startRow; y < endRow && y < tileMap.GetUpperBound(1); y++) {
-          int yPos = tileMap[x, y].Type != TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1 ? y * tileSize : y * tileSize - 64;
+          int yPos = tileMap[x, y].Type != TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1 ? y * tileSize : y * tileSize - (2 * tileSize);
           int xPos = x * tileSize;
           Vector2 coord = new Vector2(xPos, yPos);
           spriteRender.Draw(mapTileSheet.Sprite(tileMap[x, y].Type), coord);

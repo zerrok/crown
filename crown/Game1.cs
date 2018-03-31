@@ -56,8 +56,8 @@ namespace crown {
 
       IsMouseVisible = true;
 
-      cam.Pos = new Vector2(500, 500);
-      cam.Zoom = 1f;
+      cam.Pos = new Vector2(1000, 1000);
+      cam.Zoom = 0.7f;
 
       tileMap = new Tile[1, 1];
 
@@ -69,6 +69,8 @@ namespace crown {
         , menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonhouse)
         , menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttontownhall)
         , menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland));
+
+      tileSize = (int)mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Dirt1).Size.X;
     }
 
     protected override void LoadContent() {

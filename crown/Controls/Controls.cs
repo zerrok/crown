@@ -44,8 +44,8 @@ namespace crown {
     }
 
     public static void MakeFarmableLand(Tile[,] tileMap, Tile tile) {
-      int tileX = tile.Rect.X / 32;
-      int tileY = tile.Rect.Y / 32;
+      int tileX = tile.Rect.X / tileSize;
+      int tileY = tile.Rect.Y / tileSize;
 
       // Make farmable land
       // Only allowed on grass and when grass or dirt is adjacent on all sides
