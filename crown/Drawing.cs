@@ -23,6 +23,8 @@ namespace crown {
     public static void DrawMouseSelection(SpriteRender spriteRender, Vector2 mousePosition, MouseAction mouseAction) {
       SpriteFrame spriteframe = null;
 
+      // TODO: Einfach einen Selektionskasten zeichnen je nach Größe
+
       if (mouseAction == MouseAction.TOWNHALL)
         spriteframe = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Townhall);
       if (mouseAction == MouseAction.HOUSE)
