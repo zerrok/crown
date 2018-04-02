@@ -12,25 +12,41 @@ namespace crown.Terrain {
       Tile[,] tileMap = new Tile[xDimension, yDimension];
 
       InitializeMap(tileMap);
-
       // Stone
       GeneratorParameters stoneParameters = new GeneratorParameters(220, 950, 10, 15);
-      string[] forbiddenForStone = { TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1 };
-      PutTerrainOnMap(tileMap, stoneParameters, TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1, forbiddenForStone);
+      const string stone1Texture = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1;
+      string[] forbiddenForStone = { stone1Texture };
+      PutTerrainOnMap(tileMap, stoneParameters, stone1Texture, forbiddenForStone);
+
+      BlockTilesBehindMountains(tileMap, stone1Texture);
 
       // Water
       GeneratorParameters waterParameters = new GeneratorParameters(120, 910, 15, 25);
-      string[] forbiddenForWater = { TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1 };
+      string[] forbiddenForWater = { stone1Texture };
       PutTerrainOnMap(tileMap, waterParameters, TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Water1, forbiddenForWater);
 
       // Sand
       GeneratorParameters sandParameters = new GeneratorParameters(290, 920, 2, 3);
-      string[] forbiddenForSand = { TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Water1, TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1 };
+      string[] forbiddenForSand = { TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Water1, stone1Texture };
       PutTerrainOnMap(tileMap, sandParameters, TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Sand1, forbiddenForSand);
 
       SetTerrainBorders(tileMap);
 
       return tileMap;
+    }
+
+    private static void BlockTilesBehindMountains(Tile[,] tileMap, string stone1Texture) {
+      // Turn invisble tiles into dirt
+      foreach (Tile tile in tileMap) {
+        int yPos1 = tile.Rect.Y / tileSize - 1 > 0 ? tile.Rect.Y / tileSize - 1 : 0;
+        int yPos2 = tile.Rect.Y / tileSize - 2 > 0 ? tile.Rect.Y / tileSize - 2 : 0;
+        if (tileMap[tile.Rect.X / tileSize, tile.Rect.Y / tileSize].Type == stone1Texture
+            && tileMap[tile.Rect.X / tileSize, yPos1].Type != stone1Texture
+            && tileMap[tile.Rect.X / tileSize, yPos2].Type != stone1Texture) {
+          tileMap[tile.Rect.X / tileSize, yPos1].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Dirt1;
+          tileMap[tile.Rect.X / tileSize, yPos2].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Dirt1;
+        }
+      }
     }
 
     private void SetTerrainBorders(Tile[,] tileMap) {
@@ -307,10 +323,10 @@ namespace crown.Terrain {
     }
 
     private static void SmoothTerrain(Tile[,] tileMap, string texture) {
-      // Fill holes in the water so it does look better
+      // Fill holes in the tilemap so it does look better
       for (int x = 0; x < tileMap.GetUpperBound(0); x++) {
         for (int y = 0; y < tileMap.GetUpperBound(1); y++) {
-          // But only spots which are adjacent to 3 water spaces
+          // But only spots which are adjacent to 3 of the same spaces
           int sum = 0;
           if (tileMap[x + 1, y].Type == texture)
             sum++;
@@ -322,22 +338,22 @@ namespace crown.Terrain {
             sum++;
 
           if (sum >= 3) {
-            tileMap[x, y].IsClear = false;
             tileMap[x, y].Type = texture;
-          } // TODO: Kann nicht stimmen
+          }
           // The same for lonely bits of terrain sticking out - turn em into grass again
           sum = 0;
-          if (tileMap[x + 1, y].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1)
-            sum++;
-          if (tileMap[x, y + 1].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1)
-            sum++;
-          if (x != 0 && tileMap[x - 1, y].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1)
-            sum++;
-          if (y != 0 && tileMap[x, y - 1].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1)
-            sum++;
-
+          if (tileMap[x, y].Type == texture) {
+            if (tileMap[x + 1, y].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1)
+              sum++;
+            if (tileMap[x, y + 1].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1)
+              sum++;
+            if (x != 0 && tileMap[x - 1, y].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1)
+              sum++;
+            if (y != 0 && tileMap[x, y - 1].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1)
+              sum++;
+          }
           if (sum >= 3) {
-            tileMap[x, y].IsClear = false;
+            tileMap[x, y].IsClear = true;
             tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1;
           }
 

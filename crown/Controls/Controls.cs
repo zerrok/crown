@@ -21,7 +21,8 @@ namespace crown {
           && tileMap[tilePosX, tile.Rect.Y / tileSize].Type.Contains("grass")
           && tileMap[tilePosX, tilePosY].Type.Contains("grass")
           && tileMap[tile.Rect.X / tileSize, tilePosY].Type.Contains("grass")
-          && isAllowed) {
+          && isAllowed
+          && tile.IsClear == true) {
         buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Townhall)
                     , new Vector2(tile.Rect.X, tile.Rect.Y)
                     , rectangle));
@@ -36,7 +37,9 @@ namespace crown {
           isAllowed = false;
       }
 
-      if (tile.Type.Contains("grass") && isAllowed) {
+      if (tile.Type.Contains("grass")
+        && isAllowed
+        && tile.IsClear == true) {
         buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House)
                     , new Vector2(tile.Rect.X, tile.Rect.Y)
                     , rectSmall));
@@ -54,6 +57,7 @@ namespace crown {
       int upperY = tileY + 1 >= tileMap.GetUpperBound(1) - 1 ? tileMap.GetUpperBound(1) - 1 : tileY + 1;
       int lowerY = tileY - 1 < 1 ? 1 : tileY - 1;
       if (tile.Type.Contains("grass")
+        && tile.IsClear == true
         && tileX != 0
         && tileY != 0
         && (tileMap[upperX, tileY].Type.Contains("grass") || tileMap[upperX, tileY].Type.Contains("dirt")) && !tileMap[upperX, tileY].Type.Contains("tone")

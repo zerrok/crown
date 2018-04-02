@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using TexturePackerLoader;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace crown {
   public class Game1 : Game {
@@ -37,6 +38,7 @@ namespace crown {
     // Game relevant objects
     public static List<Building> buildings;
     public static List<Interactive> interactives;
+    IOrderedEnumerable<Interactive> sortedInteractives;
 
     // Seed for Random Generation
     public static Random random = new Random();
@@ -58,7 +60,7 @@ namespace crown {
 
       cam.Pos = new Vector2(3000, 3000);
       cam.Zoom = 1;
-      
+
       buildings = new List<Building>();
       interactives = new List<Interactive>();
       tileMap = new Tile[1, 1];
@@ -103,10 +105,12 @@ namespace crown {
         buildings = new List<Building>();
         interactives = new List<Interactive>();
         tileMap = new Tile[1, 1];
-        
+
         // Regenerate everything
         tileMap = new MapGenerator().GetMap(250, 250);
         InteractiveGenerator.PlaceInteractives(tileMap);
+
+        sortedInteractives = interactives.OrderBy(interactive => interactive.Coords.Y);
       }
 
       // Mouse Controls
@@ -129,30 +133,33 @@ namespace crown {
         MenuControls(mousePoint);
       }
 
+
       // Cancel current action
       if (mouseState.RightButton == ButtonState.Pressed)
         mouseAction = MouseAction.NOTHING;
     }
 
     private void MapInteraction() {
-      foreach (Tile tile in tileMap)
-        if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
-          if (mouseAction == MouseAction.FARMLAND) {
-            Controls.MakeFarmableLand(tileMap, tile);
-          }
+      if (mouseAction == MouseAction.FARMLAND || mouseAction == MouseAction.TOWNHALL || mouseAction == MouseAction.HOUSE) {
+        foreach (Tile tile in tileMap)
+          if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
+            if (mouseAction == MouseAction.FARMLAND) {
+              Controls.MakeFarmableLand(tileMap, tile);
+            }
 
-          if (mouseAction == MouseAction.TOWNHALL) {
-            Controls.BuildTownHall(tile);
-          }
+            if (mouseAction == MouseAction.TOWNHALL) {
+              Controls.BuildTownHall(tile);
+            }
 
-          if (mouseAction == MouseAction.HOUSE) {
-            Controls.BuildHouse(tile);
+            if (mouseAction == MouseAction.HOUSE) {
+              Controls.BuildHouse(tile);
+            }
+            // Cancel building when left shift is not pressed
+            if (!Keyboard.GetState().IsKeyDown(Keys.LeftShift)) {
+              mouseAction = MouseAction.NOTHING;
+            }
           }
-          // Cancel building when left shift is not pressed
-          if (!Keyboard.GetState().IsKeyDown(Keys.LeftShift)) {
-            mouseAction = MouseAction.NOTHING;
-          }
-        }
+      }
     }
 
     private void MenuControls(Point mousePoint) {
@@ -178,7 +185,7 @@ namespace crown {
       Drawing.DrawTerrain(spriteRender);
       Drawing.DrawMouseSelection(spriteRender, mousePositionInWorld, mouseAction);
       Drawing.DrawBuildings(spriteRender, buildings);
-      Drawing.DrawInteractives(spriteRender, interactives);
+      Drawing.DrawInteractives(spriteRender, sortedInteractives);
       spriteBatch.End();
 
       spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);

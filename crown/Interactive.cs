@@ -13,6 +13,7 @@ namespace crown {
     int worth;
     Rectangle rect;
     Vector2 coords;
+    bool isSelected;
 
     public Interactive(IntType type, string text, int health, int worth, Rectangle rect, Vector2 coords) {
       this.type = type;
@@ -21,6 +22,7 @@ namespace crown {
       this.worth = worth;
       this.rect = rect;
       this.coords = coords;
+      isSelected = false;
     }
 
     public string Text {
@@ -80,6 +82,16 @@ namespace crown {
 
       set {
         coords = value;
+      }
+    }
+
+    public bool IsSelected {
+      get {
+        return isSelected;
+      }
+
+      set {
+        isSelected = value;
       }
     }
   }

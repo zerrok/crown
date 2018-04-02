@@ -4,6 +4,7 @@ using TexturePackerLoader;
 using static crown.Game1;
 using System.Collections.Generic;
 using crown.Terrain;
+using System.Linq;
 
 namespace crown {
   class Drawing {
@@ -13,6 +14,7 @@ namespace crown {
       GetRenderableTilesAndCenterTile(out startCol, out endCol, out startRow, out endRow);
       for (int x = startCol; x < endCol && x < tileMap.GetUpperBound(0); x++)
         for (int y = startRow; y < endRow && y < tileMap.GetUpperBound(1); y++) {
+          // Render coords are tile coords times tilesize 
           int yPos = tileMap[x, y].Type != TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1 ? y * tileSize : y * tileSize - (2 * tileSize);
           int xPos = x * tileSize;
           Vector2 coord = new Vector2(xPos, yPos);
@@ -61,11 +63,13 @@ namespace crown {
       endRow = (int)((renderTangle.Y + renderTangle.Height) / tileSize + 3);
     }
 
-    internal static void DrawInteractives(SpriteRender spriteRender, List<Interactive> interactives) {
-      foreach (Interactive interactive in interactives) {
-        if (interactive.Type == Interactive.IntType.TREE)
-          spriteRender.Draw(interactiveTileSheet.Sprite(TexturePackerMonoGameDefinitions.interactiveAtlas.Tree), interactive.Coords);
-      }
+    internal static void DrawInteractives(SpriteRender spriteRender, IOrderedEnumerable<Interactive> interactives) {
+      if (interactives != null)
+        foreach (Interactive interactive in interactives) {
+          // Only draw interactives with health bigger than 0 - it is harvested if health is <= 0
+          if (interactive.Type == Interactive.IntType.TREE && interactive.Health > 0)
+            spriteRender.Draw(interactiveTileSheet.Sprite(TexturePackerMonoGameDefinitions.interactiveAtlas.Tree), interactive.Coords);
+        }
     }
   }
 }
