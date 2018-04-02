@@ -4,7 +4,7 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:66e0ed567586938accd800a9e91222ce:ed8922f72e2a45bb65e7d0bbb22e18d5:905072b72ea92acf8fa5b0216a681f3c$
+ * $TexturePacker:SmartUpdate:f5954d70b69967519dae88e64905e3cc:4cb1c8c9dd9f880c557b62f108225b23:905072b72ea92acf8fa5b0216a681f3c$
  *
  */
 namespace TexturePackerMonoGameDefinitions
@@ -12,6 +12,8 @@ namespace TexturePackerMonoGameDefinitions
 	public class buildingAtlas
 	{
 		public const string House = "house";
+		public const string LargeSelect = "largeSelect";
+		public const string SmallSelect = "smallSelect";
 		public const string Townhall = "townhall";
 	}
 }

@@ -276,6 +276,29 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">single/streetCross.png</key>
+            <key type="filename">single/streetDownLeft.png</key>
+            <key type="filename">single/streetDownRight.png</key>
+            <key type="filename">single/streetHori.png</key>
+            <key type="filename">single/streetLeftRightDown.png</key>
+            <key type="filename">single/streetLeftRightUp.png</key>
+            <key type="filename">single/streetUpLeft.png</key>
+            <key type="filename">single/streetUpRight.png</key>
+            <key type="filename">single/streetUpRightDown.png</key>
+            <key type="filename">single/streetUpRightLeft.png</key>
+            <key type="filename">single/streetVerti.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,16,32,32</rect>
+                <key>scale9Paddings</key>
+                <rect>16,16,32,32</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -329,6 +352,17 @@
             <filename>single/waterGrassTop.png</filename>
             <filename>single/waterSandTop.png</filename>
             <filename>single/waterStoneTop.png</filename>
+            <filename>single/streetLeftRightUp.png</filename>
+            <filename>single/streetUpLeft.png</filename>
+            <filename>single/streetUpRight.png</filename>
+            <filename>single/streetUpRightDown.png</filename>
+            <filename>single/streetUpRightLeft.png</filename>
+            <filename>single/streetVerti.png</filename>
+            <filename>single/streetCross.png</filename>
+            <filename>single/streetDownLeft.png</filename>
+            <filename>single/streetDownRight.png</filename>
+            <filename>single/streetHori.png</filename>
+            <filename>single/streetLeftRightDown.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

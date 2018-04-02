@@ -4,7 +4,7 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:7bca1b6caeab80adcc604880470ecb49:2ef8e91c4b997c19f2b2610c5665c151:15e80e53d973510bcd3d7c2616e35315$
+ * $TexturePacker:SmartUpdate:4dd546428ddeac41a90caa6dc38a581c:09d951d8bb53cb4a6e92c2f2df0f4f90:15e80e53d973510bcd3d7c2616e35315$
  *
  */
 namespace TexturePackerMonoGameDefinitions
@@ -55,6 +55,17 @@ namespace TexturePackerMonoGameDefinitions
 		public const string SandStoneTopRight = "sandStoneTopRight";
 		public const string SandStoneTopRightLeft = "sandStoneTopRightLeft";
 		public const string Stone1 = "stone1";
+		public const string StreetCross = "streetCross";
+		public const string StreetDownLeft = "streetDownLeft";
+		public const string StreetDownRight = "streetDownRight";
+		public const string StreetHori = "streetHori";
+		public const string StreetLeftRightDown = "streetLeftRightDown";
+		public const string StreetLeftRightUp = "streetLeftRightUp";
+		public const string StreetUpLeft = "streetUpLeft";
+		public const string StreetUpRight = "streetUpRight";
+		public const string StreetUpRightDown = "streetUpRightDown";
+		public const string StreetUpRightLeft = "streetUpRightLeft";
+		public const string StreetVerti = "streetVerti";
 		public const string Water1 = "water1";
 		public const string WaterGrassLeft = "waterGrassLeft";
 		public const string WaterGrassRight = "waterGrassRight";
