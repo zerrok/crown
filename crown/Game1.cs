@@ -35,6 +35,9 @@ namespace crown {
     public MouseAction mouseAction = MouseAction.NOTHING;
     Vector2 mousePositionInWorld;
 
+    // Saves the last mouse state
+    MouseState oldState;
+
     // Game relevant objects
     public static List<Building> buildings;
     public static List<Interactive> interactives;
@@ -124,9 +127,11 @@ namespace crown {
       mousePositionInWorld = GetMouseWorldPosition(mouseState);
       Point mousePoint = new Point(mouseState.X, mouseState.Y);
 
-      // Mouse interaction with the world
-      if (mouseState.LeftButton == ButtonState.Pressed && !menu.MainRect.Contains(mousePoint)) {
-        MapInteraction();
+      if (mouseState.LeftButton == ButtonState.Pressed 
+        && !menu.MainRect.Contains(mousePoint) 
+        && (oldState.LeftButton == ButtonState.Released || Keyboard.GetState().IsKeyDown(Keys.LeftShift))) {
+        // Mouse interaction with the game world
+        GameInteraction();
 
         // Mouse interaction with the menu
       } else if (mouseState.LeftButton == ButtonState.Pressed && menu.MainRect.Contains(mousePoint)) {
@@ -137,9 +142,11 @@ namespace crown {
       // Cancel current action
       if (mouseState.RightButton == ButtonState.Pressed)
         mouseAction = MouseAction.NOTHING;
+
+      oldState = mouseState;
     }
 
-    private void MapInteraction() {
+    private void GameInteraction() {
       if (mouseAction == MouseAction.FARMLAND || mouseAction == MouseAction.TOWNHALL || mouseAction == MouseAction.HOUSE) {
         foreach (Tile tile in tileMap)
           if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
