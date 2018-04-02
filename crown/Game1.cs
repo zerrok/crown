@@ -128,8 +128,8 @@ namespace crown {
       Point mousePoint = new Point(mouseState.X, mouseState.Y);
 
       if (mouseState.LeftButton == ButtonState.Pressed 
-        && !menu.MainRect.Contains(mousePoint) 
-        && (oldState.LeftButton == ButtonState.Released || Keyboard.GetState().IsKeyDown(Keys.LeftShift))) {
+          && !menu.MainRect.Contains(mousePoint) 
+          && (oldState.LeftButton == ButtonState.Released || Keyboard.GetState().IsKeyDown(Keys.LeftShift))) {
         // Mouse interaction with the game world
         GameInteraction();
 
