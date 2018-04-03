@@ -54,8 +54,8 @@ namespace crown {
       foreach (Interactive inter in interactives) {
         if (inter.Type == Interactive.IntType.TREE) {
           // Adds a random amount of trees left and right of the source tree
-          for (int x = random.Next(-10, -2); x < random.Next(2, 10); x++)
-            for (int y = random.Next(-10, -2); y < random.Next(2, 10); y++) {
+          for (int x = random.Next(-10, -2); x < random.Next(4, 15); x++)
+            for (int y = random.Next(-10, -2); y < random.Next(4, 15); y++) {
               int xTile = ((int)inter.Coords.X / tileSize) + x;
               int yTile = ((int)inter.Coords.Y / tileSize) + y;
 
@@ -77,7 +77,7 @@ namespace crown {
                 if (random.Next(0, 100) > 35) {
                   // To shift the trees by a random amount of pixels
                   // Do it twice or thrice to spawn more trees in one spot
-                  for (int i = 0; i < random.Next(2, 3); i++) {
+                  for (int i = 0; i < random.Next(2, 5); i++) {
                     int randX = random.Next(-16, 16);
                     int randY = random.Next(-32, 32);
 

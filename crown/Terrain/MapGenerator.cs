@@ -43,8 +43,8 @@ namespace crown.Terrain {
         if (tileMap[tile.Rect.X / tileSize, tile.Rect.Y / tileSize].Type == stone1Texture
             && tileMap[tile.Rect.X / tileSize, yPos1].Type != stone1Texture
             && tileMap[tile.Rect.X / tileSize, yPos2].Type != stone1Texture) {
-          tileMap[tile.Rect.X / tileSize, yPos1].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Dirt1;
-          tileMap[tile.Rect.X / tileSize, yPos2].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Dirt1;
+          tileMap[tile.Rect.X / tileSize, yPos1].IsClear = false;
+          tileMap[tile.Rect.X / tileSize, yPos2].IsClear = false;
         }
       }
     }
