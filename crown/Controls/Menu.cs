@@ -4,160 +4,65 @@ using static crown.Game1;
 
 namespace crown {
   public class Menu {
-    SpriteFrame mainControls;
-    SpriteFrame buttonHouse;
-    SpriteFrame buttonTownHall;
-    SpriteFrame buttonFarmland;
+
+    public static void BuildGameMenu() {
+      Menu menuBackground = new Menu();
+      int menuSizeX = (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols).Size.X;
+      int menuSizeY = (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols).Size.Y;
+      int xPos = 0;
+      int yPos = graphics.GraphicsDevice.Viewport.Height - menuSizeY;
+
+      menuBackground.MainPos = new Vector2(xPos, yPos);
+      menuBackground.MainRect = new Rectangle(xPos, yPos, menuSizeX, menuSizeY);
+      menuBackground.Type = Menu.MenuType.MAIN;
+      menu.Add(menuBackground);
+
+      Menu buttonHouse = new Menu();
+      buttonHouse.MainPos = new Vector2(xPos + 20, yPos + 20);
+      buttonHouse.MainRect = new Rectangle(xPos + 20, yPos + 20, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.X, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.Y);
+      buttonHouse.Type = Menu.MenuType.BUTTON_HOUSE;
+      menu.Add(buttonHouse);
+
+      Menu buttonRoads = new Menu();
+      buttonRoads.MainPos = new Vector2(xPos + 180, yPos + 20);
+      buttonRoads.MainRect = new Rectangle(xPos + 180, yPos + 20, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.X, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.Y);
+      buttonRoads.Type = Menu.MenuType.BUTTON_ROAD;
+      menu.Add(buttonRoads);
+
+      Menu buttonFarmland = new Menu();
+      buttonFarmland.MainPos = new Vector2(xPos + 340, yPos + 20);
+      buttonFarmland.MainRect = new Rectangle(xPos + 340, yPos + 20, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.X, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.Y);
+      buttonFarmland.Type = Menu.MenuType.BUTTON_FARMLAND;
+      menu.Add(buttonFarmland);
+
+      Menu buttonTownhall = new Menu();
+      buttonTownhall.MainPos = new Vector2(xPos + 500, yPos + 20);
+      buttonTownhall.MainRect = new Rectangle(xPos + 500, yPos + 20, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.X, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.Y);
+      buttonTownhall.Type = Menu.MenuType.BUTTON_TOWNHALL;
+      menu.Add(buttonTownhall);
+    }
 
     Vector2 mainPos;
-    Vector2 housePos;
-    Vector2 hallPos;
-    Vector2 farmlandPos;
-
     Rectangle mainRect;
-    Rectangle houseRect;
-    Rectangle hallRect;
-    Rectangle farmlandRect;
-
-    public Menu(SpriteFrame mainControls, SpriteFrame buttonHouse, SpriteFrame buttonTownHall, SpriteFrame buttonFarmland) {
-      this.mainControls = mainControls;
-      this.buttonHouse = buttonHouse;
-      this.buttonTownHall = buttonTownHall;
-      this.buttonFarmland = buttonFarmland;
-
-
-      int xPos = 0;
-      int yPos = graphics.GraphicsDevice.Viewport.Height - (int)this.mainControls.Size.Y;
-      mainPos = new Vector2(xPos, yPos);
-
-      hallPos = new Vector2(xPos + 20, yPos + 20);
-      housePos = new Vector2(xPos + 180, yPos + 20);
-      farmlandPos = new Vector2(xPos + 340, yPos + 20);
-
-      MainRect = new Rectangle((int)mainPos.X, (int)mainPos.Y, (int)mainControls.Size.X, (int)mainControls.Size.Y);
-      HouseRect = new Rectangle((int)housePos.X, (int)housePos.Y, (int)buttonHouse.Size.X, (int)buttonHouse.Size.Y);
-      HallRect = new Rectangle((int)hallPos.X, (int)hallPos.Y, (int)buttonTownHall.Size.X, (int)buttonTownHall.Size.Y);
-      FarmlandRect = new Rectangle((int)farmlandPos.X, (int)farmlandPos.Y, (int)buttonFarmland.Size.X, (int)buttonFarmland.Size.Y);
-    }
-
-    public SpriteFrame MainControls {
-      get {
-        return mainControls;
-      }
-
-      set {
-        mainControls = value;
-      }
-    }
-
-    public SpriteFrame ButtonHouse {
-      get {
-        return buttonHouse;
-      }
-
-      set {
-        buttonHouse = value;
-      }
-    }
-
-    public SpriteFrame ButtonTownHall {
-      get {
-        return buttonTownHall;
-      }
-
-      set {
-        buttonTownHall = value;
-      }
-    }
-
-    public SpriteFrame ButtonFarmland {
-      get {
-        return buttonFarmland;
-      }
-
-      set {
-        buttonFarmland = value;
-      }
-    }
+    MenuType type;
 
     public Vector2 MainPos {
-      get {
-        return mainPos;
-      }
-
-      set {
-        mainPos = value;
-      }
+      get => mainPos;
+      set => mainPos = value;
     }
-
-    public Vector2 HousePos {
-      get {
-        return housePos;
-      }
-
-      set {
-        housePos = value;
-      }
-    }
-
-    public Vector2 HallPos {
-      get {
-        return hallPos;
-      }
-
-      set {
-        hallPos = value;
-      }
-    }
-
-    public Vector2 FarmlandPos {
-      get {
-        return farmlandPos;
-      }
-
-      set {
-        farmlandPos = value;
-      }
-    }
-
     public Rectangle MainRect {
-      get {
-        return mainRect;
-      }
-
-      set {
-        mainRect = value;
-      }
+      get => mainRect;
+      set => mainRect = value;
+    }
+    public MenuType Type {
+      get => type;
+      set => type = value;
     }
 
-    public Rectangle HouseRect {
-      get {
-        return houseRect;
-      }
-
-      set {
-        houseRect = value;
-      }
+    public enum MenuType {
+      MAIN, BUTTON_HOUSE, BUTTON_TOWNHALL, BUTTON_FARMLAND, BUTTON_ROAD
     }
 
-    public Rectangle HallRect {
-      get {
-        return hallRect;
-      }
 
-      set {
-        hallRect = value;
-      }
-    }
-
-    public Rectangle FarmlandRect {
-      get {
-        return farmlandRect;
-      }
-
-      set {
-        farmlandRect = value;
-      }
-    }
   }
 }

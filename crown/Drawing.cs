@@ -27,7 +27,7 @@ namespace crown {
 
       if (mouseAction == MouseAction.TOWNHALL)
         spriteframe = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect);
-      if (mouseAction == MouseAction.HOUSE || mouseAction == MouseAction.FARMLAND)
+      if (mouseAction == MouseAction.HOUSE || mouseAction == MouseAction.FARMLAND || mouseAction == MouseAction.ROAD)
         spriteframe = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.SmallSelect);
 
       foreach (Tile tile in tileMap)
@@ -35,7 +35,6 @@ namespace crown {
           if (spriteframe != null)
             spriteRender.Draw(spriteframe, new Vector2(tile.Rect.X, tile.Rect.Y));
         }
-
     }
 
     public static void DrawBuildings(SpriteRender spriteRender, List<Building> buildings) {
@@ -44,12 +43,31 @@ namespace crown {
       }
     }
 
-    public static void DrawMenu(SpriteRender spriteRender, Menu menu) {
+    public static void DrawRoads(SpriteRender spriteRender, Road[,] roads) {
+      foreach (Road road in roads) {
+        if (road != null)
+          spriteRender.Draw(road.SpriteFrame, road.Coords);
+      }
+    }
+
+    public static void DrawMenu(SpriteRender spriteRender, List<Menu> menu) {
       // TODO: Muss noch skaliert werden für verschiedene auflösungen
-      spriteRender.Draw(menu.MainControls, menu.MainPos);
-      spriteRender.Draw(menu.ButtonTownHall, menu.HallPos);
-      spriteRender.Draw(menu.ButtonHouse, menu.HousePos);
-      spriteRender.Draw(menu.ButtonFarmland, menu.FarmlandPos);
+      SpriteFrame spriteFrame = null;
+      foreach (Menu item in menu) {
+        if (item.Type == Menu.MenuType.MAIN)
+          spriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols);
+        else if (item.Type == Menu.MenuType.BUTTON_HOUSE)
+          spriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonhouse);
+        else if (item.Type == Menu.MenuType.BUTTON_FARMLAND)
+          spriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland);
+        else if (item.Type == Menu.MenuType.BUTTON_ROAD)
+          spriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland); // TODO add road button in spritesheet
+        else if (item.Type == Menu.MenuType.BUTTON_TOWNHALL)
+          spriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttontownhall);
+
+        if (spriteFrame != null)
+          spriteRender.Draw(spriteFrame, item.MainPos);
+      }
     }
 
     public static void GetRenderableTilesAndCenterTile(out int startCol, out int endCol, out int startRow, out int endRow) {

@@ -1,10 +1,98 @@
 ﻿using crown.Terrain;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using TexturePackerLoader;
 using static crown.Game1;
 
 namespace crown {
   class Controls {
+
+    public static void BuildRoad(Tile tile) {
+      if (tile.IsClear) {
+        Road road = new Road(new Vector2(tile.Rect.X, tile.Rect.Y), new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize, tileSize));
+
+        // Use standard road texture
+        SpriteFrame spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetHori);
+
+        // When everyrhing is set and done we just add the new road
+        road.SpriteFrame = spriteFrame;
+        roads[tile.Rect.X / tileSize, tile.Rect.Y / tileSize] = road;
+        tile.IsClear = false;
+
+        ReplaceRoads(tile, spriteFrame);
+      }
+
+    }
+
+    private static void ReplaceRoads(Tile tile, SpriteFrame spriteFrame) {
+      if (roads != null) {
+        foreach (Road road in roads) {
+          if (road != null) {
+            int x = (int)road.Coords.X / tileSize;
+            int y = (int)road.Coords.Y / tileSize;
+            // Do not build a new road when there already is one
+            if (roads[x, y] != null) {
+              // Left and right
+              if (roads[x + 1, y] != null || roads[x - 1, y] != null) {
+                spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetHori);
+              }
+              // Up and Down
+              if (roads[x, y + 1] != null || roads[x, y - 1] != null) {
+                spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetVerti);
+              }
+
+              // Left and Down
+              if (roads[x - 1, y] != null && roads[x, y + 1] != null) {
+                spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetDownLeft);
+              }
+
+              // Left and Up
+              if (roads[x - 1, y] != null && roads[x, y - 1] != null) {
+                spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetUpLeft);
+              }
+
+              // Right and Up
+              if (roads[x + 1, y] != null && roads[x, y - 1] != null) {
+                spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetUpRight);
+              }
+
+              // Right and down
+              if (roads[x + 1, y] != null && roads[x, y + 1] != null) {
+                spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetDownRight);
+              }
+
+              // Right down left
+              if (roads[x + 1, y] != null && roads[x, y + 1] != null && roads[x - 1, y] != null) {
+                spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetLeftRightDown);
+              }
+
+              // Right up left
+              if (roads[x + 1, y] != null && roads[x, y - 1] != null && roads[x - 1, y] != null) {
+                spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetLeftRightUp);
+              }
+
+              // Right up down
+              if (roads[x + 1, y] != null && roads[x, y - 1] != null && roads[x, y + 1] != null) {
+                spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetUpRightDown);
+              }
+
+              // left up down
+              if (roads[x - 1, y] != null && roads[x, y - 1] != null && roads[x + 1, y] != null) {
+                spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetUpRightLeft);
+              }
+
+              // left up down
+              if (roads[x - 1, y] != null && roads[x, y + 1] != null && roads[x, y - 1] != null && roads[x + 1, y] != null) {
+                spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetCross);
+              }
+
+              road.SpriteFrame = spriteFrame;
+              roads[x, y] = road;
+            }
+          }
+        }
+      }
+    }
 
     public static void BuildTownHall(Tile tile) {
       bool isAllowed = true;

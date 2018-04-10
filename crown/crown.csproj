@@ -58,6 +58,7 @@
     <Compile Include="SpriteSheets\tileAtlas.cs" />
     <Compile Include="Terrain\GeneratorParameters.cs" />
     <Compile Include="Terrain\MapGenerator.cs" />
+    <Compile Include="Terrain\Road.cs" />
     <Compile Include="Terrain\Tile.cs" />
   </ItemGroup>
   <ItemGroup>
