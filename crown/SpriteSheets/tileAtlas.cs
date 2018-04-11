@@ -4,7 +4,7 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:90442052198547164a647d72ba42ce5a:a20d4c4478c308ea52d772b052857fc9:15e80e53d973510bcd3d7c2616e35315$
+ * $TexturePacker:SmartUpdate:a379fa0f376c607754083ebb18c95872:a20d4c4478c308ea52d772b052857fc9:15e80e53d973510bcd3d7c2616e35315$
  *
  */
 namespace TexturePackerMonoGameDefinitions
@@ -60,7 +60,7 @@ namespace TexturePackerMonoGameDefinitions
 		public const string StreetDownRight = "streetDownRight";
 		public const string StreetHori = "streetHori";
 		public const string StreetLeftRightDown = "streetLeftRightDown";
-		public const string StreetLeftRightUp = "streetLeftRightUp";
+		public const string StreetLeftUpDown = "streetLeftUpDown";
 		public const string StreetUpLeft = "streetUpLeft";
 		public const string StreetUpRight = "streetUpRight";
 		public const string StreetUpRightDown = "streetUpRightDown";

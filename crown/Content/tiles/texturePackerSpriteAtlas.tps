@@ -4,9 +4,9 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.3.3</string>
+        <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/game projects/crown/crown/crown/Content/tiles/texturePackerSpriteAtlas.tps</string>
+        <string>D:/_Projekt/crown/crown/Content/tiles/texturePackerSpriteAtlas.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -177,6 +177,8 @@
         <false/>
         <key>prependSmartFolderName</key>
         <false/>
+        <key>autodetectAnimations</key>
+        <true/>
         <key>globalSpriteSettings</key>
         <struct type="SpriteSettings">
             <key>scale</key>
@@ -190,7 +192,7 @@
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">Trim</enum>
+            <enum type="SpriteSettings::TrimMode">None</enum>
             <key>tracerTolerance</key>
             <int>200</int>
             <key>heuristicMask</key>
@@ -281,7 +283,7 @@
             <key type="filename">single/streetDownRight.png</key>
             <key type="filename">single/streetHori.png</key>
             <key type="filename">single/streetLeftRightDown.png</key>
-            <key type="filename">single/streetLeftRightUp.png</key>
+            <key type="filename">single/streetLeftUpDown.png</key>
             <key type="filename">single/streetUpLeft.png</key>
             <key type="filename">single/streetUpRight.png</key>
             <key type="filename">single/streetUpRightDown.png</key>
@@ -352,7 +354,6 @@
             <filename>single/waterGrassTop.png</filename>
             <filename>single/waterSandTop.png</filename>
             <filename>single/waterStoneTop.png</filename>
-            <filename>single/streetLeftRightUp.png</filename>
             <filename>single/streetUpLeft.png</filename>
             <filename>single/streetUpRight.png</filename>
             <filename>single/streetUpRightDown.png</filename>
@@ -363,6 +364,7 @@
             <filename>single/streetDownRight.png</filename>
             <filename>single/streetHori.png</filename>
             <filename>single/streetLeftRightDown.png</filename>
+            <filename>single/streetLeftUpDown.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -68,7 +68,7 @@ namespace crown {
 
               // Right up left
               if (roads[x + 1, y] != null && roads[x, y - 1] != null && roads[x - 1, y] != null) {
-                spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetLeftRightUp);
+                spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetUpRightLeft);
               }
 
               // Right up down
@@ -77,11 +77,11 @@ namespace crown {
               }
 
               // left up down
-              if (roads[x - 1, y] != null && roads[x, y - 1] != null && roads[x + 1, y] != null) {
-                spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetUpRightLeft);
+              if (roads[x - 1, y] != null && roads[x, y - 1] != null && roads[x, y + 1] != null) {
+                spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetLeftUpDown);
               }
 
-              // left up down
+              // cross
               if (roads[x - 1, y] != null && roads[x, y + 1] != null && roads[x, y - 1] != null && roads[x + 1, y] != null) {
                 spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetCross);
               }
