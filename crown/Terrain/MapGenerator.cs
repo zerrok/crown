@@ -36,7 +36,6 @@ namespace crown.Terrain {
     }
 
     private static void BlockTilesBehindMountains(Tile[,] tileMap, string stone1Texture) {
-      // Turn invisble tiles into dirt
       foreach (Tile tile in tileMap) {
         int yPos1 = tile.Rect.Y / tileSize - 1 > 0 ? tile.Rect.Y / tileSize - 1 : 0;
         int yPos2 = tile.Rect.Y / tileSize - 2 > 0 ? tile.Rect.Y / tileSize - 2 : 0;
@@ -82,6 +81,7 @@ namespace crown.Terrain {
         if (y != 0 && tileMap[x, y - 1].Type.Contains("stone")) {
           tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.WaterStoneTop;
         }
+        tileMap[x, y].IsClear = false;
       }
     }
 
@@ -175,6 +175,7 @@ namespace crown.Terrain {
             if (x != 0 && tileMap[x - 1, y].Type.Contains("dirt") && tileMap[x + 1, y].Type.Contains("dirt") && y != 0 && tileMap[x, y - 1].Type.Contains("dirt") && tileMap[x, y + 1].Type.Contains("dirt")) {
               tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Dirt1;
             }
+            tileMap[x, y].IsClear = false;
           }
         }
       }
@@ -256,6 +257,7 @@ namespace crown.Terrain {
           tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.SandStoneTopRightLeft;
         }
 
+        tileMap[x, y].IsClear = false;
       }
     }
 
@@ -338,6 +340,7 @@ namespace crown.Terrain {
             sum++;
 
           if (sum >= 3) {
+            tileMap[x, y].IsClear = false;
             tileMap[x, y].Type = texture;
           }
           // The same for lonely bits of terrain sticking out - turn em into grass again
