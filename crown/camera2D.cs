@@ -6,14 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace crown {
-    public class Camera2d {
+namespace crown
+{
+    public class Camera2d
+    {
         public float _zoom; // Camera Zoom
         public Matrix _transform; // Matrix Transform
         public Vector2 _pos; // Camera Position
         protected float _rotation; // Camera Rotation
 
-        public Camera2d() {
+        public Camera2d()
+        {
         }
 
         // Sets and gets zoom
@@ -28,7 +31,8 @@ namespace crown {
         }
 
         // Auxiliary function to move the camera
-        public void Move(Vector2 amount) {
+        public void Move(Vector2 amount)
+        {
             _pos += amount;
         }
         // Get set position
@@ -36,7 +40,8 @@ namespace crown {
             get { return _pos; }
             set { _pos = value; }
         }
-        public Matrix GetTransformation(GraphicsDevice graphicsDevice) {
+        public Matrix GetTransformation(GraphicsDevice graphicsDevice)
+        {
             Viewport viewPort = graphicsDevice.Viewport;
             _transform =       // Thanks to o KB o for this solution
               Matrix.CreateTranslation(new Vector3(-_pos.X, -_pos.Y, 0)) *

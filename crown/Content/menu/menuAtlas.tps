@@ -4,7 +4,7 @@
         <key>fileFormatVersion</key>
         <int>4</int>
         <key>texturePackerVersion</key>
-        <string>4.3.3</string>
+        <string>4.6.1</string>
         <key>fileName</key>
         <string>D:/game projects/crown/crown/crown/Content/menu/menuAtlas.tps</string>
         <key>autoSDSettings</key>
@@ -177,6 +177,8 @@
         <false/>
         <key>prependSmartFolderName</key>
         <false/>
+        <key>autodetectAnimations</key>
+        <true/>
         <key>globalSpriteSettings</key>
         <struct type="SpriteSettings">
             <key>scale</key>
@@ -202,6 +204,22 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">buttonfarm.png</key>
+            <key type="filename">buttonroad.png</key>
+            <key type="filename">buttonstorage.png</key>
+            <key type="filename">buttonwoodcutter.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>19,19,37,37</rect>
+                <key>scale9Paddings</key>
+                <rect>19,19,37,37</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">buttonfarmland.png</key>
             <key type="filename">buttonhouse.png</key>
             <key type="filename">buttontownhall.png</key>
@@ -237,6 +255,10 @@
             <filename>buttonhouse.png</filename>
             <filename>buttontownhall.png</filename>
             <filename>maincontrols.png</filename>
+            <filename>buttonroad.png</filename>
+            <filename>buttonstorage.png</filename>
+            <filename>buttonwoodcutter.png</filename>
+            <filename>buttonfarm.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

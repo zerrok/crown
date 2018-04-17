@@ -4,11 +4,15 @@
 # To learn how to import these sprites into your MonoGame project visit:
 # http://www.codeandweb.com/texturepacker/monogame
 #
-# Sprite sheet: menuAtlas.png (1924 x 324)
-# $TexturePacker:SmartUpdate:54d7b74473f371306334098ead3232e1:e5798f413b0342dd72c4de5889563cc2:bd0f4c71b5cb59f99b3ec3385caa636d$
+# Sprite sheet: menuAtlas.png (1924 x 352)
+# $TexturePacker:SmartUpdate:3395e6c67c73c9370f5b962fc462bb6a:3974052dab19b0e764595e5dfdcb99be:bd0f4c71b5cb59f99b3ec3385caa636d$
 #
 
-buttonfarmland;0;1;1;150;50;150;50;0.5;0.5
-buttonhouse;0;153;1;150;50;150;50;0.5;0.5
-buttontownhall;0;305;1;150;50;150;50;0.5;0.5
-maincontrols;0;1;53;1920;270;1920;270;0.5;0.5
+buttonfarm;0;1;1;75;75;75;75;0.5;0.5
+buttonfarmland;0;78;1;75;75;75;75;0.5;0.5
+buttonhouse;0;155;1;75;75;75;75;0.5;0.5
+buttonroad;0;232;1;75;75;75;75;0.5;0.5
+buttonstorage;0;309;1;75;75;75;75;0.5;0.5
+buttontownhall;0;386;1;75;75;75;75;0.5;0.5
+buttonwoodcutter;0;463;1;75;75;75;75;0.5;0.5
+maincontrols;0;1;78;1920;270;1920;270;0.5;0.5
