@@ -1,12 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace crown
-{
-    public class Interactive
-    {
+namespace crown {
+    public class Interactive {
 
-        public enum IntType
-        {
+        public enum IntType {
             TREE
         }
 
@@ -18,8 +15,7 @@ namespace crown
         Vector2 coords;
         bool isSelected;
 
-        public Interactive(IntType type, string text, int health, int worth, Rectangle rect, Vector2 coords)
-        {
+        public Interactive(IntType type, string text, int health, int worth, Rectangle rect, Vector2 coords) {
             this.type = type;
             this.text = text;
             this.health = health;

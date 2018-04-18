@@ -2,17 +2,14 @@
 using System;
 using TexturePackerMonoGameDefinitions;
 
-namespace crown.Terrain
-{
-    public class Tile
-    {
+namespace crown.Terrain {
+    public class Tile {
 
         String type;
         bool isClear;
         Rectangle rect;
 
-        public Tile(int x, int y, int tileSize)
-        {
+        public Tile(int x, int y, int tileSize) {
             IsClear = true;
             Type = texturePackerSpriteAtlas.Grass1;
             rect = new Rectangle(x * tileSize, y * tileSize, tileSize, tileSize);

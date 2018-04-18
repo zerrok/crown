@@ -2,13 +2,10 @@
 using TexturePackerLoader;
 using static crown.Game1;
 
-namespace crown
-{
-    public class Menu
-    {
+namespace crown {
+    public class Menu {
 
-        public static void BuildGameMenu()
-        {
+        public static void BuildGameMenu() {
             Menu menuBackground = new Menu();
             int menuSizeX = (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols).Size.X;
             int menuSizeY = (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols).Size.Y;
@@ -80,8 +77,7 @@ namespace crown
             set => type = value;
         }
 
-        public enum MenuType
-        {
+        public enum MenuType {
             MAIN, BUTTON_HOUSE, BUTTON_TOWNHALL, BUTTON_FARMLAND, BUTTON_ROAD, BUTTON_FARM, BUTTON_WOODCUTTER, BUTTON_STORAGE
         }
 

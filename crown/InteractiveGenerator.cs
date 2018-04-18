@@ -5,19 +5,15 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Linq;
 
-namespace crown
-{
-    public class InteractiveGenerator
-    {
+namespace crown {
+    public class InteractiveGenerator {
 
-        public static void PlaceInteractives(Tile[,] tileMap)
-        {
+        public static void PlaceInteractives(Tile[,] tileMap) {
             // Trees can only grow on grass tiles      
             PlaceTrees(tileMap);
         }
 
-        private static void PlaceTrees(Tile[,] tileMap)
-        {
+        private static void PlaceTrees(Tile[,] tileMap) {
             // First add sources for the forests
             int treeSources = random.Next(35, 45);
             PlaceSources(tileMap, treeSources);
@@ -30,8 +26,7 @@ namespace crown
             PlaceSources(tileMap, treeSources);
         }
 
-        private static void PlaceSources(Tile[,] tileMap, int treeSources)
-        {
+        private static void PlaceSources(Tile[,] tileMap, int treeSources) {
             // Places the sources
             while (treeSources != 0) {
                 int randomX = random.Next(0, tileMap.GetUpperBound(0));
@@ -51,41 +46,54 @@ namespace crown
             }
         }
 
-        private static void GrowForest(Tile[,] tileMap)
-        {
+        private static void GrowForest(Tile[,] tileMap) {
             List<Interactive> newInteractives = new List<Interactive>();
 
             foreach (Interactive inter in interactives) {
                 if (inter.Type == Interactive.IntType.TREE) {
-                    // TODO: An den Ecken weniger Bäume wachsen lassen
                     // Adds a random amount of trees left and right of the source tree
-                    for (int x = random.Next(-10, -2); x < random.Next(4, 15); x++)
-                        for (int y = random.Next(-10, -2); y < random.Next(4, 15); y++) {
+                    int initX = random.Next(-10, -4);
+                    int initY = random.Next(-10, -4);
+
+                    int maxX = random.Next(4, 10);
+                    int maxY = random.Next(4, 10);
+
+                    for (int x = initX; x < maxX; x++) {
+                        for (int y = initY; y < maxY; y++) {
                             int xTile = ((int)inter.Coords.X / tileSize) + x;
                             int yTile = ((int)inter.Coords.Y / tileSize) + y;
 
-                            if (xTile < 2)
-                                xTile = 2;
+                            if (xTile <= 1)
+                                break;
                             if (xTile >= tileMap.GetUpperBound(0) - 1)
-                                xTile = tileMap.GetUpperBound(0) - 2;
-
-                            if (yTile < 2)
-                                yTile = 2;
+                                break;
+                            if (yTile <= 1)
+                                break;
                             if (yTile >= tileMap.GetUpperBound(1) - 1)
-                                yTile = tileMap.GetUpperBound(1) - 2;
+                                break;
 
                             // Only if the surrounding tiles are grass
                             if (SurroundingTilesAreClear(tileMap, xTile, yTile)) {
-                                if (random.Next(0, 100) > 35) {
+                                int probability = 15;
+                                // Spawn less trees outwards
+                                if (x < initX + 3 || y < initY + 3 || x >= maxX - 3 || y >= maxY - 3)
+                                    probability = 45;
+                                if (x < initX + 2 || y < initY + 2 || x >= maxX - 2 || y >= maxY - 2)
+                                    probability = 65;
+                                if (x < initX + 1 || y < initY + 1 || x >= maxX - 1 || y >= maxY - 1)
+                                    probability = 85;
+
+
+                                if (random.Next(0, 100) > probability) {
                                     // To shift the trees by a random amount of pixels
                                     // Do it twice or thrice to spawn more trees in one spot
-                                    for (int i = 0; i < random.Next(1, 10); i++) {
-                                        int randX = random.Next(-16, 16);
+                                    for (int i = 0; i < random.Next(4, 8); i++) {
+                                        int randX = random.Next(-32, 32);
                                         int randY = random.Next(-32, 32);
 
                                         Interactive tree = new Interactive(Interactive.IntType.TREE
                                                                          , "Tree"
-                                                                         , 3
+                                                                         , 1
                                                                          , 1
                                                                          , new Rectangle(xTile * tileSize + randX, yTile * tileSize + randY, tileSize / 2, tileSize)
                                                                          , new Vector2(xTile * tileSize + randX, yTile * tileSize + randY));
@@ -94,6 +102,7 @@ namespace crown
                                 }
                             }
                         }
+                    }
                 }
             }
 
@@ -101,8 +110,7 @@ namespace crown
                 interactives.Add(tree);
         }
 
-        private static bool SurroundingTilesAreClear(Tile[,] tileMap, int xTile, int yTile)
-        {
+        private static bool SurroundingTilesAreClear(Tile[,] tileMap, int xTile, int yTile) {
             return tileMap[xTile, yTile + 1].IsClear
                             && tileMap[xTile + 1, yTile].IsClear
                             && tileMap[xTile, yTile - 1].IsClear

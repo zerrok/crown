@@ -7,10 +7,8 @@ using TexturePackerLoader;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace crown
-{
-    public class Game1 : Game
-    {
+namespace crown {
+    public class Game1 : Game {
 
         public static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -29,8 +27,7 @@ namespace crown
         public static Tile[,] tileMap;
 
         // Which action is the mouse currently doing
-        public enum MouseAction
-        {
+        public enum MouseAction {
             FARMLAND, HOUSE, TOWNHALL, NOTHING, ROAD
         }
 
@@ -51,8 +48,7 @@ namespace crown
         // Seed for Random Generation
         public static Random random = new Random();
 
-        public Game1()
-        {
+        public Game1() {
             graphics = new GraphicsDeviceManager(this) {
                 IsFullScreen = false,
                 PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width,
@@ -62,8 +58,7 @@ namespace crown
             Content.RootDirectory = "Content";
         }
 
-        protected override void Initialize()
-        {
+        protected override void Initialize() {
             base.Initialize();
 
             IsMouseVisible = true;
@@ -81,8 +76,7 @@ namespace crown
         }
 
 
-        protected override void LoadContent()
-        {
+        protected override void LoadContent() {
             // Load Spritebatch and SpriteRender for spritesheets
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteRender = new SpriteRender(spriteBatch);
@@ -94,13 +88,11 @@ namespace crown
             interactiveTileSheet = spriteSheetLoader.Load("interactives/interactiveAtlas");
         }
 
-        protected override void UnloadContent()
-        {
+        protected override void UnloadContent() {
             Content.Unload();
         }
 
-        protected override void Update(GameTime gameTime)
-        {
+        protected override void Update(GameTime gameTime) {
             // Exit the game
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) {
                 UnloadContent();
@@ -121,21 +113,33 @@ namespace crown
                 roads = new Road[250, 250];
                 InteractiveGenerator.PlaceInteractives(tileMap);
 
+                // Sort trees so they are rendered correctly
                 sortedInteractives = interactives.OrderBy(interactive => interactive.Coords.Y);
+                interactives = new List<Interactive>();
+                foreach (Interactive inter in sortedInteractives) {
+                    interactives.Add(inter);
+                }
+
 
                 Menu.BuildGameMenu();
             }
 
             // Mouse Controls
-            MouseControls();
+            MouseState mouseState = Mouse.GetState();
+            mousePositionInWorld = GetMouseWorldPosition(mouseState);
+            if (mouseState.LeftButton == ButtonState.Pressed)
+                MouseControls(mouseState);
+
+            // Cancel current action
+            if (mouseState.RightButton == ButtonState.Pressed)
+                mouseAction = MouseAction.NOTHING;
+
+            oldState = mouseState;
 
             base.Update(gameTime);
         }
 
-        private void MouseControls()
-        {
-            MouseState mouseState = Mouse.GetState();
-            mousePositionInWorld = GetMouseWorldPosition(mouseState);
+        private void MouseControls(MouseState mouseState) {
             Point mousePoint = new Point(mouseState.X, mouseState.Y);
             Menu main = new Menu();
             foreach (Menu menuItem in menu)
@@ -143,27 +147,19 @@ namespace crown
                     main = menuItem;
 
             if (main != null)
-                if (mouseState.LeftButton == ButtonState.Pressed
-                    && !main.MainRect.Contains(mousePoint)
+                if (!main.MainRect.Contains(mousePoint)
                     && (oldState.LeftButton == ButtonState.Released || Keyboard.GetState().IsKeyDown(Keys.LeftShift))) {
                     // Mouse interaction with the game world
                     GameInteraction();
 
                     // Mouse interaction with the menu
-                } else if (mouseState.LeftButton == ButtonState.Pressed && main.MainRect.Contains(mousePoint)) {
+                } else if (main.MainRect.Contains(mousePoint)) {
                     MenuControls(mousePoint);
                 }
 
-
-            // Cancel current action
-            if (mouseState.RightButton == ButtonState.Pressed)
-                mouseAction = MouseAction.NOTHING;
-
-            oldState = mouseState;
         }
 
-        private void GameInteraction()
-        {
+        private void GameInteraction() {
             if (mouseAction != MouseAction.NOTHING) {
                 foreach (Tile tile in tileMap)
                     if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
@@ -184,11 +180,20 @@ namespace crown
                             mouseAction = MouseAction.NOTHING;
                         }
                     }
+            } else { // Interact with objects
+                foreach (Interactive inter in interactives) {
+                    if (inter.Type == Interactive.IntType.TREE) {
+                        if (inter.Rect.Contains(mousePositionInWorld)) {
+                            // TODO: Nur selektieren
+                            inter.Health--;
+                            break;
+                        }
+                    }
+                }
             }
         }
 
-        private void MenuControls(Point mousePoint)
-        {
+        private void MenuControls(Point mousePoint) {
             foreach (Menu item in menu)
                 if (item.MainRect.Contains(mousePoint)) {
                     if (item.Type == Menu.MenuType.BUTTON_TOWNHALL)
@@ -202,20 +207,18 @@ namespace crown
                 }
         }
 
-        private static Vector2 GetMouseWorldPosition(MouseState mouseState)
-        {
+        private static Vector2 GetMouseWorldPosition(MouseState mouseState) {
             return Vector2.Transform(new Point(mouseState.X, mouseState.Y).ToVector2(), Matrix.Invert(cam.GetTransformation(graphics.GraphicsDevice)));
         }
 
-        protected override void Draw(GameTime gameTime)
-        {
+        protected override void Draw(GameTime gameTime) {
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, cam.GetTransformation(graphics.GraphicsDevice));
             Drawing.DrawTerrain(spriteRender);
             Drawing.DrawMouseSelection(spriteRender, mousePositionInWorld, mouseAction);
             Drawing.DrawBuildings(spriteRender, buildings);
-            Drawing.DrawInteractives(spriteRender, sortedInteractives);
+            Drawing.DrawInteractives(spriteRender, interactives);
             Drawing.DrawRoads(spriteRender, roads);
             spriteBatch.End();
 

@@ -6,17 +6,14 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using TexturePackerLoader;
 
-namespace crown.Terrain
-{
-    public class Road
-    {
+namespace crown.Terrain {
+    public class Road {
 
         Vector2 coords;
         Rectangle rect;
         SpriteFrame spriteFrame;
 
-        public Road(Vector2 coords, Rectangle rect)
-        {
+        public Road(Vector2 coords, Rectangle rect) {
             this.coords = coords;
             this.rect = rect;
         }

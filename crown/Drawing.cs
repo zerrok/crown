@@ -6,13 +6,10 @@ using System.Collections.Generic;
 using crown.Terrain;
 using System.Linq;
 
-namespace crown
-{
-    class Drawing
-    {
+namespace crown {
+    class Drawing {
 
-        public static void DrawTerrain(SpriteRender spriteRender)
-        {
+        public static void DrawTerrain(SpriteRender spriteRender) {
             int startCol, endCol, startRow, endRow;
             GetRenderableTilesAndCenterTile(out startCol, out endCol, out startRow, out endRow);
             for (int x = startCol; x < endCol && x < tileMap.GetUpperBound(0); x++)
@@ -20,13 +17,11 @@ namespace crown
                     // Render coords are tile coords times tilesize 
                     int yPos = tileMap[x, y].Type != TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1 ? y * tileSize : y * tileSize - (2 * tileSize);
                     int xPos = x * tileSize;
-                    Vector2 coord = new Vector2(xPos, yPos);
-                    spriteRender.Draw(mapTileSheet.Sprite(tileMap[x, y].Type), coord);
+                    spriteRender.Draw(mapTileSheet.Sprite(tileMap[x, y].Type), new Vector2(xPos, yPos));
                 }
         }
 
-        public static void DrawMouseSelection(SpriteRender spriteRender, Vector2 mousePosition, MouseAction mouseAction)
-        {
+        public static void DrawMouseSelection(SpriteRender spriteRender, Vector2 mousePosition, MouseAction mouseAction) {
             SpriteFrame spriteframe = null;
 
             if (mouseAction == MouseAction.TOWNHALL)
@@ -41,23 +36,20 @@ namespace crown
                 }
         }
 
-        public static void DrawBuildings(SpriteRender spriteRender, List<Building> buildings)
-        {
+        public static void DrawBuildings(SpriteRender spriteRender, List<Building> buildings) {
             foreach (Building building in buildings) {
                 spriteRender.Draw(building.SpriteFrame, building.Position);
             }
         }
 
-        public static void DrawRoads(SpriteRender spriteRender, Road[,] roads)
-        {
+        public static void DrawRoads(SpriteRender spriteRender, Road[,] roads) {
             foreach (Road road in roads) {
                 if (road != null)
                     spriteRender.Draw(road.SpriteFrame, road.Coords);
             }
         }
 
-        public static void DrawMenu(SpriteRender spriteRender, List<Menu> menu)
-        {
+        public static void DrawMenu(SpriteRender spriteRender, List<Menu> menu) {
             // TODO: Muss noch skaliert werden für verschiedene auflösungen
             SpriteFrame spriteFrame = null;
             foreach (Menu item in menu) {
@@ -83,8 +75,7 @@ namespace crown
             }
         }
 
-        public static void GetRenderableTilesAndCenterTile(out int startCol, out int endCol, out int startRow, out int endRow)
-        {
+        public static void GetRenderableTilesAndCenterTile(out int startCol, out int endCol, out int startRow, out int endRow) {
             var width = graphics.GraphicsDevice.Viewport.Width;
             var height = graphics.GraphicsDevice.Viewport.Height;
             Rectangle renderTangle = new Rectangle((int)Math.Ceiling(cam.Pos.X) - width, (int)Math.Ceiling(cam.Pos.Y) - height, width * 2, height * 2);
@@ -95,8 +86,7 @@ namespace crown
             endRow = (int)((renderTangle.Y + renderTangle.Height) / tileSize + 3);
         }
 
-        internal static void DrawInteractives(SpriteRender spriteRender, IOrderedEnumerable<Interactive> interactives)
-        {
+        internal static void DrawInteractives(SpriteRender spriteRender, List<Interactive> interactives) {
             if (interactives != null)
                 foreach (Interactive interactive in interactives) {
                     // Only draw interactives with health bigger than 0 - it is harvested if health is <= 0

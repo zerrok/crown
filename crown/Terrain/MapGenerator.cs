@@ -5,13 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using static crown.Game1;
 
-namespace crown.Terrain
-{
-    class MapGenerator
-    {
+namespace crown.Terrain {
+    class MapGenerator {
 
-        public Tile[,] GetMap(int xDimension, int yDimension)
-        {
+        public Tile[,] GetMap(int xDimension, int yDimension) {
             Tile[,] tileMap = new Tile[xDimension, yDimension];
 
             InitializeMap(tileMap);
@@ -38,8 +35,7 @@ namespace crown.Terrain
             return tileMap;
         }
 
-        private static void BlockTilesBehindMountains(Tile[,] tileMap, string stone1Texture)
-        {
+        private static void BlockTilesBehindMountains(Tile[,] tileMap, string stone1Texture) {
             foreach (Tile tile in tileMap) {
                 int yPos1 = tile.Rect.Y / tileSize - 1 > 0 ? tile.Rect.Y / tileSize - 1 : 0;
                 int yPos2 = tile.Rect.Y / tileSize - 2 > 0 ? tile.Rect.Y / tileSize - 2 : 0;
@@ -52,8 +48,7 @@ namespace crown.Terrain
             }
         }
 
-        private void SetTerrainBorders(Tile[,] tileMap)
-        {
+        private void SetTerrainBorders(Tile[,] tileMap) {
             for (int x = 0; x < tileMap.GetUpperBound(0); x++) {
                 for (int y = 0; y < tileMap.GetUpperBound(1); y++) {
                     AddSandBorders(tileMap, x, y);
@@ -63,8 +58,7 @@ namespace crown.Terrain
             }
         }
 
-        private static void AddWaterBorders(Tile[,] tileMap, int x, int y)
-        {
+        private static void AddWaterBorders(Tile[,] tileMap, int x, int y) {
             // Set water borders
             if (tileMap[x, y].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Water1) {
                 // Grass borders
@@ -91,8 +85,7 @@ namespace crown.Terrain
             }
         }
 
-        private static void AddGrassBorders(Tile[,] tileMap, int x, int y)
-        {
+        private static void AddGrassBorders(Tile[,] tileMap, int x, int y) {
             if (tileMap[x, y].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1) {
                 // Stone on 1 side
                 const string stone1 = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1;
@@ -121,8 +114,7 @@ namespace crown.Terrain
             }
         }
 
-        public static void AddDirtBorders(Tile[,] tileMap)
-        {
+        public static void AddDirtBorders(Tile[,] tileMap) {
             for (int x = 0; x < tileMap.GetUpperBound(0); x++) {
                 for (int y = 0; y < tileMap.GetUpperBound(1); y++) {
                     if (tileMap[x, y].Type.Contains("dirt")) {
@@ -189,8 +181,7 @@ namespace crown.Terrain
             }
         }
 
-        private static void AddSandBorders(Tile[,] tileMap, int x, int y)
-        {
+        private static void AddSandBorders(Tile[,] tileMap, int x, int y) {
             // Set sand borders
             if (tileMap[x, y].Type == TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Sand1) {
                 const string grass1 = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1;
@@ -270,8 +261,7 @@ namespace crown.Terrain
             }
         }
 
-        private static void InitializeMap(Tile[,] tileMap)
-        {
+        private static void InitializeMap(Tile[,] tileMap) {
             // First, fill everything with grassland
             for (int x = 0; x <= tileMap.GetUpperBound(0); x++) {
                 for (int y = 0; y <= tileMap.GetUpperBound(1); y++) {
@@ -280,8 +270,7 @@ namespace crown.Terrain
             }
         }
 
-        private static void PutTerrainOnMap(Tile[,] tileMap, GeneratorParameters parameters, string sourceTexture, string[] forbiddenTextures)
-        {
+        private static void PutTerrainOnMap(Tile[,] tileMap, GeneratorParameters parameters, string sourceTexture, string[] forbiddenTextures) {
             PutTerrainSources(tileMap, sourceTexture, parameters.MinSourceAmount, parameters.MaxSourceAmount, forbiddenTextures);
             GrowTerrainType(tileMap, parameters.Size, parameters.GrowChance, sourceTexture, forbiddenTextures);
 
@@ -289,8 +278,7 @@ namespace crown.Terrain
                 SmoothTerrain(tileMap, sourceTexture);
         }
 
-        private static void PutTerrainSources(Tile[,] tileMap, string texture, int lowBound, int upBound, string[] forbiddenTextures)
-        {
+        private static void PutTerrainSources(Tile[,] tileMap, string texture, int lowBound, int upBound, string[] forbiddenTextures) {
             int xStart = 0;
             int yStart = 0;
 
@@ -307,8 +295,7 @@ namespace crown.Terrain
             }
         }
 
-        private static void GrowTerrainType(Tile[,] tileMap, int lakeSize, int chance, string growingTexture, string[] forbiddenTextures)
-        {
+        private static void GrowTerrainType(Tile[,] tileMap, int lakeSize, int chance, string growingTexture, string[] forbiddenTextures) {
             // Now iterate over the map and add to the size of the terrain spots
             for (int count = 0; count < lakeSize; count++) {
                 for (int x = 0; x < tileMap.GetUpperBound(0); x++) {
@@ -337,8 +324,7 @@ namespace crown.Terrain
             }
         }
 
-        private static void SmoothTerrain(Tile[,] tileMap, string texture)
-        {
+        private static void SmoothTerrain(Tile[,] tileMap, string texture) {
             // Fill holes in the tilemap so it does look better
             for (int x = 0; x < tileMap.GetUpperBound(0); x++) {
                 for (int y = 0; y < tileMap.GetUpperBound(1); y++) {

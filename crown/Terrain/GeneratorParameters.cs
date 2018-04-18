@@ -4,18 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace crown.Terrain
-{
-    class GeneratorParameters
-    {
+namespace crown.Terrain {
+    class GeneratorParameters {
 
         int size;
         int growChance;
         int minSourceAmount;
         int maxSourceAmount;
 
-        public GeneratorParameters(int size, int growChance, int minSourceAmount, int maxSourceAmount)
-        {
+        public GeneratorParameters(int size, int growChance, int minSourceAmount, int maxSourceAmount) {
             this.size = size;
             this.growChance = growChance;
             this.minSourceAmount = minSourceAmount;
