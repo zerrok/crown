@@ -7,6 +7,38 @@ using static crown.Game1;
 namespace crown {
     class Controls {
 
+        public static void BuildStuff(MouseAction mouseAction, Vector2 mousePositionInWorld) {
+            foreach (Tile tile in tileMap)
+                if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
+                if (mouseAction == MouseAction.FARMLAND) {
+                    Controls.MakeFarmableLand(tileMap, tile);
+                }
+                if (mouseAction == MouseAction.TOWNHALL) {
+                    Controls.BuildTownHall(tile);
+                }
+                if (mouseAction == MouseAction.HOUSE) {
+                    Controls.BuildHouse(tile);
+                }
+                if (mouseAction == MouseAction.ROAD) {
+                    Controls.BuildRoad(tile);
+                }
+                // Cancel building when left shift is not pressed
+                if (!Keyboard.GetState().IsKeyDown(Keys.LeftShift)) {
+                    mouseAction = MouseAction.NOTHING;
+                }
+            }
+        }
+        public static void InteractWithStuff(Vector2 mousePositionInWorld) {
+            foreach (Interactive inter in interactives) {
+                if (inter.Type == Interactive.IntType.TREE) {
+                if (inter.Rect.Contains(mousePositionInWorld)) {
+                    // TODO: Nur selektieren
+                    inter.Health--;
+                    break;
+                }
+            }
+        }
+    }
         public static void BuildRoad(Tile tile) {
             if (tile.IsClear) {
                 Rectangle rect = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize, tileSize);

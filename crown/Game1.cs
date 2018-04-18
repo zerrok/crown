@@ -11,11 +11,10 @@ namespace crown {
     public class Game1 : Game {
 
         public static GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
 
         // player camera
         public static Camera2d cam = new Camera2d();
-        public float camSpeed = 15f;
+        public float camSpeed = 16f;
 
         // Textures
         public static SpriteRender spriteRender;
@@ -25,6 +24,17 @@ namespace crown {
         public static SpriteSheet interactiveTileSheet;
         public static int tileSize = 32;
         public static Tile[,] tileMap;
+
+        // Game relevant objects
+        public static List<Building> buildings;
+        public static List<Interactive> interactives;
+        public static Road[,] roads;
+        public static List<Menu> menu;
+
+        // Seed for Random Generation
+        public static Random random = new Random();
+
+        SpriteBatch spriteBatch;
 
         // Which action is the mouse currently doing
         public enum MouseAction {
@@ -37,16 +47,6 @@ namespace crown {
         // Saves the last mouse state
         MouseState oldState;
 
-        // Game relevant objects
-        public static List<Building> buildings;
-        public static List<Interactive> interactives;
-        public static Road[,] roads;
-        public static List<Menu> menu;
-
-        IOrderedEnumerable<Interactive> sortedInteractives;
-
-        // Seed for Random Generation
-        public static Random random = new Random();
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this) {
@@ -114,12 +114,11 @@ namespace crown {
                 InteractiveGenerator.PlaceInteractives(tileMap);
 
                 // Sort trees so they are rendered correctly
-                sortedInteractives = interactives.OrderBy(interactive => interactive.Coords.Y);
+                IOrderedEnumerable<Interactive> sortedInteractives = interactives.OrderBy(interactive => interactive.Coords.Y);
                 interactives = new List<Interactive>();
                 foreach (Interactive inter in sortedInteractives) {
                     interactives.Add(inter);
                 }
-
 
                 Menu.BuildGameMenu();
             }
@@ -150,47 +149,17 @@ namespace crown {
                 if (!main.MainRect.Contains(mousePoint)
                     && (oldState.LeftButton == ButtonState.Released || Keyboard.GetState().IsKeyDown(Keys.LeftShift))) {
                     // Mouse interaction with the game world
-                    GameInteraction();
+                    if (mouseAction != MouseAction.NOTHING) {
+                        Controls.BuildStuff(mouseAction, mousePositionInWorld);
+                    } else {
+                        Controls.InteractWithStuff(mousePositionInWorld);
+                    }
 
                     // Mouse interaction with the menu
                 } else if (main.MainRect.Contains(mousePoint)) {
                     MenuControls(mousePoint);
                 }
 
-        }
-
-        private void GameInteraction() {
-            if (mouseAction != MouseAction.NOTHING) {
-                foreach (Tile tile in tileMap)
-                    if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
-                        if (mouseAction == MouseAction.FARMLAND) {
-                            Controls.MakeFarmableLand(tileMap, tile);
-                        }
-                        if (mouseAction == MouseAction.TOWNHALL) {
-                            Controls.BuildTownHall(tile);
-                        }
-                        if (mouseAction == MouseAction.HOUSE) {
-                            Controls.BuildHouse(tile);
-                        }
-                        if (mouseAction == MouseAction.ROAD) {
-                            Controls.BuildRoad(tile);
-                        }
-                        // Cancel building when left shift is not pressed
-                        if (!Keyboard.GetState().IsKeyDown(Keys.LeftShift)) {
-                            mouseAction = MouseAction.NOTHING;
-                        }
-                    }
-            } else { // Interact with objects
-                foreach (Interactive inter in interactives) {
-                    if (inter.Type == Interactive.IntType.TREE) {
-                        if (inter.Rect.Contains(mousePositionInWorld)) {
-                            // TODO: Nur selektieren
-                            inter.Health--;
-                            break;
-                        }
-                    }
-                }
-            }
         }
 
         private void MenuControls(Point mousePoint) {
