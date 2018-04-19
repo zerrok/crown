@@ -26,7 +26,7 @@ namespace crown {
         public static Tile[,] tileMap;
 
         // Game relevant objects
-        public static List<Building> buildings;
+        public static Mechanics mechanics;
         public static List<Interactive> interactives;
         public static Road[,] roads;
         public static List<Menu> menu;
@@ -47,6 +47,9 @@ namespace crown {
         // Saves the last mouse state
         MouseState oldState;
 
+        // Menu font
+        public static SpriteFont maelFont;
+        Texture2D pixel;
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this) {
@@ -66,11 +69,11 @@ namespace crown {
             cam.Pos = new Vector2(3000, 3000);
             cam.Zoom = 1;
 
-            buildings = new List<Building>();
             interactives = new List<Interactive>();
             menu = new List<Menu>();
             roads = new Road[1, 1];
             tileMap = new Tile[1, 1];
+            mechanics = new Mechanics();
 
             tileSize = (int)mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Dirt1).Size.X;
         }
@@ -86,6 +89,20 @@ namespace crown {
             menuTileSheet = spriteSheetLoader.Load("menu/menuAtlas");
             buildingTileSheet = spriteSheetLoader.Load("buildings/buildingAtlas");
             interactiveTileSheet = spriteSheetLoader.Load("interactives/interactiveAtlas");
+
+            maelFont = Content.Load<SpriteFont>("maelFont");
+
+            // Make a 1x1 texture named pixel.  
+            pixel = new Texture2D(GraphicsDevice, 1, 1);
+
+            // Create a 1D array of color data to fill the pixel texture with.  
+            Color[] colorData = {
+                        Color.White,
+                    };
+
+            // Set the texture data with our color information.  
+            pixel.SetData<Color>(colorData);
+
         }
 
         protected override void UnloadContent() {
@@ -104,7 +121,7 @@ namespace crown {
 
             if (Keyboard.GetState().IsKeyDown(Keys.Q)) {
                 // Reset everything
-                buildings = new List<Building>();
+                mechanics.Buildings = new List<Building>();
                 interactives = new List<Interactive>();
                 tileMap = new Tile[1, 1];
 
@@ -186,13 +203,24 @@ namespace crown {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, cam.GetTransformation(graphics.GraphicsDevice));
             Drawing.DrawTerrain(spriteRender);
             Drawing.DrawMouseSelection(spriteRender, mousePositionInWorld, mouseAction);
-            Drawing.DrawBuildings(spriteRender, buildings);
+            Drawing.DrawBuildings(spriteRender, mechanics.Buildings);
             Drawing.DrawInteractives(spriteRender, interactives);
             Drawing.DrawRoads(spriteRender, roads);
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
             Drawing.DrawMenu(spriteRender, menu);
+
+            // Draw text on top of everything
+            // Draw a fancy purple rectangle.  
+            spriteBatch.Draw(pixel, new Rectangle(0, 0, 150, 450), Color.SlateGray);
+            spriteBatch.DrawString(maelFont, "Population: " + mechanics.Population, new Vector2(16, 16), Color.White);
+            spriteBatch.DrawString(maelFont, "Gold: " + mechanics.Gold, new Vector2(16, 32), Color.White);
+            spriteBatch.DrawString(maelFont, "Wood: " + mechanics.Wood, new Vector2(16, 48), Color.White);
+            spriteBatch.DrawString(maelFont, "Stone: " + mechanics.Stone, new Vector2(16, 64), Color.White);
+            spriteBatch.DrawString(maelFont, "Food: " + mechanics.Food, new Vector2(16, 80), Color.White);
+            spriteBatch.DrawString(maelFont, "DoomClock: " + mechanics.DoomClock, new Vector2(16, 96), Color.White);
+            spriteBatch.DrawString(maelFont, "Buildings: " + mechanics.Buildings.Count, new Vector2(16, 112), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);

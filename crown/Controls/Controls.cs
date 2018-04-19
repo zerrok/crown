@@ -10,35 +10,35 @@ namespace crown {
         public static void BuildStuff(MouseAction mouseAction, Vector2 mousePositionInWorld) {
             foreach (Tile tile in tileMap)
                 if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
-                if (mouseAction == MouseAction.FARMLAND) {
-                    Controls.MakeFarmableLand(tileMap, tile);
+                    if (mouseAction == MouseAction.FARMLAND) {
+                        Controls.MakeFarmableLand(tileMap, tile);
+                    }
+                    if (mouseAction == MouseAction.TOWNHALL) {
+                        Controls.BuildTownHall(tile);
+                    }
+                    if (mouseAction == MouseAction.HOUSE) {
+                        Controls.BuildHouse(tile);
+                    }
+                    if (mouseAction == MouseAction.ROAD) {
+                        Controls.BuildRoad(tile);
+                    }
+                    // Cancel building when left shift is not pressed
+                    if (!Keyboard.GetState().IsKeyDown(Keys.LeftShift)) {
+                        mouseAction = MouseAction.NOTHING;
+                    }
                 }
-                if (mouseAction == MouseAction.TOWNHALL) {
-                    Controls.BuildTownHall(tile);
-                }
-                if (mouseAction == MouseAction.HOUSE) {
-                    Controls.BuildHouse(tile);
-                }
-                if (mouseAction == MouseAction.ROAD) {
-                    Controls.BuildRoad(tile);
-                }
-                // Cancel building when left shift is not pressed
-                if (!Keyboard.GetState().IsKeyDown(Keys.LeftShift)) {
-                    mouseAction = MouseAction.NOTHING;
-                }
-            }
         }
         public static void InteractWithStuff(Vector2 mousePositionInWorld) {
             foreach (Interactive inter in interactives) {
                 if (inter.Type == Interactive.IntType.TREE) {
-                if (inter.Rect.Contains(mousePositionInWorld)) {
-                    // TODO: Nur selektieren
-                    inter.Health--;
-                    break;
+                    if (inter.Rect.Contains(mousePositionInWorld)) {
+                        // TODO: Nur selektieren
+                        inter.Health--;
+                        break;
+                    }
                 }
             }
         }
-    }
         public static void BuildRoad(Tile tile) {
             if (tile.IsClear) {
                 Rectangle rect = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize, tileSize);
@@ -69,7 +69,7 @@ namespace crown {
             int tilePosX = (tile.Rect.X) / tileSize + 1;
             int tilePosY = (tile.Rect.Y) / tileSize + 1;
 
-            foreach (Building building in buildings) {
+            foreach (Building building in mechanics.Buildings) {
                 if (building.Rect.Intersects(rectangle))
                     isAllowed = false;
             }
@@ -84,9 +84,9 @@ namespace crown {
                 && tileMap[tile.Rect.X / tileSize, tilePosY].IsClear
                 && isAllowed
                 && tile.IsClear) {
-                buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Townhall)
-                            , new Vector2(tile.Rect.X, tile.Rect.Y)
-                            , rectangle));
+                mechanics.Buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Townhall)
+                                      , new Vector2(tile.Rect.X, tile.Rect.Y)
+                                      , rectangle));
 
                 // Set tiles underneath to not clear
                 tileMap[tilePosX, tile.Rect.Y / tileSize].IsClear = false;
@@ -99,7 +99,7 @@ namespace crown {
         public static void BuildHouse(Tile tile) {
             bool isAllowed = true;
             Rectangle rectSmall = new Rectangle(tile.Rect.X, tile.Rect.Y, 64, 64);
-            foreach (Building building in buildings) {
+            foreach (Building building in mechanics.Buildings) {
                 if (building.Rect.Intersects(rectSmall))
                     isAllowed = false;
             }
@@ -111,9 +111,9 @@ namespace crown {
             if (tile.Type.Contains("grass")
               && isAllowed
               && tile.IsClear == true) {
-                buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House)
-                            , new Vector2(tile.Rect.X, tile.Rect.Y)
-                            , rectSmall));
+                mechanics.Buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House)
+                                      , new Vector2(tile.Rect.X, tile.Rect.Y)
+                                      , rectSmall));
                 tile.IsClear = false;
             }
         }

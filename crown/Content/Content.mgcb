@@ -73,3 +73,10 @@
 #begin interactives/interactiveAtlas.txt
 /copy:interactives/interactiveAtlas.txt
 
+#begin maelFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:maelFont.spritefont
+

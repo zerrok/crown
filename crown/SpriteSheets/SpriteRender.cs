@@ -35,6 +35,7 @@ namespace TexturePackerLoader
                 case SpriteEffects.FlipVertically: origin.Y = sprite.SourceRectangle.Height - origin.Y; break;
             }
 
+#pragma warning disable CS0618 // Typ oder Element ist veraltet
             this.spriteBatch.Draw(
                 texture: sprite.Texture,
                 position: position,
@@ -42,6 +43,7 @@ namespace TexturePackerLoader
                 color: color,
                 rotation: rotation,
                 scale: new Vector2(scale, scale));
+#pragma warning restore CS0618 // Typ oder Element ist veraltet
         }
     }
 }
