@@ -152,6 +152,8 @@ namespace crown {
 
             oldState = mouseState;
 
+            mechanics.UpdateMechanics();
+
             base.Update(gameTime);
         }
 
@@ -213,14 +215,15 @@ namespace crown {
 
             // Draw text on top of everything
             // Draw a fancy purple rectangle.  
-            spriteBatch.Draw(pixel, new Rectangle(0, 0, 150, 450), Color.SlateGray);
+            spriteBatch.Draw(pixel, new Rectangle(0, 0, 450, 150), Color.SlateGray);
             spriteBatch.DrawString(maelFont, "Population: " + mechanics.Population, new Vector2(16, 16), Color.White);
-            spriteBatch.DrawString(maelFont, "Gold: " + mechanics.Gold, new Vector2(16, 32), Color.White);
-            spriteBatch.DrawString(maelFont, "Wood: " + mechanics.Wood, new Vector2(16, 48), Color.White);
-            spriteBatch.DrawString(maelFont, "Stone: " + mechanics.Stone, new Vector2(16, 64), Color.White);
-            spriteBatch.DrawString(maelFont, "Food: " + mechanics.Food, new Vector2(16, 80), Color.White);
-            spriteBatch.DrawString(maelFont, "DoomClock: " + mechanics.DoomClock, new Vector2(16, 96), Color.White);
-            spriteBatch.DrawString(maelFont, "Buildings: " + mechanics.Buildings.Count, new Vector2(16, 112), Color.White);
+            spriteBatch.DrawString(maelFont, "Workers: TODO: Count Workers in Buildings", new Vector2(16, 32), Color.White);
+            spriteBatch.DrawString(maelFont, "Gold: " + mechanics.Gold, new Vector2(16, 48), Color.White);
+            spriteBatch.DrawString(maelFont, "Wood: " + mechanics.Wood, new Vector2(16, 64), Color.White);
+            spriteBatch.DrawString(maelFont, "Stone: " + mechanics.Stone, new Vector2(16, 80), Color.White);
+            spriteBatch.DrawString(maelFont, "Food: " + mechanics.Food, new Vector2(16, 96), Color.White);
+            spriteBatch.DrawString(maelFont, "DoomClock: " + mechanics.DoomClock, new Vector2(16, 112), Color.White);
+            spriteBatch.DrawString(maelFont, "Buildings: " + mechanics.Buildings.Count, new Vector2(16, 128), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);

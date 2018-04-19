@@ -3,6 +3,7 @@
 namespace crown {
 
     public class Mechanics {
+
         int gold;
         int wood;
         int stone;
@@ -28,6 +29,18 @@ namespace crown {
         public int Food { get => food; set => food = value; }
         public float DoomClock { get => doomClock; set => doomClock = value; }
         public List<Building> Buildings { get => buildings; set => buildings = value; }
+
+
+        public void UpdateMechanics() {
+            doomClock += 0.02f;
+
+            if (DoomClock > 1f) {
+                Gold += 10;
+                DoomClock = 0f;
+            }
+        }
     }
+
+
 
 }
