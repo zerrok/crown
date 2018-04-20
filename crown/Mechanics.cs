@@ -30,7 +30,6 @@ namespace crown {
         public float DoomClock { get => doomClock; set => doomClock = value; }
         public List<Building> Buildings { get => buildings; set => buildings = value; }
 
-
         public void UpdateMechanics() {
             doomClock += 0.02f;
 

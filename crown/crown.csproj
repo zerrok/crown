@@ -42,6 +42,7 @@
     <Compile Include="camera2D.cs" />
     <Compile Include="Controls\Controls.cs" />
     <Compile Include="Controls\Menu.cs" />
+    <Compile Include="Controls\MenuBuilder.cs" />
     <Compile Include="Drawing.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Interactive.cs" />

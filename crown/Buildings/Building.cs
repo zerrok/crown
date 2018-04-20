@@ -9,10 +9,15 @@ namespace crown {
         Vector2 position;
         Rectangle rect;
 
-        public Building(SpriteFrame spriteFrame, Vector2 position, Rectangle rect) {
+        public enum Type  {TOWNHALL, HOUSE, WOODCUTTER, FARM, STORAGE };
+        Type type;
+
+
+        public Building(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, Type type) {
             this.spriteFrame = spriteFrame;
             this.position = position;
             this.rect = rect;
+            this.type = type;
         }
 
         public SpriteFrame SpriteFrame {
@@ -44,5 +49,7 @@ namespace crown {
                 rect = value;
             }
         }
+
+        public Type Type1 { get => type; set => type = value; }
     }
 }

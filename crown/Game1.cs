@@ -124,6 +124,7 @@ namespace crown {
                 mechanics.Buildings = new List<Building>();
                 interactives = new List<Interactive>();
                 tileMap = new Tile[1, 1];
+                mechanics = new Mechanics();
 
                 // Regenerate everything
                 tileMap = new MapGenerator().GetMap(250, 250);
@@ -137,7 +138,7 @@ namespace crown {
                     interactives.Add(inter);
                 }
 
-                Menu.BuildGameMenu();
+                MenuBuilder.BuildGameMenu();
             }
 
             // Mouse Controls
@@ -169,7 +170,7 @@ namespace crown {
                     && (oldState.LeftButton == ButtonState.Released || Keyboard.GetState().IsKeyDown(Keys.LeftShift))) {
                     // Mouse interaction with the game world
                     if (mouseAction != MouseAction.NOTHING) {
-                        Controls.BuildStuff(mouseAction, mousePositionInWorld);
+                        mouseAction = Controls.BuildStuff(mouseAction, mousePositionInWorld);
                     } else {
                         Controls.InteractWithStuff(mousePositionInWorld);
                     }
@@ -214,7 +215,7 @@ namespace crown {
             Drawing.DrawMenu(spriteRender, menu);
 
             // Draw text on top of everything
-            // Draw a fancy purple rectangle.  
+            // Draw a fancy rectangle.  
             spriteBatch.Draw(pixel, new Rectangle(0, 0, 450, 150), Color.SlateGray);
             spriteBatch.DrawString(maelFont, "Population: " + mechanics.Population, new Vector2(16, 16), Color.White);
             spriteBatch.DrawString(maelFont, "Workers: TODO: Count Workers in Buildings", new Vector2(16, 32), Color.White);
