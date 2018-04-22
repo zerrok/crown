@@ -15,7 +15,7 @@ namespace crown {
 
         private static void PlaceTrees(Tile[,] tileMap) {
             // First add sources for the forests
-            int treeSources = random.Next(35, 45);
+            int treeSources = random.Next(45, 65);
             PlaceSources(tileMap, treeSources);
 
             // Grow the sources
@@ -52,11 +52,11 @@ namespace crown {
             foreach (Interactive inter in interactives) {
                 if (inter.Type == Interactive.IntType.TREE) {
                     // Adds a random amount of trees left and right of the source tree
-                    int initX = random.Next(-10, -4);
-                    int initY = random.Next(-10, -4);
+                    int initX = random.Next(-12, -6);
+                    int initY = random.Next(-15, -6);
 
-                    int maxX = random.Next(4, 10);
-                    int maxY = random.Next(4, 10);
+                    int maxX = random.Next(6, 12);
+                    int maxY = random.Next(6, 12);
 
                     for (int x = initX; x < maxX; x++) {
                         for (int y = initY; y < maxY; y++) {
@@ -75,19 +75,30 @@ namespace crown {
                             // Only if the surrounding tiles are grass
                             if (SurroundingTilesAreClear(tileMap, xTile, yTile)) {
                                 int probability = 15;
+                                int minTrees = 5;
+                                int maxTrees = 7;
                                 // Spawn less trees outwards
-                                if (x < initX + 3 || y < initY + 3 || x >= maxX - 3 || y >= maxY - 3)
+                                if (x < initX + 3 || y < initY + 3 || x >= maxX - 3 || y >= maxY - 3) {
                                     probability = 45;
-                                if (x < initX + 2 || y < initY + 2 || x >= maxX - 2 || y >= maxY - 2)
+                                    minTrees = 3;
+                                    maxTrees = 6;
+                                }
+                                if (x < initX + 2 || y < initY + 2 || x >= maxX - 2 || y >= maxY - 2) {
                                     probability = 65;
-                                if (x < initX + 1 || y < initY + 1 || x >= maxX - 1 || y >= maxY - 1)
+                                    minTrees = 2;
+                                    maxTrees = 4;
+                                }
+                                if (x < initX + 1 || y < initY + 1 || x >= maxX - 1 || y >= maxY - 1) {
                                     probability = 85;
+                                    minTrees = 1;
+                                    maxTrees = 2;
+                                }
 
 
                                 if (random.Next(0, 100) > probability) {
                                     // To shift the trees by a random amount of pixels
                                     // Do it twice or thrice to spawn more trees in one spot
-                                    for (int i = 0; i < random.Next(4, 8); i++) {
+                                    for (int i = 0; i < random.Next(minTrees, maxTrees); i++) {
                                         int randX = random.Next(-32, 32);
                                         int randY = random.Next(-32, 32);
 

@@ -80,19 +80,27 @@ namespace crown {
             var height = graphics.GraphicsDevice.Viewport.Height;
             Rectangle renderTangle = new Rectangle((int)Math.Ceiling(cam.Pos.X) - width, (int)Math.Ceiling(cam.Pos.Y) - height, width * 2, height * 2);
 
-            startCol = (int)(renderTangle.X / tileSize) - 3 < 1 ? 0 : (int)(renderTangle.X / tileSize) - 3;
-            endCol = (int)((renderTangle.X + renderTangle.Width) / tileSize) + 3;
-            startRow = (int)(renderTangle.Y / tileSize) - 3 < 0 ? 0 : (int)(renderTangle.Y / tileSize) - 3;
-            endRow = (int)((renderTangle.Y + renderTangle.Height) / tileSize + 3);
+            startCol = renderTangle.X / tileSize - 3 < 1 ? 0 : renderTangle.X / tileSize - 3;
+            endCol = (renderTangle.X + renderTangle.Width) / tileSize + 3;
+            startRow = renderTangle.Y / tileSize - 3 < 0 ? 0 : renderTangle.Y / tileSize - 3;
+            endRow = (renderTangle.Y + renderTangle.Height) / tileSize + 3;
         }
 
         internal static void DrawInteractives(SpriteRender spriteRender, List<Interactive> interactives) {
-            if (interactives != null)
+            if (interactives != null) {
+                GetRenderableTilesAndCenterTile(out int startCol, out int endCol, out int startRow, out int endRow);
+
                 foreach (Interactive interactive in interactives) {
-                    // Only draw interactives with health bigger than 0 - it is harvested if health is <= 0
-                    if (interactive.Type == Interactive.IntType.TREE && interactive.Health > 0)
-                        spriteRender.Draw(interactiveTileSheet.Sprite(TexturePackerMonoGameDefinitions.interactiveAtlas.Tree), interactive.Coords);
+                    // Only draw if its visible
+                    if (interactive.Coords.X / tileSize > startCol &&
+                       interactive.Coords.X / tileSize < endCol &&
+                       interactive.Coords.Y / tileSize > startRow &&
+                       interactive.Coords.Y / tileSize < endRow)
+                        // Only draw interactives with health bigger than 0 - it is harvested if health is <= 0
+                        if (interactive.Type == Interactive.IntType.TREE && interactive.Health > 0)
+                            spriteRender.Draw(interactiveTileSheet.Sprite(TexturePackerMonoGameDefinitions.interactiveAtlas.Tree), interactive.Coords);
                 }
+            }
         }
     }
 }

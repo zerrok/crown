@@ -13,11 +13,11 @@ namespace crown {
         List<Building> buildings;
 
         public Mechanics() {
-            gold = 0;
+            gold = 500;
             wood = 0;
             stone = 0;
             population = 0;
-            food = 0;
+            food = 100;
             doomClock = 0;
             buildings = new List<Building>();
         }
@@ -34,7 +34,6 @@ namespace crown {
             doomClock += 0.02f;
 
             if (DoomClock > 1f) {
-                Gold += 10;
                 DoomClock = 0f;
             }
         }
