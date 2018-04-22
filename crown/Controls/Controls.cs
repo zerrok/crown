@@ -16,7 +16,7 @@ namespace crown {
                     if (mouseAction == MouseAction.TOWNHALL) {
                         // Only allowed to build it once
                         foreach (Building building in mechanics.Buildings)
-                            if (building.Type1 == Building.Type.TOWNHALL){
+                            if (building.Type1 == Building.Type.TOWNHALL) {
                                 mouseAction = MouseAction.NOTHING;
                                 return mouseAction;
                             }
@@ -49,6 +49,7 @@ namespace crown {
             }
         }
         public static void BuildRoad(Tile tile) {
+            // TODO: Straßen dürfen auch nur neben Straßen gebaut werden
             if (tile.IsClear) {
                 Rectangle rect = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize, tileSize);
 
@@ -62,7 +63,7 @@ namespace crown {
                 // Use standard road texture
                 SpriteFrame spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetHori);
 
-                // When everyrhing is set and done we just add the new road
+                // When everything is set and done we just add the new road
                 road.SpriteFrame = spriteFrame;
                 roads[tile.Rect.X / tileSize, tile.Rect.Y / tileSize] = road;
                 tile.IsClear = false;
@@ -73,12 +74,13 @@ namespace crown {
         }
 
         public static void BuildTownHall(Tile tile) {
+            // TODO: Setze eine Reihe Straßen unter der Stadthalle
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, 128, 128);
             int tilePosX = (tile.Rect.X) / tileSize + 1;
             int tilePosY = (tile.Rect.Y) / tileSize + 1;
 
-            isAllowed = checkIntersections(isAllowed, rectangle);
+            isAllowed = CheckIntersections(isAllowed, rectangle);
 
             if (tile.Type.Contains("grass")
                 && tileMap[tilePosX, tile.Rect.Y / tileSize].IsClear
@@ -102,30 +104,19 @@ namespace crown {
             }
         }
 
-        private static bool checkIntersections(bool isAllowed, Rectangle rectangle) {
-            foreach (Building building in mechanics.Buildings) {
-                if (building.Rect.Intersects(rectangle))
-                    isAllowed = false;
-            }
-            foreach (Interactive inter in interactives) {
-                if (inter.Rect.Intersects(rectangle))
-                    isAllowed = false;
-            }
-
-            return isAllowed;
-        }
-
         public static void BuildHouse(Tile tile) {
             bool isAllowed = true;
-            Rectangle rectSmall = new Rectangle(tile.Rect.X, tile.Rect.Y, 64, 64);
-            isAllowed = checkIntersections(isAllowed, rectSmall);
+            Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, 64, 64);
+
+            isAllowed = CheckIntersections(isAllowed, rectangle);
+            isAllowed = IsBesidesRoad(isAllowed, rectangle);
 
             if (tile.Type.Contains("grass")
               && isAllowed
               && tile.IsClear == true) {
                 mechanics.Buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House)
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
-                                      , rectSmall
+                                      , rectangle
                                       , Building.Type.HOUSE));
                 tile.IsClear = false;
             }
@@ -258,5 +249,45 @@ namespace crown {
             }
         }
 
+        private static bool CheckIntersections(bool isAllowed, Rectangle rectangle) {
+            foreach (Building building in mechanics.Buildings) {
+                if (building.Rect.Intersects(rectangle))
+                    isAllowed = false;
+            }
+            foreach (Interactive inter in interactives) {
+                if (inter.Rect.Intersects(rectangle))
+                    isAllowed = false;
+            }
+
+            return isAllowed;
+        }
+
+        private static bool IsBesidesRoad(bool isAllowed, Rectangle rectangle) {
+            int xPos = rectangle.X / tileSize;
+            int yPos = rectangle.Y / tileSize;
+
+            if (roads[xPos + 1, yPos] == null
+             && roads[xPos - 1, yPos] == null
+             && roads[xPos, yPos + 1] == null
+             && roads[xPos, yPos - 1] == null)
+                isAllowed = false;
+
+            isAllowed = RoadsBuilt(isAllowed);
+
+            return isAllowed;
+        }
+
+        private static bool RoadsBuilt(bool isAllowed) {
+            // Everything except the town hall has to be connected to roads
+            // So check if there even are roads
+            bool foundRoad = false;
+            foreach (Road road in roads) {
+                if (road != null)
+                    foundRoad = true;
+            }
+            if (foundRoad == false)
+                isAllowed = false;
+            return isAllowed;
+        }
     }
 }
