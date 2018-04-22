@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/_Projekt/crown/crown/Content/tiles/texturePackerSpriteAtlas.tps</string>
+        <string>D:/game projects/crown/crown/crown/Content/tiles/texturePackerSpriteAtlas.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">

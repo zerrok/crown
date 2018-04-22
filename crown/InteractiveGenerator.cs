@@ -2,8 +2,6 @@
 using crown.Terrain;
 using static crown.Game1;
 using Microsoft.Xna.Framework;
-using System;
-using System.Linq;
 
 namespace crown {
     public class InteractiveGenerator {
