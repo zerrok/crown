@@ -23,10 +23,10 @@ namespace crown {
                         BuildTownHall(tile);
                     }
                     if (mouseAction == MouseAction.HOUSE) {
-                        BuildHouse(tile);
+                        BuildSmallBuilding(tile, Building.Type.HOUSE);
                     }
                     if (mouseAction == MouseAction.ROAD) {
-                        BuildRoad(tile);
+                        BuildRoad(tile, false);
                     }
                     // Cancel building when left shift is not pressed
                     if (!Keyboard.GetState().IsKeyDown(Keys.LeftShift)) {
@@ -48,29 +48,34 @@ namespace crown {
                 }
             }
         }
-        public static void BuildRoad(Tile tile) {
-            // TODO: Straßen dürfen auch nur neben Straßen gebaut werden
+        public static void BuildRoad(Tile tile, bool isFirstRoad) {
+            bool isAllowed = true;
+
             if (tile.IsClear) {
                 Rectangle rect = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize, tileSize);
+
+                if (!isFirstRoad)
+                    isAllowed = IsBesidesRoad(isAllowed, rect);
 
                 foreach (Interactive inter in interactives) {
                     if (inter.Rect.Intersects(rect))
                         return;
                 }
 
-                Road road = new Road(new Vector2(tile.Rect.X, tile.Rect.Y), rect);
+                if (isAllowed) {
+                    Road road = new Road(new Vector2(tile.Rect.X, tile.Rect.Y), rect);
 
-                // Use standard road texture
-                SpriteFrame spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetHori);
+                    // Use standard road texture
+                    SpriteFrame spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetHori);
 
-                // When everything is set and done we just add the new road
-                road.SpriteFrame = spriteFrame;
-                roads[tile.Rect.X / tileSize, tile.Rect.Y / tileSize] = road;
-                tile.IsClear = false;
+                    // When everything is set and done we just add the new road
+                    road.SpriteFrame = spriteFrame;
+                    roads[tile.Rect.X / tileSize, tile.Rect.Y / tileSize] = road;
+                    tile.IsClear = false;
 
-                ReplaceRoads(tile, spriteFrame);
+                    ReplaceRoads(tile, spriteFrame);
+                }
             }
-
         }
 
         public static void BuildTownHall(Tile tile) {
@@ -86,6 +91,8 @@ namespace crown {
                 && tileMap[tilePosX, tile.Rect.Y / tileSize].IsClear
                 && tileMap[tilePosX, tilePosY].IsClear
                 && tileMap[tile.Rect.X / tileSize, tilePosY].IsClear
+                && tileMap[tile.Rect.X / tileSize, tilePosY + 1].IsClear
+                && tileMap[tilePosX, tilePosY + 1].IsClear
                 && isAllowed
                 && tile.IsClear) {
                 mechanics.Buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Townhall)
@@ -99,12 +106,16 @@ namespace crown {
                 tileMap[tile.Rect.X / tileSize, tilePosY].IsClear = false;
                 tile.IsClear = false;
 
+                // Add the first road pieces
+                BuildRoad(tileMap[tile.Rect.X / tileSize, tilePosY + 1], true);
+                BuildRoad(tileMap[tilePosX, tilePosY + 1], true);
+
                 // Unlocks the first menu tier
                 MenuBuilder.MenuTierOne();
             }
         }
 
-        public static void BuildHouse(Tile tile) {
+        public static void BuildSmallBuilding(Tile tile, Building.Type type) {
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, 64, 64);
 
@@ -117,7 +128,7 @@ namespace crown {
                 mechanics.Buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House)
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
                                       , rectangle
-                                      , Building.Type.HOUSE));
+                                      , type));
                 tile.IsClear = false;
             }
         }
