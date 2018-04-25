@@ -15,7 +15,7 @@ namespace crown {
             for (int x = startCol; x < endCol && x < tileMap.GetUpperBound(0); x++)
                 for (int y = startRow; y < endRow && y < tileMap.GetUpperBound(1); y++) {
                     // Render coords are tile coords times tilesize 
-                    int yPos = tileMap[x, y].Type != TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1 ? y * tileSize : y * tileSize - (2 * tileSize);
+                    int yPos = tileMap[x, y].Type != TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1 ? y * tileSize : y * tileSize - tileSize;
                     int xPos = x * tileSize;
                     spriteRender.Draw(mapTileSheet.Sprite(tileMap[x, y].Type), new Vector2(xPos, yPos));
                 }
