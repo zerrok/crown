@@ -13,7 +13,7 @@ namespace crown.Terrain {
 
             InitializeMap(tileMap);
             // Stone
-            GeneratorParameters stoneParameters = new GeneratorParameters(220, 950, 10, 15);
+            GeneratorParameters stoneParameters = new GeneratorParameters(220, 950, 20, 25);
             const string stone1Texture = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Stone1;
             string[] forbiddenForStone = { stone1Texture };
             PutTerrainOnMap(tileMap, stoneParameters, stone1Texture, forbiddenForStone);

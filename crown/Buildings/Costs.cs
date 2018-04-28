@@ -1,7 +1,5 @@
-﻿namespace crown
-{
-    public class Costs
-    {
+﻿namespace crown {
+    public class Costs {
         int stone;
         int wood;
         int gold;
@@ -9,8 +7,7 @@
         int population;
         int food;
 
-        public Costs(int stone, int wood, int gold, int workers, int population, int food)
-        {
+        public Costs(int stone, int wood, int gold, int workers, int population, int food) {
             this.stone = stone;
             this.wood = wood;
             this.gold = gold;

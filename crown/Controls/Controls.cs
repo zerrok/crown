@@ -4,13 +4,10 @@ using Microsoft.Xna.Framework.Input;
 using TexturePackerLoader;
 using static crown.Game1;
 
-namespace crown
-{
-    class Controls
-    {
+namespace crown {
+    class Controls {
 
-        public static MouseAction BuildStuff(MouseAction mouseAction, Vector2 mousePositionInWorld)
-        {
+        public static MouseAction BuildStuff(MouseAction mouseAction, Vector2 mousePositionInWorld) {
             foreach (Tile tile in tileMap)
                 if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
                     if (mouseAction == MouseAction.FARMLAND) {
@@ -19,43 +16,38 @@ namespace crown
                     if (mouseAction == MouseAction.TOWNHALL) {
                         // Only allowed to build it once
                         foreach (Building building in mechanics.Buildings)
-                            if (building.Type1 == Building.Type.TOWNHALL) {
+                            if (building.Type == Building.BuildingTypes.TOWNHALL) {
                                 mouseAction = MouseAction.NOTHING;
                                 return mouseAction;
                             }
                         BuildTownHall(tile);
+                        mouseAction = MouseAction.NOTHING;
                     }
                     if (mouseAction == MouseAction.HOUSE) {
                         // TODO: Kosten aus XML ziehen
                         Costs costs = new Costs(0, 0, -30, 2, 2, 0);
-                        BuildSmallBuilding(tile, Building.Type.HOUSE, costs);
+                        BuildSmallBuilding(tile, Building.BuildingTypes.HOUSE, costs);
                     }
                     if (mouseAction == MouseAction.ROAD) {
                         BuildRoad(tile, false);
                     }
-                    // Cancel building when left shift is not pressed
-                    if (!Keyboard.GetState().IsKeyDown(Keys.LeftShift)) {
-                        mouseAction = MouseAction.NOTHING;
-                    }
+
                 }
+            mechanics.MaxPop = mechanics.GetMaxPop();
             return mouseAction;
         }
 
-        public static void InteractWithStuff(Vector2 mousePositionInWorld)
-        {
+        public static void InteractWithStuff(Vector2 mousePositionInWorld) {
             foreach (Interactive inter in interactives) {
                 if (inter.Type == Interactive.IntType.TREE) {
                     if (inter.Rect.Contains(mousePositionInWorld)) {
-                        // TODO: Nur selektieren
-                        inter.Health--;
-                        inter.Rect = new Rectangle();
+                        // TODO: selektieren
                         break;
                     }
                 }
             }
         }
-        public static void BuildRoad(Tile tile, bool isFirstRoad)
-        {
+        public static void BuildRoad(Tile tile, bool isFirstRoad) {
             bool isAllowed = true;
 
             if (tile.IsClear) {
@@ -64,12 +56,10 @@ namespace crown
                 if (!isFirstRoad)
                     isAllowed = IsBesidesRoad(isAllowed, rect);
 
-                foreach (Interactive inter in interactives) {
-                    if (inter.Rect.Intersects(rect))
-                        return;
-                }
 
-                if (isAllowed) {
+                if (isAllowed && mechanics.Gold - 5 >= 0) {
+                    RemoveIntersectingTrees(rect);
+
                     Road road = new Road(new Vector2(tile.Rect.X, tile.Rect.Y), rect);
 
                     // Use standard road texture
@@ -88,9 +78,7 @@ namespace crown
             }
         }
 
-        public static void BuildTownHall(Tile tile)
-        {
-            // TODO: Setze eine Reihe Straßen unter der Stadthalle
+        public static void BuildTownHall(Tile tile) {
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, 128, 128);
             int tilePosX = (tile.Rect.X) / tileSize + 1;
@@ -109,7 +97,7 @@ namespace crown
                 mechanics.Buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect)
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
                                       , rectangle
-                                      , Building.Type.TOWNHALL
+                                      , Building.BuildingTypes.TOWNHALL
                                       ));
 
                 // Set tiles underneath to not clear
@@ -124,11 +112,11 @@ namespace crown
 
                 // Unlocks the first menu tier
                 MenuBuilder.MenuTierOne();
+                RemoveIntersectingTrees(rectangle);
             }
         }
 
-        public static void BuildSmallBuilding(Tile tile, Building.Type type, Costs costs)
-        {
+        public static void BuildSmallBuilding(Tile tile, Building.BuildingTypes type, Costs costs) {
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, 64, 64);
 
@@ -155,14 +143,22 @@ namespace crown
                 mechanics.Gold += costs.Gold;
                 mechanics.Stone += costs.Stone;
                 mechanics.Wood += costs.Wood;
-                mechanics.Population += costs.Population;
-                mechanics.Workers += costs.Workers;
                 mechanics.Food += costs.Food;
+
+                RemoveIntersectingTrees(rectangle);
             }
         }
 
-        public static void MakeFarmableLand(Tile[,] tileMap, Tile tile)
-        {
+        private static void RemoveIntersectingTrees(Rectangle rectangle) {
+            foreach (Interactive inter in interactives) {
+                if (inter.Rect.Intersects(rectangle) && inter.Type == Interactive.IntType.TREE) {
+                    inter.Health = 0;
+                    inter.Rect = new Rectangle();
+                }
+            }
+        }
+
+        public static void MakeFarmableLand(Tile[,] tileMap, Tile tile) {
             int tileX = tile.Rect.X / tileSize;
             int tileY = tile.Rect.Y / tileSize;
 
@@ -193,8 +189,7 @@ namespace crown
 
         }
 
-        private static void ReplaceRoads(Tile tile, SpriteFrame spriteFrame)
-        {
+        private static void ReplaceRoads(Tile tile, SpriteFrame spriteFrame) {
             if (roads != null) {
                 foreach (Road road in roads) {
                     if (road != null) {
@@ -264,8 +259,7 @@ namespace crown
             }
         }
 
-        public static void CameraControls(Camera2d cam, float camSpeed)
-        {
+        public static void CameraControls(Camera2d cam, float camSpeed) {
             // Camera Movement
             if (Keyboard.GetState().IsKeyDown(Keys.S)) {
                 cam.Move(new Vector2(0, camSpeed));
@@ -280,33 +274,32 @@ namespace crown
                 cam.Move(new Vector2(camSpeed, 0));
             }
             if (Keyboard.GetState().IsKeyDown(Keys.N)) {
-                if (cam.Zoom >= 0.5f)
-                    cam.Zoom -= 0.05f;
-                if (cam.Zoom < 0.5f)
-                    cam.Zoom = 0.5f;
+                if (cam.Zoom >= 0.6f)
+                    cam.Zoom -= 0.01f;
+                if (cam.Zoom < 0.6f)
+                    cam.Zoom = 0.6f;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.M)) {
                 if (cam.Zoom <= 3f)
-                    cam.Zoom += 0.05f;
+                    cam.Zoom += 0.01f;
             }
         }
 
-        private static bool CheckIntersections(bool isAllowed, Rectangle rectangle)
-        {
+        private static bool CheckIntersections(bool isAllowed, Rectangle rectangle) {
             foreach (Building building in mechanics.Buildings) {
                 if (building.Rect.Intersects(rectangle))
                     isAllowed = false;
             }
             foreach (Interactive inter in interactives) {
-                if (inter.Rect.Intersects(rectangle))
+                // Trees may be intersected and will be removed
+                if (inter.Rect.Intersects(rectangle) && inter.Type != Interactive.IntType.TREE)
                     isAllowed = false;
             }
 
             return isAllowed;
         }
 
-        private static bool IsBesidesRoad(bool isAllowed, Rectangle rectangle)
-        {
+        private static bool IsBesidesRoad(bool isAllowed, Rectangle rectangle) {
             int xPos = rectangle.X / tileSize;
             int yPos = rectangle.Y / tileSize;
 
@@ -321,8 +314,7 @@ namespace crown
             return isAllowed;
         }
 
-        private static bool RoadsBuilt(bool isAllowed)
-        {
+        private static bool RoadsBuilt(bool isAllowed) {
             // Everything except the town hall has to be connected to roads
             // So check if there even are roads
             bool foundRoad = false;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using TexturePackerLoader;
 
 namespace crown {
     public class Interactive {
@@ -13,9 +14,10 @@ namespace crown {
         int worth;
         Rectangle rect;
         Vector2 coords;
+        SpriteFrame spriteFrame;
         bool isSelected;
 
-        public Interactive(IntType type, string text, int health, int worth, Rectangle rect, Vector2 coords) {
+        public Interactive(IntType type, string text, int health, int worth, Rectangle rect, Vector2 coords, SpriteFrame spriteFrame) {
             this.type = type;
             this.text = text;
             this.health = health;
@@ -23,6 +25,7 @@ namespace crown {
             this.rect = rect;
             this.coords = coords;
             isSelected = false;
+            this.spriteFrame = spriteFrame;
         }
 
         public string Text {
@@ -93,6 +96,11 @@ namespace crown {
             set {
                 isSelected = value;
             }
+        }
+
+        public SpriteFrame SpriteFrame {
+            get => spriteFrame;
+            set => spriteFrame = value;
         }
     }
 }

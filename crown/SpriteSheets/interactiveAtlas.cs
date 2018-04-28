@@ -4,7 +4,7 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:f725fb783d1d53f4394888202025e5e1:98f4992d48deabd703090db08c136b2e:e54b12530905a7f2f23d43a9b4c7e53a$
+ * $TexturePacker:SmartUpdate:92b8fcb700e3402785f436af1b7264f1:14454e6ec8e2759e6eb3fdb57921b6f9:e54b12530905a7f2f23d43a9b4c7e53a$
  *
  */
 namespace TexturePackerMonoGameDefinitions
@@ -12,5 +12,7 @@ namespace TexturePackerMonoGameDefinitions
 	public class interactiveAtlas
 	{
 		public const string Tree = "tree";
+		public const string Tree2 = "tree2";
+		public const string Tree3 = "tree3";
 	}
 }

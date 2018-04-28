@@ -30,18 +30,33 @@ namespace crown {
                 int randomX = random.Next(0, tileMap.GetUpperBound(0));
                 int randomY = random.Next(0, tileMap.GetUpperBound(1));
 
+                string sprite = getRandomTreeSprite();
+
                 if (tileMap[randomX, randomY].IsClear) {
                     Interactive tree = new Interactive(Interactive.IntType.TREE
                                                      , "Tree"
                                                      , 3
                                                      , 1
                                                      , new Rectangle(randomX * tileSize, randomY * tileSize, 16, 32)
-                                                     , new Vector2(randomX * tileSize, randomY * tileSize));
+                                                     , new Vector2(randomX * tileSize, randomY * tileSize)
+                                                     , interactiveTileSheet.Sprite(sprite));
                     interactives.Add(tree);
 
                     treeSources--;
                 }
             }
+        }
+
+        private static string getRandomTreeSprite() {
+            int randTree = random.Next(1, 4);
+            if (randTree == 1)
+                return TexturePackerMonoGameDefinitions.interactiveAtlas.Tree;
+            else if (randTree == 2)
+                return TexturePackerMonoGameDefinitions.interactiveAtlas.Tree2;
+            else if (randTree == 3)
+                return TexturePackerMonoGameDefinitions.interactiveAtlas.Tree3;
+            else
+                return "";
         }
 
         private static void GrowForest(Tile[,] tileMap) {
@@ -100,12 +115,15 @@ namespace crown {
                                         int randX = random.Next(-32, 32);
                                         int randY = random.Next(-32, 32);
 
+                                        string sprite = getRandomTreeSprite();
+
                                         Interactive tree = new Interactive(Interactive.IntType.TREE
                                                                          , "Tree"
                                                                          , 1
                                                                          , 1
                                                                          , new Rectangle(xTile * tileSize + randX, yTile * tileSize + randY, tileSize / 2, tileSize)
-                                                                         , new Vector2(xTile * tileSize + randX, yTile * tileSize + randY));
+                                                                         , new Vector2(xTile * tileSize + randX, yTile * tileSize + randY)
+                                                                         , interactiveTileSheet.Sprite(sprite));
                                         newInteractives.Add(tree);
                                     }
                                 }
