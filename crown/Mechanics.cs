@@ -55,9 +55,9 @@ namespace crown {
                 foodTick++;
                 if (foodTick > 50) {
                     foodTick = 0;
-                    food -= population / 2 < 0 ? 0 : population / 2;
+                    food -= (food - population / 2) < 0 ? 0 : population / 2;
 
-                    // TODO: Wenn food < 0 dann sterben erst arbeitslose, dann worker
+                    // TODO: Wenn food <= 0 dann sterben erst arbeitslose, dann worker
                 }
 
                 // People gotta pay taxes
@@ -73,31 +73,31 @@ namespace crown {
         private void UpdateBuildings() {
             // Building updates
             foreach (Building bld in buildings) {
-                if (bld.BuildingTick < 5) {
+                if (bld.BuildingTick < 5)
                     bld.BuildingTick++;
 
-                    if (bld.BuildingTick >= 5) {
-                        if (bld.BuildingState <= 3) {
-                            // Go through the different build phases
-                            UpdateBuildingSprites(bld);
-                        }
-                        if (bld.BuildingState == 4) {
-                            if (bld.Type == Building.BuildingTypes.HOUSE) {
-                                // People move in and are ready to work
-                                InitializeHouse(bld);
-                            }
-                            // Townhall can store stuff now and brings initial food
-                            if (bld.Type == Building.BuildingTypes.TOWNHALL) {
-                                InitializeTownhall();
-                            }
-                            bld.BuildingState = 5;
-                        }
-                        if (bld.BuildingState == 5) {
-                            // Do something building related, 5 is the final state
-                        }
-                        bld.BuildingTick = 0;
+                if (bld.BuildingTick >= 5) {
+                    if (bld.BuildingState <= 3) {
+                        // Go through the different build phases
+                        UpdateBuildingSprites(bld);
                     }
+                    if (bld.BuildingState == 4) {
+                        if (bld.Type == Building.BuildingTypes.HOUSE) {
+                            // People move in and are ready to work
+                            InitializeHouse(bld);
+                        }
+                        // Townhall can store stuff now and brings initial food
+                        if (bld.Type == Building.BuildingTypes.TOWNHALL) {
+                            InitializeTownhall();
+                        }
+                        bld.BuildingState = 5;
+                    }
+                    if (bld.BuildingState == 5) {
+                        // Do something building related, 5 is the final state
+                    }
+                    bld.BuildingTick = 0;
                 }
+
             }
         }
 

@@ -1,6 +1,8 @@
 ﻿using crown.Terrain;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
+using System.Linq;
 using TexturePackerLoader;
 using static crown.Game1;
 
@@ -33,6 +35,14 @@ namespace crown {
                     }
 
                 }
+
+            // Sort buildings for rendering later
+            IOrderedEnumerable<Building> sortedBuildings = mechanics.Buildings.OrderBy(building => building.Position.Y);
+            mechanics.Buildings = new List<Building>();
+            foreach (Building building in sortedBuildings) {
+                mechanics.Buildings.Add(building);
+            }
+
             mechanics.MaxPop = mechanics.GetMaxPop();
             return mouseAction;
         }

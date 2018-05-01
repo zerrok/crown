@@ -38,7 +38,12 @@ namespace crown {
 
         public static void DrawBuildings(SpriteRender spriteRender, List<Building> buildings) {
             foreach (Building building in buildings) {
-                spriteRender.Draw(building.SpriteFrame, building.Position);
+                int offset = 0;
+                if (building.SpriteFrame != buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.SmallSelect)
+                 && building.SpriteFrame != buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect))
+                    offset = tileSize / 4;
+
+                spriteRender.Draw(building.SpriteFrame, new Vector2(building.Position.X, building.Position.Y - offset));
             }
         }
 
