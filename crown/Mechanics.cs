@@ -23,7 +23,7 @@ namespace crown {
         int taxTick;
 
         public Mechanics() {
-            gold = 500;
+            gold = 5000;
             wood = 0;
             stone = 0;
             population = 0;
@@ -85,8 +85,9 @@ namespace crown {
                             if (bld.Type == Building.BuildingTypes.HOUSE) {
                                 // People move in and are ready to work
                                 InitializeHouse(bld);
-
-                                // Townhall can store stuff now and brings initial food
+                            }
+                            // Townhall can store stuff now and brings initial food
+                            if (bld.Type == Building.BuildingTypes.HOUSE) {
                                 InitializeTownhall();
                             }
                             bld.BuildingState = 5;
