@@ -87,7 +87,7 @@ namespace crown {
                                 InitializeHouse(bld);
                             }
                             // Townhall can store stuff now and brings initial food
-                            if (bld.Type == Building.BuildingTypes.HOUSE) {
+                            if (bld.Type == Building.BuildingTypes.TOWNHALL) {
                                 InitializeTownhall();
                             }
                             bld.BuildingState = 5;
