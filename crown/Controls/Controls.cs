@@ -90,7 +90,7 @@ namespace crown {
 
         public static void BuildTownHall(Tile tile) {
             bool isAllowed = true;
-            Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, 128, 128);
+            Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize * 2, tileSize * 2);
             int tilePosX = (tile.Rect.X) / tileSize + 1;
             int tilePosY = (tile.Rect.Y) / tileSize + 1;
 
@@ -128,7 +128,7 @@ namespace crown {
 
         public static void BuildSmallBuilding(Tile tile, Building.BuildingTypes type, Costs costs) {
             bool isAllowed = true;
-            Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, 64, 64);
+            Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize, tileSize);
 
             isAllowed = CheckIntersections(isAllowed, rectangle);
             isAllowed = IsBesidesRoad(isAllowed, rectangle);
