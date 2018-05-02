@@ -284,13 +284,13 @@ namespace crown {
                 cam.Move(new Vector2(camSpeed, 0));
             }
             if (Keyboard.GetState().IsKeyDown(Keys.N)) {
-                if (cam.Zoom >= 0.6f)
+                if (cam.Zoom >= 0.2f)
                     cam.Zoom -= 0.01f;
-                if (cam.Zoom < 0.6f)
-                    cam.Zoom = 0.6f;
+                if (cam.Zoom < 0.2f)
+                    cam.Zoom = 0.2f;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.M)) {
-                if (cam.Zoom <= 3f)
+                if (cam.Zoom <= 2f)
                     cam.Zoom += 0.01f;
             }
         }

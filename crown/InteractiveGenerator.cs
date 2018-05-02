@@ -112,8 +112,8 @@ namespace crown {
                                     // To shift the trees by a random amount of pixels
                                     // Do it twice or thrice to spawn more trees in one spot
                                     for (int i = 0; i < random.Next(minTrees, maxTrees); i++) {
-                                        int randX = random.Next(-32, 32);
-                                        int randY = random.Next(-32, 32);
+                                        int randX = random.Next(-64, 64);
+                                        int randY = random.Next(-64, 64);
 
                                         string sprite = getRandomTreeSprite();
 

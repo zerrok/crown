@@ -84,11 +84,12 @@ namespace crown {
             var width = graphics.GraphicsDevice.Viewport.Width;
             var height = graphics.GraphicsDevice.Viewport.Height;
             Rectangle renderTangle = new Rectangle((int)Math.Ceiling(cam.Pos.X) - width, (int)Math.Ceiling(cam.Pos.Y) - height, width * 2, height * 2);
-
-            startCol = renderTangle.X / tileSize - 3 < 1 ? 0 : renderTangle.X / tileSize - 3;
-            endCol = (renderTangle.X + renderTangle.Width) / tileSize + 3;
-            startRow = renderTangle.Y / tileSize - 3 < 0 ? 0 : renderTangle.Y / tileSize - 3;
-            endRow = (renderTangle.Y + renderTangle.Height) / tileSize + 3;
+            // Offset of tiles rendered off screen (when zoom == 1f)
+            const int offset = 24;
+            startCol = renderTangle.X / tileSize - offset < 1 ? 0 : renderTangle.X / tileSize - offset;
+            endCol = (renderTangle.X + renderTangle.Width) / tileSize + offset;
+            startRow = renderTangle.Y / tileSize - offset < 0 ? 0 : renderTangle.Y / tileSize - offset;
+            endRow = (renderTangle.Y + renderTangle.Height) / tileSize + offset;
         }
 
         internal static void DrawInteractives(SpriteRender spriteRender, List<Interactive> interactives) {
