@@ -40,6 +40,9 @@
   <ItemGroup>
     <Compile Include="Buildings\Building.cs" />
     <Compile Include="Buildings\Costs.cs" />
+    <Compile Include="Buildings\Farm.cs" />
+    <Compile Include="Buildings\Townhall.cs" />
+    <Compile Include="Buildings\House.cs" />
     <Compile Include="camera2D.cs" />
     <Compile Include="Controls\Controls.cs" />
     <Compile Include="Controls\Menu.cs" />

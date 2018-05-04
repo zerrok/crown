@@ -1,4 +1,5 @@
-﻿using crown.Terrain;
+﻿using crown.Buildings;
+using crown.Terrain;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -112,7 +113,7 @@ namespace crown {
                 && tileMap[tilePosX, tilePosY + 1].IsClear
                 && isAllowed
                 && tile.IsClear) {
-                mechanics.Buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect)
+                mechanics.Buildings.Add(new Townhall(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect)
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
                                       , rectangle
                                       , Building.BuildingTypes.TOWNHALL
@@ -149,7 +150,7 @@ namespace crown {
                 && tileMap[tile.Rect.X / tileSize, tilePosY].IsClear
                 && isAllowed
                 && tile.IsClear) {
-                mechanics.Buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect)
+                mechanics.Buildings.Add(GetLargeBuilding(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect)
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
                                       , rectangle
                                       , type
@@ -167,7 +168,6 @@ namespace crown {
             }
         }
 
-
         public static void BuildSmallBuilding(Tile tile, Building.BuildingTypes type, Costs costs) {
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize, tileSize);
@@ -179,7 +179,7 @@ namespace crown {
             if (tile.Type.Contains("grass")
               && isAllowed
               && tile.IsClear == true) {
-                mechanics.Buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.SmallSelect)
+                mechanics.Buildings.Add(GetSmallBuilding(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.SmallSelect)
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
                                       , rectangle
                                       , type));
@@ -189,6 +189,20 @@ namespace crown {
 
                 RemoveIntersectingTrees(rectangle);
             }
+        }
+
+        private static Building GetLargeBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Building.BuildingTypes type) {
+            if (type == Building.BuildingTypes.FARM)
+                return new Farm(spriteFrame, pos, rect, type);
+
+            return null;
+        }
+
+        private static Building GetSmallBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Building.BuildingTypes type) {
+            if (type == Building.BuildingTypes.HOUSE)
+                return new House(spriteFrame, pos, rect, type);
+
+            return null;
         }
 
         private static void CalculateCosts(Costs costs) {

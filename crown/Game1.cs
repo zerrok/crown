@@ -14,7 +14,7 @@ namespace crown {
 
         // player camera
         public static Camera2d cam = new Camera2d();
-        public float camSpeed = 8f;
+        public float camSpeed = 16f;
 
         // Textures
         public static SpriteRender spriteRender;
