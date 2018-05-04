@@ -34,11 +34,13 @@ namespace crown {
         // Seed for Random Generation
         public static Random random = new Random();
 
+        public static Building selectedBuilding;
+
         SpriteBatch spriteBatch;
 
         // Which action is the mouse currently doing
         public enum MouseAction {
-            FARMLAND, HOUSE, TOWNHALL, NOTHING, ROAD
+            FARM, HOUSE, TOWNHALL, NOTHING, ROAD
         }
 
         public MouseAction mouseAction = MouseAction.NOTHING;
@@ -75,7 +77,7 @@ namespace crown {
             tileMap = new Tile[1, 1];
             mechanics = new Mechanics();
 
-            tileSize = (int)mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Dirt1).Size.X;
+            tileSize = (int)mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1).Size.X;
         }
 
 
@@ -150,8 +152,10 @@ namespace crown {
                 MouseControls(mouseState);
 
             // Cancel current action
-            if (mouseState.RightButton == ButtonState.Pressed)
+            if (mouseState.RightButton == ButtonState.Pressed) {
                 mouseAction = MouseAction.NOTHING;
+                selectedBuilding = null;
+            }
 
             oldState = mouseState;
 
@@ -193,8 +197,8 @@ namespace crown {
                         mouseAction = MouseAction.ROAD;
                     else if (item.Type == Menu.MenuType.BUTTON_HOUSE)
                         mouseAction = MouseAction.HOUSE;
-                    else if (item.Type == Menu.MenuType.BUTTON_FARMLAND)
-                        mouseAction = MouseAction.FARMLAND;
+                    else if (item.Type == Menu.MenuType.BUTTON_FARM)
+                        mouseAction = MouseAction.FARM;
                 }
         }
 
@@ -221,11 +225,23 @@ namespace crown {
             spriteBatch.Draw(pixel, new Rectangle(0, 0, 450, 150), Color.SlateGray);
             spriteBatch.DrawString(font, "Population: " + mechanics.Population + " / " + mechanics.MaxPop, new Vector2(16, 16), Color.White);
             spriteBatch.DrawString(font, "Available Workers: " + mechanics.Workers, new Vector2(16, 32), Color.White);
-            spriteBatch.DrawString(font, "Gold: " + mechanics.Gold, new Vector2(16, 48), Color.White);
-            spriteBatch.DrawString(font, "Wood: " + mechanics.Wood + " / " + mechanics.WoodStorage, new Vector2(16, 64), Color.White);
-            spriteBatch.DrawString(font, "Stone: " + mechanics.Stone + " / " + mechanics.StoneStorage, new Vector2(16, 80), Color.White);
-            spriteBatch.DrawString(font, "Food: " + mechanics.Food + " / " + mechanics.FoodStorage, new Vector2(16, 96), Color.White);
+            spriteBatch.DrawString(font, "Gold: " + mechanics.Gold + "   " + mechanics.GoldDelta + " / tick", new Vector2(16, 48), Color.White);
+            spriteBatch.DrawString(font, "Wood: " + mechanics.Wood + " / " + mechanics.WoodStorage + "   " + mechanics.WoodDelta + " / tick", new Vector2(16, 64), Color.White);
+            spriteBatch.DrawString(font, "Stone: " + mechanics.Stone + " / " + mechanics.StoneStorage + "   " + mechanics.StoneDelta + " / tick", new Vector2(16, 80), Color.White);
+            spriteBatch.DrawString(font, "Food: " + mechanics.Food + " / " + mechanics.FoodStorage + "   " + mechanics.FoodDelta + " / tick", new Vector2(16, 96), Color.White);
             spriteBatch.End();
+
+            // Draw infos for selection
+            if (selectedBuilding != null) {
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
+                spriteBatch.Draw(pixel, new Rectangle(0, 175, 450, 150), Color.SlateGray);
+                spriteBatch.DrawString(font, selectedBuilding.Type.ToString(), new Vector2(16, 191), Color.White);
+                if (selectedBuilding.Type == Building.BuildingTypes.HOUSE)
+                    spriteBatch.DrawString(font, "Inhabitants: " + selectedBuilding.Inhabitants, new Vector2(16, 206), Color.White);
+                if (selectedBuilding.Type == Building.BuildingTypes.FARM)
+                    spriteBatch.DrawString(font, "Workers: " + selectedBuilding.Inhabitants, new Vector2(16, 206), Color.White);
+                spriteBatch.End();
+            }
 
             base.Draw(gameTime);
         }

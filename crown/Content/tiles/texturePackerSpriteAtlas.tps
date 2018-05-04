@@ -204,22 +204,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">single/dirt1.png</key>
-            <key type="filename">single/dirtGrassAll.png</key>
-            <key type="filename">single/dirtGrassDown.png</key>
-            <key type="filename">single/dirtGrassDownLeft.png</key>
-            <key type="filename">single/dirtGrassDownLeftRight.png</key>
-            <key type="filename">single/dirtGrassDownRight.png</key>
-            <key type="filename">single/dirtGrassLeft.png</key>
-            <key type="filename">single/dirtGrassLeftRight.png</key>
-            <key type="filename">single/dirtGrassRight.png</key>
-            <key type="filename">single/dirtGrassTop.png</key>
-            <key type="filename">single/dirtGrassTopDown.png</key>
-            <key type="filename">single/dirtGrassTopDownLeft.png</key>
-            <key type="filename">single/dirtGrassTopDownRight.png</key>
-            <key type="filename">single/dirtGrassTopLeft.png</key>
-            <key type="filename">single/dirtGrassTopLeftRight.png</key>
-            <key type="filename">single/dirtGrassTopRight.png</key>
             <key type="filename">single/grass1.png</key>
             <key type="filename">single/grassStoneLeft.png</key>
             <key type="filename">single/grassStoneRight.png</key>
@@ -304,22 +288,6 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>single/dirt1.png</filename>
-            <filename>single/dirtGrassAll.png</filename>
-            <filename>single/dirtGrassDown.png</filename>
-            <filename>single/dirtGrassDownLeft.png</filename>
-            <filename>single/dirtGrassDownLeftRight.png</filename>
-            <filename>single/dirtGrassDownRight.png</filename>
-            <filename>single/dirtGrassLeft.png</filename>
-            <filename>single/dirtGrassLeftRight.png</filename>
-            <filename>single/dirtGrassRight.png</filename>
-            <filename>single/dirtGrassTop.png</filename>
-            <filename>single/dirtGrassTopDown.png</filename>
-            <filename>single/dirtGrassTopDownLeft.png</filename>
-            <filename>single/dirtGrassTopDownRight.png</filename>
-            <filename>single/dirtGrassTopLeft.png</filename>
-            <filename>single/dirtGrassTopLeftRight.png</filename>
-            <filename>single/dirtGrassTopRight.png</filename>
             <filename>single/grass1.png</filename>
             <filename>single/grassStoneLeft.png</filename>
             <filename>single/grassStoneRight.png</filename>

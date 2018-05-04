@@ -4,13 +4,17 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:3146eb2302d806d9b80ca2521437d8df:6d4cfdeea5791b6369ec8996263d4ea9:905072b72ea92acf8fa5b0216a681f3c$
+ * $TexturePacker:SmartUpdate:5124c1077943ca57b1a39ca52c606898:306f62bf7c049b1e188cff0ffbb32943:905072b72ea92acf8fa5b0216a681f3c$
  *
  */
 namespace TexturePackerMonoGameDefinitions
 {
 	public class buildingAtlas
 	{
+		public const string Farm0 = "farm0";
+		public const string Farm1 = "farm1";
+		public const string Farm2 = "farm2";
+		public const string Farm4 = "farm4";
 		public const string House = "house";
 		public const string House0 = "house0";
 		public const string House1 = "house1";

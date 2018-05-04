@@ -10,8 +10,12 @@ namespace crown {
         Rectangle rect;
         int inhabitants;
 
+        int resourcesProduced;
+        int goldUpkeep;
+
         int buildingState;
         int buildingTick;
+        int actionTick;
 
         public enum BuildingTypes {
             TOWNHALL,
@@ -35,6 +39,111 @@ namespace crown {
             if (type == BuildingTypes.TOWNHALL)
                 BuildingState = 2;
             BuildingTick = 0;
+            actionTick = 0;
+            resourcesProduced = 0;
+            goldUpkeep = 0;
+        }
+
+        public void Updates() {
+            if (BuildingTick < 5)
+                BuildingTick++;
+
+            if (BuildingTick >= 5) {
+                if (BuildingState <= 3) {
+                    // Go through the different build phases for every type
+                    UpdateBuildingSprites();
+                }
+                if (Type == BuildingTypes.HOUSE) {
+                    UpdateHouse();
+                }
+                if (Type == Building.BuildingTypes.TOWNHALL) {
+                    UpdateTownhall();
+                }
+                if (Type == Building.BuildingTypes.FARM) {
+                    UpdateFarm();
+                }
+                BuildingTick = 0;
+            }
+        }
+
+        private void UpdateFarm() {
+            if (BuildingState == 4) {
+                InitializeFarm();
+                BuildingState = 5;
+            } else if (BuildingState == 5) {
+
+                // Update resources
+                if (ActionTick > 5) {
+                    // Food
+                    if (mechanics.Food + ResourcesProduced < mechanics.FoodStorage)
+                        mechanics.Food += ResourcesProduced;
+                    else {
+                        mechanics.Food = mechanics.FoodStorage;
+                    }
+                    // Gold
+                    mechanics.Gold -= GoldUpkeep;
+
+                    ActionTick = 0;
+                }
+
+                ActionTick++;
+            }
+        }
+
+        private void UpdateHouse() {
+            if (BuildingState == 4) {
+                // People move in and are ready to work
+                InitializeHouse();
+                BuildingState = 5;
+            } else if (BuildingState == 5) {
+
+                // Update resources
+                if (ActionTick > 5) {
+                    mechanics.Food -= Inhabitants / 2;
+                    mechanics.Gold += 4;
+                    ActionTick = 0;
+                }
+
+                ActionTick++;
+            }
+        }
+
+        private void UpdateTownhall() {
+            if (BuildingState == 4) {
+                InitializeTownhall();
+                BuildingState = 5;
+            }
+        }
+
+        private void InitializeHouse() {
+            Inhabitants = 2;
+            mechanics.Population += Inhabitants;
+            mechanics.Workers += Inhabitants;
+            mechanics.GoldDelta += 4;
+            mechanics.FoodDelta -= Inhabitants / 2;
+        }
+
+        private void InitializeFarm() {
+            Inhabitants = 5;
+            ResourcesProduced = Inhabitants * 3;
+            GoldUpkeep = 10;
+            mechanics.Workers -= 5;
+            mechanics.GoldDelta -= GoldUpkeep;
+            mechanics.FoodDelta += ResourcesProduced;
+        }
+
+        private void InitializeTownhall() {
+            mechanics.WoodStorage = 200;
+            mechanics.StoneStorage = 200;
+            mechanics.FoodStorage = 1000;
+            mechanics.Wood = 200;
+            mechanics.Food = 300;
+        }
+
+        private void UpdateBuildingSprites() {
+            // For gradually building buildings
+            UpdateSprite();
+            BuildingState++;
         }
 
         public void UpdateSprite() {
@@ -43,20 +152,28 @@ namespace crown {
                     SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House0);
                 if (Type == BuildingTypes.TOWNHALL)
                     SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect);
+                if (Type == BuildingTypes.FARM)
+                    SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Farm0);
             }
             if (BuildingState == 1) {
                 if (Type == BuildingTypes.HOUSE)
                     SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House1);
                 if (Type == BuildingTypes.TOWNHALL)
                     SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect);
+                if (Type == BuildingTypes.FARM)
+                    SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Farm1);
             }
             if (BuildingState == 2) {
                 if (Type == BuildingTypes.HOUSE)
                     SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House2);
                 if (Type == BuildingTypes.TOWNHALL)
                     SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect);
+                if (Type == BuildingTypes.FARM)
+                    SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Farm2);
             }
             if (BuildingState == 3) {
+                if (Type == BuildingTypes.FARM)
+                    SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Farm4);
                 if (Type == BuildingTypes.HOUSE) {
                     int randomHouse = random.Next(1, 7);
                     if (randomHouse == 1)
@@ -105,5 +222,8 @@ namespace crown {
             get => type;
             set => type = value;
         }
+        public int ActionTick { get => actionTick; set => actionTick = value; }
+        public int ResourcesProduced { get => resourcesProduced; set => resourcesProduced = value; }
+        public int GoldUpkeep { get => goldUpkeep; set => goldUpkeep = value; }
     }
 }

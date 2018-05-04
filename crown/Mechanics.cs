@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace crown {
 
@@ -15,19 +16,26 @@ namespace crown {
         int foodStorage;
         int woodStorage;
 
+        int foodDelta;
+        int goldDelta;
+        int woodDelta;
+        int stoneDelta;
+
         int workers;
         float doomClock;
         List<Building> buildings;
 
-        int foodTick;
-        int taxTick;
-
         public Mechanics() {
-            gold = 5000;
+            gold = 1000;
             wood = 0;
             stone = 0;
             population = 0;
             food = 0;
+
+            foodDelta = 0;
+            goldDelta = 0;
+            woodDelta = 0;
+            stoneDelta = 0;
 
             StoneStorage = 0;
             FoodStorage = 0;
@@ -36,9 +44,6 @@ namespace crown {
             doomClock = 0;
             buildings = new List<Building>();
             workers = 0;
-
-            foodTick = 0;
-            taxTick = 0;
 
             maxPop = 0;
         }
@@ -49,64 +54,18 @@ namespace crown {
 
             // Things are happening every doomlock tick
             if (DoomClock > 1f) {
-                UpdateBuildings();
-
-                // People gotta eat
-                foodTick++;
-                if (foodTick > 50) {
-                    foodTick = 0;
-                    food -= (food - population / 2) < 0 ? 0 : population / 2;
-
-                    // TODO: Wenn food <= 0 dann sterben erst arbeitslose, dann worker
-                }
-
-                // People gotta pay taxes
-                taxTick++;
-                if (taxTick > 25) {
-                    taxTick = 0;
-                    gold += population;
-                }
+                BuildingUpdates();
                 DoomClock = 0f;
             }
         }
 
-        private void UpdateBuildings() {
+        private void BuildingUpdates() {
             // Building updates
             foreach (Building bld in buildings) {
-                if (bld.BuildingTick < 5)
-                    bld.BuildingTick++;
-
-                if (bld.BuildingTick >= 5) {
-                    if (bld.BuildingState <= 3) {
-                        // Go through the different build phases
-                        UpdateBuildingSprites(bld);
-                    }
-                    if (bld.BuildingState == 4) {
-                        if (bld.Type == Building.BuildingTypes.HOUSE) {
-                            // People move in and are ready to work
-                            InitializeHouse(bld);
-                        }
-                        // Townhall can store stuff now and brings initial food
-                        if (bld.Type == Building.BuildingTypes.TOWNHALL) {
-                            InitializeTownhall();
-                        }
-                        bld.BuildingState = 5;
-                    }
-                    if (bld.BuildingState == 5) {
-                        // Do something building related, 5 is the final state
-                    }
-                    bld.BuildingTick = 0;
-                }
-
+                bld.Updates();
             }
         }
 
-        private void InitializeTownhall() {
-            woodStorage = 200;
-            stoneStorage = 200;
-            foodStorage = 1000;
-            food = 300;
-        }
 
         public int GetMaxPop() {
             int count = 0;
@@ -115,18 +74,6 @@ namespace crown {
                     count++;
             }
             return count * 2;
-        }
-
-        private void InitializeHouse(Building bld) {
-            bld.Inhabitants = 2;
-            population += bld.Inhabitants;
-            workers += bld.Inhabitants;
-        }
-
-        private void UpdateBuildingSprites(Building bld) {
-            // For gradually building buildings
-            bld.UpdateSprite();
-            bld.BuildingState++;
         }
 
         public int Gold {
@@ -153,9 +100,6 @@ namespace crown {
         public int Workers {
             get => workers; set => workers = value;
         }
-        public int FoodTick {
-            get => foodTick; set => foodTick = value;
-        }
         public int StoneStorage {
             get => stoneStorage;
             set => stoneStorage = value;
@@ -169,6 +113,10 @@ namespace crown {
             set => woodStorage = value;
         }
         public int MaxPop { get => maxPop; set => maxPop = value; }
+        public int FoodDelta { get => foodDelta; set => foodDelta = value; }
+        public int GoldDelta { get => goldDelta; set => goldDelta = value; }
+        public int WoodDelta { get => woodDelta; set => woodDelta = value; }
+        public int StoneDelta { get => stoneDelta; set => stoneDelta = value; }
     }
 }
 

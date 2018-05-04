@@ -6,7 +6,7 @@ namespace crown {
 
         public static void BuildGameMenu() {
             Menu menuBackground = new Menu();
-            int menuSizeX = (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols).Size.X;
+            int menuSizeX = 500;
             int menuSizeY = (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols).Size.Y;
             int xPos = 0;
             int yPos = graphics.GraphicsDevice.Viewport.Height - menuSizeY;
@@ -24,7 +24,6 @@ namespace crown {
         }
 
         public static void MenuTierOne() {
-            int menuSizeX = (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols).Size.X;
             int menuSizeY = (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols).Size.Y;
             int xPos = 0;
             int yPos = graphics.GraphicsDevice.Viewport.Height - menuSizeY;
@@ -41,12 +40,6 @@ namespace crown {
             buttonRoads.MainRect = new Rectangle(xPos + 180, yPos + 20, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.X, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.Y);
             buttonRoads.Type = Menu.MenuType.BUTTON_ROAD;
             menu.Add(buttonRoads);
-
-            Menu buttonFarmland = new Menu();
-            buttonFarmland.MainPos = new Vector2(xPos + 260, yPos + 20);
-            buttonFarmland.MainRect = new Rectangle(xPos + 260, yPos + 20, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.X, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.Y);
-            buttonFarmland.Type = Menu.MenuType.BUTTON_FARMLAND;
-            menu.Add(buttonFarmland);
 
             Menu buttonFarm = new Menu();
             buttonFarm.MainPos = new Vector2(xPos + 20, yPos + 100);

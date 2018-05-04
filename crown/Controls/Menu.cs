@@ -3,17 +3,17 @@
 namespace crown {
     public class Menu {
 
-        Vector2 mainPos;
-        Rectangle mainRect;
+        Vector2 pos;
+        Rectangle rect;
         MenuType type;
 
         public Vector2 MainPos {
-            get => mainPos;
-            set => mainPos = value;
+            get => pos;
+            set => pos = value;
         }
         public Rectangle MainRect {
-            get => mainRect;
-            set => mainRect = value;
+            get => rect;
+            set => rect = value;
         }
         public MenuType Type {
             get => type;

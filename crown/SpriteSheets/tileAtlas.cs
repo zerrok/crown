@@ -4,29 +4,13 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:43fe383396a86b1c818effb28751f153:3674405bc179fb1e39c951e536a20811:15e80e53d973510bcd3d7c2616e35315$
+ * $TexturePacker:SmartUpdate:9054dc75462a080ec001954ac5b74a40:3f82b41c9292ab67ca830c754805afeb:15e80e53d973510bcd3d7c2616e35315$
  *
  */
 namespace TexturePackerMonoGameDefinitions
 {
 	public class texturePackerSpriteAtlas
 	{
-		public const string Dirt1 = "dirt1";
-		public const string DirtGrassAll = "dirtGrassAll";
-		public const string DirtGrassDown = "dirtGrassDown";
-		public const string DirtGrassDownLeft = "dirtGrassDownLeft";
-		public const string DirtGrassDownLeftRight = "dirtGrassDownLeftRight";
-		public const string DirtGrassDownRight = "dirtGrassDownRight";
-		public const string DirtGrassLeft = "dirtGrassLeft";
-		public const string DirtGrassLeftRight = "dirtGrassLeftRight";
-		public const string DirtGrassRight = "dirtGrassRight";
-		public const string DirtGrassTop = "dirtGrassTop";
-		public const string DirtGrassTopDown = "dirtGrassTopDown";
-		public const string DirtGrassTopDownLeft = "dirtGrassTopDownLeft";
-		public const string DirtGrassTopDownRight = "dirtGrassTopDownRight";
-		public const string DirtGrassTopLeft = "dirtGrassTopLeft";
-		public const string DirtGrassTopLeftRight = "dirtGrassTopLeftRight";
-		public const string DirtGrassTopRight = "dirtGrassTopRight";
 		public const string Grass1 = "grass1";
 		public const string GrassStoneLeft = "grassStoneLeft";
 		public const string GrassStoneRight = "grassStoneRight";

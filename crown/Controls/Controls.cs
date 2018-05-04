@@ -12,9 +12,6 @@ namespace crown {
         public static MouseAction BuildStuff(MouseAction mouseAction, Vector2 mousePositionInWorld) {
             foreach (Tile tile in tileMap)
                 if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
-                    if (mouseAction == MouseAction.FARMLAND) {
-                        MakeFarmableLand(tileMap, tile);
-                    }
                     if (mouseAction == MouseAction.TOWNHALL) {
                         // Only allowed to build it once
                         foreach (Building building in mechanics.Buildings)
@@ -27,8 +24,13 @@ namespace crown {
                     }
                     if (mouseAction == MouseAction.HOUSE) {
                         // TODO: Kosten aus XML ziehen
-                        Costs costs = new Costs(0, 0, -30, 2, 2, 0);
+                        Costs costs = new Costs(0, -5, -30, 2, 2, 0);
                         BuildSmallBuilding(tile, Building.BuildingTypes.HOUSE, costs);
+                    }
+                    if (mouseAction == MouseAction.FARM) {
+                        // TODO: Kosten aus XML ziehen
+                        Costs costs = new Costs(0, -50, -80, -2, 0, 0);
+                        BuildLargeBuilding(tile, Building.BuildingTypes.FARM, costs);
                     }
                     if (mouseAction == MouseAction.ROAD) {
                         BuildRoad(tile, false);
@@ -51,9 +53,15 @@ namespace crown {
             foreach (Interactive inter in interactives) {
                 if (inter.Type == Interactive.IntType.TREE) {
                     if (inter.Rect.Contains(mousePositionInWorld)) {
-                        // TODO: selektieren
+                        // TODO: Select interactive and show info
                         break;
                     }
+                }
+            }
+            foreach (Building building in mechanics.Buildings) {
+                if (building.Rect.Contains(mousePositionInWorld)) {
+                    selectedBuilding = building;
+                    break;
                 }
             }
         }
@@ -64,7 +72,7 @@ namespace crown {
                 Rectangle rect = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize, tileSize);
 
                 if (!isFirstRoad)
-                    isAllowed = IsBesidesRoad(isAllowed, rect);
+                    isAllowed = IsBesidesRoad(isAllowed, rect, true);
 
 
                 if (isAllowed && mechanics.Gold - 5 >= 0) {
@@ -125,20 +133,48 @@ namespace crown {
                 RemoveIntersectingTrees(rectangle);
             }
         }
+        public static void BuildLargeBuilding(Tile tile, Building.BuildingTypes type, Costs costs) {
+            bool isAllowed = true;
+            Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize * 2, tileSize * 2);
+            int tilePosX = (tile.Rect.X) / tileSize + 1;
+            int tilePosY = (tile.Rect.Y) / tileSize + 1;
+
+            isAllowed = CheckIntersections(isAllowed, rectangle);
+            isAllowed = IsBesidesRoad(isAllowed, rectangle, false);
+            isAllowed = CheckCosts(costs, isAllowed);
+
+            if (tile.Type.Contains("grass")
+                && tileMap[tilePosX, tile.Rect.Y / tileSize].IsClear
+                && tileMap[tilePosX, tilePosY].IsClear
+                && tileMap[tile.Rect.X / tileSize, tilePosY].IsClear
+                && isAllowed
+                && tile.IsClear) {
+                mechanics.Buildings.Add(new Building(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect)
+                                      , new Vector2(tile.Rect.X, tile.Rect.Y)
+                                      , rectangle
+                                      , type
+                                      ));
+
+                // Set tiles underneath to not clear
+                tileMap[tilePosX, tile.Rect.Y / tileSize].IsClear = false;
+                tileMap[tilePosX, tilePosY].IsClear = false;
+                tileMap[tile.Rect.X / tileSize, tilePosY].IsClear = false;
+                tile.IsClear = false;
+
+                CalculateCosts(costs);
+
+                RemoveIntersectingTrees(rectangle);
+            }
+        }
+
 
         public static void BuildSmallBuilding(Tile tile, Building.BuildingTypes type, Costs costs) {
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize, tileSize);
 
             isAllowed = CheckIntersections(isAllowed, rectangle);
-            isAllowed = IsBesidesRoad(isAllowed, rectangle);
-
-            // Check if the costs are okay
-            if (mechanics.Gold + costs.Gold < 0 ||
-                mechanics.Stone + costs.Stone < 0 ||
-                mechanics.Wood + costs.Wood < 0 ||
-                mechanics.Workers + costs.Workers < 0)
-                isAllowed = false;
+            isAllowed = IsBesidesRoad(isAllowed, rectangle, true);
+            isAllowed = CheckCosts(costs, isAllowed);
 
             if (tile.Type.Contains("grass")
               && isAllowed
@@ -149,14 +185,30 @@ namespace crown {
                                       , type));
                 tile.IsClear = false;
 
-                // After building subtract the costs
-                mechanics.Gold += costs.Gold;
-                mechanics.Stone += costs.Stone;
-                mechanics.Wood += costs.Wood;
-                mechanics.Food += costs.Food;
+                CalculateCosts(costs);
 
                 RemoveIntersectingTrees(rectangle);
             }
+        }
+
+        private static void CalculateCosts(Costs costs) {
+
+            // After building subtract the costs
+            mechanics.Gold += costs.Gold;
+            mechanics.Stone += costs.Stone;
+            mechanics.Wood += costs.Wood;
+            mechanics.Food += costs.Food;
+        }
+
+
+        private static bool CheckCosts(Costs costs, bool isAllowed) {
+            // Check if the costs are okay
+            if (mechanics.Gold + costs.Gold < 0 ||
+                mechanics.Stone + costs.Stone < 0 ||
+                mechanics.Wood + costs.Wood < 0 ||
+                mechanics.Workers + costs.Workers < 0)
+                isAllowed = false;
+            return isAllowed;
         }
 
         private static void RemoveIntersectingTrees(Rectangle rectangle) {
@@ -168,35 +220,52 @@ namespace crown {
             }
         }
 
-        public static void MakeFarmableLand(Tile[,] tileMap, Tile tile) {
-            int tileX = tile.Rect.X / tileSize;
-            int tileY = tile.Rect.Y / tileSize;
-
-            bool isAllowed = true;
+        private static bool CheckIntersections(bool isAllowed, Rectangle rectangle) {
+            foreach (Building building in mechanics.Buildings) {
+                if (building.Rect.Intersects(rectangle))
+                    isAllowed = false;
+            }
             foreach (Interactive inter in interactives) {
-                if (inter.Rect.Intersects(tile.Rect))
+                // Trees may be intersected and will be removed
+                if (inter.Rect.Intersects(rectangle) && inter.Type != Interactive.IntType.TREE)
                     isAllowed = false;
             }
 
-            // Make farmable land
-            // Only allowed on grass and when grass or dirt is adjacent on all sides
-            int upperX = tileX + 1 >= tileMap.GetUpperBound(0) - 1 ? tileMap.GetUpperBound(0) - 1 : tileX + 1;
-            int lowerX = tileX - 1 < 1 ? 1 : tileX - 1;
-            int upperY = tileY + 1 >= tileMap.GetUpperBound(1) - 1 ? tileMap.GetUpperBound(1) - 1 : tileY + 1;
-            int lowerY = tileY - 1 < 1 ? 1 : tileY - 1;
-            if (tile.Type.Contains("grass")
-              && tile.IsClear == true
-              && isAllowed
-              && tileX != 0
-              && tileY != 0
-              && (tileMap[upperX, tileY].Type.Contains("grass") || tileMap[upperX, tileY].Type.Contains("dirt")) && !tileMap[upperX, tileY].Type.Contains("tone")
-              && (tileMap[lowerX, tileY].Type.Contains("grass") || tileMap[lowerX, tileY].Type.Contains("dirt")) && !tileMap[lowerX, tileY].Type.Contains("tone")
-              && (tileMap[tileX, upperY].Type.Contains("grass") || tileMap[tileX, upperY].Type.Contains("dirt")) && !tileMap[tileX, upperY].Type.Contains("tone")
-              && (tileMap[tileX, lowerY].Type.Contains("grass") || tileMap[tileX, lowerY].Type.Contains("dirt")) && !tileMap[tileX, lowerY].Type.Contains("tone")) {
-                tile.Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Dirt1;
-                MapGenerator.AddDirtBorders(tileMap);
-            }
+            return isAllowed;
+        }
 
+        private static bool IsBesidesRoad(bool isAllowed, Rectangle rectangle, bool isSmall) {
+            int xPos = rectangle.X / tileSize;
+            int yPos = rectangle.Y / tileSize;
+            if (isSmall) {
+                if (roads[xPos + 1, yPos] == null
+                 && roads[xPos - 1, yPos] == null
+                 && roads[xPos, yPos + 1] == null
+                 && roads[xPos, yPos - 1] == null)
+                    isAllowed = false;
+            } else {
+                if (roads[xPos + 2, yPos] == null
+                 && roads[xPos - 1, yPos] == null
+                 && roads[xPos, yPos + 2] == null
+                 && roads[xPos, yPos - 1] == null)
+                    isAllowed = false;
+            }
+            isAllowed = RoadsBuilt(isAllowed);
+
+            return isAllowed;
+        }
+
+        private static bool RoadsBuilt(bool isAllowed) {
+            // Everything except the town hall has to be connected to roads
+            // So check if there even are roads
+            bool foundRoad = false;
+            foreach (Road road in roads) {
+                if (road != null)
+                    foundRoad = true;
+            }
+            if (foundRoad == false)
+                isAllowed = false;
+            return isAllowed;
         }
 
         private static void ReplaceRoads(Tile tile, SpriteFrame spriteFrame) {
@@ -295,46 +364,6 @@ namespace crown {
             }
         }
 
-        private static bool CheckIntersections(bool isAllowed, Rectangle rectangle) {
-            foreach (Building building in mechanics.Buildings) {
-                if (building.Rect.Intersects(rectangle))
-                    isAllowed = false;
-            }
-            foreach (Interactive inter in interactives) {
-                // Trees may be intersected and will be removed
-                if (inter.Rect.Intersects(rectangle) && inter.Type != Interactive.IntType.TREE)
-                    isAllowed = false;
-            }
 
-            return isAllowed;
-        }
-
-        private static bool IsBesidesRoad(bool isAllowed, Rectangle rectangle) {
-            int xPos = rectangle.X / tileSize;
-            int yPos = rectangle.Y / tileSize;
-
-            if (roads[xPos + 1, yPos] == null
-             && roads[xPos - 1, yPos] == null
-             && roads[xPos, yPos + 1] == null
-             && roads[xPos, yPos - 1] == null)
-                isAllowed = false;
-
-            isAllowed = RoadsBuilt(isAllowed);
-
-            return isAllowed;
-        }
-
-        private static bool RoadsBuilt(bool isAllowed) {
-            // Everything except the town hall has to be connected to roads
-            // So check if there even are roads
-            bool foundRoad = false;
-            foreach (Road road in roads) {
-                if (road != null)
-                    foundRoad = true;
-            }
-            if (foundRoad == false)
-                isAllowed = false;
-            return isAllowed;
-        }
     }
 }
