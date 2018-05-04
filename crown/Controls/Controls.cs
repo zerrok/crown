@@ -20,17 +20,17 @@ namespace crown {
                                 mouseAction = MouseAction.NOTHING;
                                 return mouseAction;
                             }
-                        BuildTownHall(tile);
+                        BuildTownHall(tile, new Costs(0, 0, 0, 0, 0, 0));
                         mouseAction = MouseAction.NOTHING;
                     }
                     if (mouseAction == MouseAction.HOUSE) {
                         // TODO: Kosten aus XML ziehen
-                        Costs costs = new Costs(0, -5, -30, 2, 2, 0);
+                        Costs costs = new Costs(0, -5, -30, 0, 2, 0);
                         BuildSmallBuilding(tile, Building.BuildingTypes.HOUSE, costs);
                     }
                     if (mouseAction == MouseAction.FARM) {
                         // TODO: Kosten aus XML ziehen
-                        Costs costs = new Costs(0, -50, -80, -2, 0, 0);
+                        Costs costs = new Costs(0, -50, -80, -5, 0, 0);
                         BuildLargeBuilding(tile, Building.BuildingTypes.FARM, costs);
                     }
                     if (mouseAction == MouseAction.ROAD) {
@@ -74,7 +74,7 @@ namespace crown {
 
                 if (!isFirstRoad)
                     isAllowed = IsBesidesRoad(isAllowed, rect, true);
-                    
+
                 if (isAllowed && mechanics.Gold - 5 >= 0) {
                     RemoveIntersectingTrees(rect);
 
@@ -96,7 +96,7 @@ namespace crown {
             }
         }
 
-        public static void BuildTownHall(Tile tile) {
+        public static void BuildTownHall(Tile tile, Costs costs) {
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize * 2, tileSize * 2);
             int tilePosX = (tile.Rect.X) / tileSize + 1;
@@ -116,6 +116,7 @@ namespace crown {
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
                                       , rectangle
                                       , Building.BuildingTypes.TOWNHALL
+                                      , costs
                                       ));
 
                 // Set tiles underneath to not clear
@@ -154,6 +155,7 @@ namespace crown {
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
                                       , rectangle
                                       , type
+                                      , costs
                                       ));
 
                 // Set tiles underneath to not clear
@@ -161,8 +163,6 @@ namespace crown {
                 tileMap[tilePosX, tilePosY].IsClear = false;
                 tileMap[tile.Rect.X / tileSize, tilePosY].IsClear = false;
                 tile.IsClear = false;
-
-                CalculateCosts(costs);
 
                 RemoveIntersectingTrees(rectangle);
             }
@@ -182,37 +182,28 @@ namespace crown {
                 mechanics.Buildings.Add(GetSmallBuilding(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.SmallSelect)
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
                                       , rectangle
-                                      , type));
+                                      , type
+                                      , costs));
                 tile.IsClear = false;
-
-                CalculateCosts(costs);
 
                 RemoveIntersectingTrees(rectangle);
             }
         }
 
-        private static Building GetLargeBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Building.BuildingTypes type) {
+        private static Building GetLargeBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Building.BuildingTypes type, Costs costs) {
             if (type == Building.BuildingTypes.FARM)
-                return new Farm(spriteFrame, pos, rect, type);
+                return new Farm(spriteFrame, pos, rect, type, costs);
 
             return null;
         }
 
-        private static Building GetSmallBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Building.BuildingTypes type) {
+        private static Building GetSmallBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Building.BuildingTypes type, Costs costs) {
             if (type == Building.BuildingTypes.HOUSE)
-                return new House(spriteFrame, pos, rect, type);
+                return new House(spriteFrame, pos, rect, type, costs);
 
             return null;
         }
 
-        private static void CalculateCosts(Costs costs) {
-            // After building subtract the costs
-            mechanics.Gold += costs.Gold;
-            mechanics.Stone += costs.Stone;
-            mechanics.Wood += costs.Wood;
-            mechanics.Food += costs.Food;
-        }
-        
         private static bool CheckCosts(Costs costs, bool isAllowed) {
             // Check if the costs are okay
             if (mechanics.Gold + costs.Gold < 0 ||
@@ -379,6 +370,6 @@ namespace crown {
                     cam.Zoom += 0.01f;
             }
         }
-        
+
     }
 }

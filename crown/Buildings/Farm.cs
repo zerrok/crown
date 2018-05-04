@@ -5,14 +5,13 @@ using static crown.Game1;
 namespace crown.Buildings {
     class Farm : Building {
 
-        public Farm(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, BuildingTypes type) : base(spriteFrame, position, rect, type) {
+        public Farm(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, BuildingTypes type, Costs costs) : base(spriteFrame, position, rect, type, costs) {
         }
 
         public override void Initialize() {
             Inhabitants = 5;
             ResourcesProduced = Inhabitants * 3;
             GoldUpkeep = 10;
-            mechanics.Workers -= Inhabitants;
             mechanics.GoldDelta -= GoldUpkeep;
             mechanics.FoodDelta += ResourcesProduced;
         }

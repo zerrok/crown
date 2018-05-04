@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using TexturePackerLoader;
+using static crown.Game1;
 
 namespace crown {
     abstract public class Building {
@@ -29,7 +30,7 @@ namespace crown {
         };
         BuildingTypes type;
 
-        public Building(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, BuildingTypes type) {
+        public Building(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, BuildingTypes type, Costs costs) {
             this.spriteFrame = spriteFrame;
             this.position = position;
             this.rect = rect;
@@ -43,6 +44,17 @@ namespace crown {
             actionTick = 0;
             resourcesProduced = 0;
             goldUpkeep = 0;
+
+            DeductCosts(costs);
+        }
+
+        public void DeductCosts(Costs costs) {
+            // After building subtract the costs
+            mechanics.Gold += costs.Gold;
+            mechanics.Stone += costs.Stone;
+            mechanics.Wood += costs.Wood;
+            mechanics.Food += costs.Food;
+            mechanics.Workers += costs.Workers;
         }
 
         public void Updates() {

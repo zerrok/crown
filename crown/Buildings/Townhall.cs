@@ -5,7 +5,7 @@ using static crown.Game1;
 namespace crown.Buildings {
     class Townhall : Building {
 
-        public Townhall(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, BuildingTypes type) : base(spriteFrame, position, rect, type) {
+        public Townhall(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, BuildingTypes type, Costs costs) : base(spriteFrame, position, rect, type, costs) {
         }
 
         public override void Initialize() {

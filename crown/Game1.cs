@@ -99,11 +99,11 @@ namespace crown {
 
             // Create a 1D array of color data to fill the pixel texture with.  
             Color[] colorData = {
-                        Color.White
+                        new Color(Color.White, 0.5f)                        
                     };
 
             // Set the texture data with our color information.  
-            pixel.SetData<Color>(colorData);
+            pixel.SetData(colorData);
 
         }
 
