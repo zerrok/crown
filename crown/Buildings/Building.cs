@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using TexturePackerLoader;
-using static crown.Game1;
 
 namespace crown {
     abstract public class Building {
@@ -97,5 +96,6 @@ namespace crown {
         public int ActionTick { get => actionTick; set => actionTick = value; }
         public int ResourcesProduced { get => resourcesProduced; set => resourcesProduced = value; }
         public int GoldUpkeep { get => goldUpkeep; set => goldUpkeep = value; }
+
     }
 }

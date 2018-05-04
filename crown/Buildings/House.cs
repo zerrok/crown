@@ -4,6 +4,7 @@ using static crown.Game1;
 
 namespace crown.Buildings {
     class House : Building {
+
         public House(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, BuildingTypes type) : base(spriteFrame, position, rect, type) {
         }
 
@@ -58,5 +59,6 @@ namespace crown.Buildings {
                     SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House8);
             }
         }
+
     }
 }

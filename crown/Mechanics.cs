@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace crown {
 
@@ -117,6 +116,7 @@ namespace crown {
         public int GoldDelta { get => goldDelta; set => goldDelta = value; }
         public int WoodDelta { get => woodDelta; set => woodDelta = value; }
         public int StoneDelta { get => stoneDelta; set => stoneDelta = value; }
+
     }
 }
 

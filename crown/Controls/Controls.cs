@@ -74,8 +74,7 @@ namespace crown {
 
                 if (!isFirstRoad)
                     isAllowed = IsBesidesRoad(isAllowed, rect, true);
-
-
+                    
                 if (isAllowed && mechanics.Gold - 5 >= 0) {
                     RemoveIntersectingTrees(rect);
 
@@ -134,6 +133,7 @@ namespace crown {
                 RemoveIntersectingTrees(rectangle);
             }
         }
+
         public static void BuildLargeBuilding(Tile tile, Building.BuildingTypes type, Costs costs) {
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize * 2, tileSize * 2);
@@ -206,15 +206,13 @@ namespace crown {
         }
 
         private static void CalculateCosts(Costs costs) {
-
             // After building subtract the costs
             mechanics.Gold += costs.Gold;
             mechanics.Stone += costs.Stone;
             mechanics.Wood += costs.Wood;
             mechanics.Food += costs.Food;
         }
-
-
+        
         private static bool CheckCosts(Costs costs, bool isAllowed) {
             // Check if the costs are okay
             if (mechanics.Gold + costs.Gold < 0 ||
@@ -261,7 +259,11 @@ namespace crown {
                 if (roads[xPos + 2, yPos] == null
                  && roads[xPos - 1, yPos] == null
                  && roads[xPos, yPos + 2] == null
-                 && roads[xPos, yPos - 1] == null)
+                 && roads[xPos, yPos - 1] == null
+                 && roads[xPos + 2, yPos + 1] == null
+                 && roads[xPos - 1, yPos + 1] == null
+                 && roads[xPos + 1, yPos + 2] == null
+                 && roads[xPos + 1, yPos - 1] == null)
                     isAllowed = false;
             }
             isAllowed = RoadsBuilt(isAllowed);
@@ -377,7 +379,6 @@ namespace crown {
                     cam.Zoom += 0.01f;
             }
         }
-
-
+        
     }
 }

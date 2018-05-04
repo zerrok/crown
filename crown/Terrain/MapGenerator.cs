@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using static crown.Game1;
 
 namespace crown.Terrain {
@@ -38,12 +34,9 @@ namespace crown.Terrain {
         private static void BlockTilesBehindMountains(Tile[,] tileMap, string stone1Texture) {
             foreach (Tile tile in tileMap) {
                 int yPos1 = tile.Rect.Y / tileSize - 1 > 0 ? tile.Rect.Y / tileSize - 1 : 0;
-                int yPos2 = tile.Rect.Y / tileSize - 2 > 0 ? tile.Rect.Y / tileSize - 2 : 0;
                 if (tileMap[tile.Rect.X / tileSize, tile.Rect.Y / tileSize].Type == stone1Texture
-                    && tileMap[tile.Rect.X / tileSize, yPos1].Type != stone1Texture
-                    && tileMap[tile.Rect.X / tileSize, yPos2].Type != stone1Texture) {
+                    && tileMap[tile.Rect.X / tileSize, yPos1].Type != stone1Texture) {
                     tileMap[tile.Rect.X / tileSize, yPos1].IsClear = false;
-                    tileMap[tile.Rect.X / tileSize, yPos2].IsClear = false;
                 }
             }
         }
@@ -190,7 +183,7 @@ namespace crown.Terrain {
                     tileMap[x, y].Type = TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.SandStoneTopRightLeft;
                 }
 
-                tileMap[x, y].IsClear = false;
+                tileMap[x, y].IsClear = true;
             }
         }
 

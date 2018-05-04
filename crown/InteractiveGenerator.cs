@@ -32,7 +32,7 @@ namespace crown {
 
                 string sprite = getRandomTreeSprite();
 
-                if (tileMap[randomX, randomY].IsClear) {
+                if (tileMap[randomX, randomY].IsClear && !tileMap[randomX, randomY].Type.Contains("sand")) {
                     Interactive tree = new Interactive(Interactive.IntType.TREE
                                                      , "Tree"
                                                      , 3
@@ -86,7 +86,7 @@ namespace crown {
                                 break;
 
                             // Only if the surrounding tiles are grass
-                            if (SurroundingTilesAreClear(tileMap, xTile, yTile)) {
+                            if (SurroundingTilesClearAndNoSand(tileMap, xTile, yTile)) {
                                 int probability = 15;
                                 int minTrees = 5;
                                 int maxTrees = 7;
@@ -137,23 +137,23 @@ namespace crown {
                 interactives.Add(tree);
         }
 
-        private static bool SurroundingTilesAreClear(Tile[,] tileMap, int xTile, int yTile) {
-            return tileMap[xTile, yTile + 1].IsClear
-                            && tileMap[xTile + 1, yTile].IsClear
-                            && tileMap[xTile, yTile - 1].IsClear
-                            && tileMap[xTile - 1, yTile].IsClear
-                            && tileMap[xTile - 1, yTile - 1].IsClear
-                            && tileMap[xTile + 1, yTile + 1].IsClear
-                            && tileMap[xTile - 1, yTile + 1].IsClear
-                            && tileMap[xTile + 1, yTile - 1].IsClear
-                            && tileMap[xTile, yTile + 2].IsClear
-                            && tileMap[xTile + 2, yTile].IsClear
-                            && tileMap[xTile, yTile - 2].IsClear
-                            && tileMap[xTile - 2, yTile].IsClear
-                            && tileMap[xTile - 2, yTile - 2].IsClear
-                            && tileMap[xTile + 2, yTile + 2].IsClear
-                            && tileMap[xTile - 2, yTile + 2].IsClear
-                            && tileMap[xTile + 2, yTile - 2].IsClear;
+        private static bool SurroundingTilesClearAndNoSand(Tile[,] tileMap, int xTile, int yTile) {
+            return tileMap[xTile, yTile + 1].IsClear && !tileMap[xTile, yTile + 1].Type.Contains("sand")
+                            && tileMap[xTile + 1, yTile].IsClear && !tileMap[xTile + 1, yTile].Type.Contains("sand")
+                            && tileMap[xTile, yTile - 1].IsClear && !tileMap[xTile, yTile - 1].Type.Contains("sand")
+                            && tileMap[xTile - 1, yTile].IsClear && !tileMap[xTile - 1, yTile].Type.Contains("sand")
+                            && tileMap[xTile - 1, yTile - 1].IsClear && !tileMap[xTile - 1, yTile - 1].Type.Contains("sand")
+                            && tileMap[xTile + 1, yTile + 1].IsClear && !tileMap[xTile + 1, yTile + 1].Type.Contains("sand")
+                            && tileMap[xTile - 1, yTile + 1].IsClear && !tileMap[xTile - 1, yTile + 1].Type.Contains("sand")
+                            && tileMap[xTile + 1, yTile - 1].IsClear && !tileMap[xTile + 1, yTile - 1].Type.Contains("sand")
+                            && tileMap[xTile, yTile + 2].IsClear && !tileMap[xTile, yTile + 2].Type.Contains("sand")
+                            && tileMap[xTile + 2, yTile].IsClear && !tileMap[xTile + 2, yTile].Type.Contains("sand")
+                            && tileMap[xTile, yTile - 2].IsClear && !tileMap[xTile, yTile - 2].Type.Contains("sand")
+                            && tileMap[xTile - 2, yTile].IsClear && !tileMap[xTile - 2, yTile].Type.Contains("sand")
+                            && tileMap[xTile - 2, yTile - 2].IsClear && !tileMap[xTile - 2, yTile - 2].Type.Contains("sand")
+                            && tileMap[xTile + 2, yTile + 2].IsClear && !tileMap[xTile + 2, yTile + 2].Type.Contains("sand")
+                            && tileMap[xTile - 2, yTile + 2].IsClear && !tileMap[xTile - 2, yTile + 2].Type.Contains("sand")
+                            && tileMap[xTile + 2, yTile - 2].IsClear && !tileMap[xTile + 2, yTile - 2].Type.Contains("sand");
         }
     }
 }
