@@ -25,17 +25,17 @@ namespace crown {
                     }
                     if (mouseAction == MouseAction.HOUSE) {
                         // TODO: Kosten aus XML ziehen
-                        Costs costs = new Costs(0, -5, -30, 0, 2, 0);
+                        Costs costs = new Costs(0, -15, -30, 0, 2, 0);
                         BuildSmallBuilding(tile, Building.BuildingTypes.HOUSE, costs);
                     }
                     if (mouseAction == MouseAction.FARM) {
                         // TODO: Kosten aus XML ziehen
-                        Costs costs = new Costs(0, -50, -80, -5, 0, 0);
+                        Costs costs = new Costs(0, -5, -50, -5, 0, 0);
                         BuildLargeBuilding(tile, Building.BuildingTypes.FARM, costs);
                     }
                     if (mouseAction == MouseAction.WOODCUTTER) {
                         // TODO: Kosten aus XML ziehen
-                        Costs costs = new Costs(0, 0, -50, -3, 0, 0);
+                        Costs costs = new Costs(0, 0, -40, -3, 0, 0);
                         BuildSmallBuilding(tile, Building.BuildingTypes.WOODCUTTER, costs);
                     }
                     if (mouseAction == MouseAction.ROAD) {

@@ -10,8 +10,8 @@ namespace crown.Buildings {
 
         public override void Initialize() {
             Inhabitants = 3;
-            GoldUpkeep = 6;
-            ResourcesProduced = 10;
+            GoldUpkeep = 8;
+            ResourcesProduced = 20;
             mechanics.GoldDelta -= GoldUpkeep;
             mechanics.WoodDelta += ResourcesProduced;
         }
@@ -28,7 +28,7 @@ namespace crown.Buildings {
                     foreach (Interactive interactive in interactives) {
                         if (interactive.Type == Interactive.IntType.TREE
                         && interactive.Health > 0
-                        && interactive.Rect.Intersects(new Rectangle(Rect.X - 2 * Rect.Width, Rect.Y - 2 * Rect.Height, Rect.Width * 4, Rect.Height * 4))) {
+                        && interactive.Rect.Intersects(new Rectangle(Rect.X - 4 * Rect.Width, Rect.Y - 4 * Rect.Height, Rect.Width * 9, Rect.Height * 9))) {
                             if (mechanics.Wood + ResourcesProduced > mechanics.WoodStorage)
                                 break;
 

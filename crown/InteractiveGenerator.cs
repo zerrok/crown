@@ -13,14 +13,14 @@ namespace crown {
 
         private static void PlaceTrees(Tile[,] tileMap) {
             // First add sources for the forests
-            int treeSources = random.Next(45, 65);
+            int treeSources = random.Next(100, 120);
             PlaceSources(tileMap, treeSources);
 
             // Grow the sources
             GrowForest(tileMap);
 
             // Add single trees
-            treeSources = random.Next(50, 80);
+            treeSources = random.Next(120, 150);
             PlaceSources(tileMap, treeSources);
         }
 
@@ -65,11 +65,11 @@ namespace crown {
             foreach (Interactive inter in interactives) {
                 if (inter.Type == Interactive.IntType.TREE) {
                     // Adds a random amount of trees left and right of the source tree
-                    int initX = random.Next(-12, -6);
-                    int initY = random.Next(-15, -6);
+                    int initX = random.Next(-16, -8);
+                    int initY = random.Next(-16, -8);
 
-                    int maxX = random.Next(6, 12);
-                    int maxY = random.Next(6, 12);
+                    int maxX = random.Next(8, 16);
+                    int maxY = random.Next(8, 16);
 
                     for (int x = initX; x < maxX; x++) {
                         for (int y = initY; y < maxY; y++) {
@@ -145,15 +145,7 @@ namespace crown {
                             && tileMap[xTile - 1, yTile - 1].IsClear && !tileMap[xTile - 1, yTile - 1].Type.Contains("sand")
                             && tileMap[xTile + 1, yTile + 1].IsClear && !tileMap[xTile + 1, yTile + 1].Type.Contains("sand")
                             && tileMap[xTile - 1, yTile + 1].IsClear && !tileMap[xTile - 1, yTile + 1].Type.Contains("sand")
-                            && tileMap[xTile + 1, yTile - 1].IsClear && !tileMap[xTile + 1, yTile - 1].Type.Contains("sand")
-                            && tileMap[xTile, yTile + 2].IsClear && !tileMap[xTile, yTile + 2].Type.Contains("sand")
-                            && tileMap[xTile + 2, yTile].IsClear && !tileMap[xTile + 2, yTile].Type.Contains("sand")
-                            && tileMap[xTile, yTile - 2].IsClear && !tileMap[xTile, yTile - 2].Type.Contains("sand")
-                            && tileMap[xTile - 2, yTile].IsClear && !tileMap[xTile - 2, yTile].Type.Contains("sand")
-                            && tileMap[xTile - 2, yTile - 2].IsClear && !tileMap[xTile - 2, yTile - 2].Type.Contains("sand")
-                            && tileMap[xTile + 2, yTile + 2].IsClear && !tileMap[xTile + 2, yTile + 2].Type.Contains("sand")
-                            && tileMap[xTile - 2, yTile + 2].IsClear && !tileMap[xTile - 2, yTile + 2].Type.Contains("sand")
-                            && tileMap[xTile + 2, yTile - 2].IsClear && !tileMap[xTile + 2, yTile - 2].Type.Contains("sand");
+                            && tileMap[xTile + 1, yTile - 1].IsClear && !tileMap[xTile + 1, yTile - 1].Type.Contains("sand");
         }
     }
 }
