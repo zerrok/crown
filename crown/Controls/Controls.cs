@@ -33,6 +33,11 @@ namespace crown {
                         Costs costs = new Costs(0, -50, -80, -5, 0, 0);
                         BuildLargeBuilding(tile, Building.BuildingTypes.FARM, costs);
                     }
+                    if (mouseAction == MouseAction.WOODCUTTER) {
+                        // TODO: Kosten aus XML ziehen
+                        Costs costs = new Costs(0, 0, -50, -3, 0, 0);
+                        BuildSmallBuilding(tile, Building.BuildingTypes.WOODCUTTER, costs);
+                    }
                     if (mouseAction == MouseAction.ROAD) {
                         BuildRoad(tile, false);
                     }
@@ -200,6 +205,8 @@ namespace crown {
         private static Building GetSmallBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Building.BuildingTypes type, Costs costs) {
             if (type == Building.BuildingTypes.HOUSE)
                 return new House(spriteFrame, pos, rect, type, costs);
+            if (type == Building.BuildingTypes.WOODCUTTER)
+                return new Woodcutter(spriteFrame, pos, rect, type, costs);
 
             return null;
         }

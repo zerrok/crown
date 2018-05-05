@@ -25,7 +25,7 @@ namespace crown {
         List<Building> buildings;
 
         public Mechanics() {
-            gold = 1000;
+            gold = 500;
             wood = 0;
             stone = 0;
             population = 0;

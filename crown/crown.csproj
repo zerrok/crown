@@ -41,6 +41,7 @@
     <Compile Include="Buildings\Building.cs" />
     <Compile Include="Buildings\Costs.cs" />
     <Compile Include="Buildings\Farm.cs" />
+    <Compile Include="Buildings\Woodcutter.cs" />
     <Compile Include="Buildings\Townhall.cs" />
     <Compile Include="Buildings\House.cs" />
     <Compile Include="camera2D.cs" />

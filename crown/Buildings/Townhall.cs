@@ -9,11 +9,11 @@ namespace crown.Buildings {
         }
 
         public override void Initialize() {
-            mechanics.WoodStorage = 200;
-            mechanics.StoneStorage = 200;
+            mechanics.WoodStorage = 400;
+            mechanics.StoneStorage = 100;
             mechanics.FoodStorage = 1000;
-            mechanics.Wood = 500;
-            mechanics.Food = 300;
+            mechanics.Wood = 200;
+            mechanics.Food = 200;
         }
 
         public override void Update() {

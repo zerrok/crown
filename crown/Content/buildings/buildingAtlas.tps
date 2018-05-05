@@ -268,6 +268,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">woodcutter4.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,40,64,80</rect>
+                <key>scale9Paddings</key>
+                <rect>32,40,64,80</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -287,6 +300,7 @@
             <filename>farm1.png</filename>
             <filename>farm2.png</filename>
             <filename>farm4.png</filename>
+            <filename>woodcutter4.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -40,7 +40,8 @@ namespace crown {
 
         // Which action is the mouse currently doing
         public enum MouseAction {
-            FARM, HOUSE, TOWNHALL, NOTHING, ROAD
+            FARM, HOUSE, TOWNHALL, NOTHING, ROAD,
+            WOODCUTTER
         }
 
         public MouseAction mouseAction = MouseAction.NOTHING;
@@ -199,6 +200,8 @@ namespace crown {
                         mouseAction = MouseAction.HOUSE;
                     else if (item.Type == Menu.MenuType.BUTTON_FARM)
                         mouseAction = MouseAction.FARM;
+                    else if (item.Type == Menu.MenuType.BUTTON_WOODCUTTER)
+                        mouseAction = MouseAction.WOODCUTTER;
                 }
         }
 
