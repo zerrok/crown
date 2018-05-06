@@ -10,7 +10,7 @@ namespace crown.Buildings {
 
         public override void Initialize() {
             Inhabitants = 2;
-            GoldUpkeep = Inhabitants * 2;
+            GoldUpkeep = Inhabitants * 3;
             ResourcesProduced = Inhabitants;
             mechanics.Population += Inhabitants;
             mechanics.Workers += Inhabitants;

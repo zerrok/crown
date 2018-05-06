@@ -100,7 +100,7 @@ namespace crown {
 
             // Create a 1D array of color data to fill the pixel texture with.  
             Color[] colorData = {
-                        new Color(Color.White, 0.5f)                        
+                        new Color(Color.White, 0.5f)
                     };
 
             // Set the texture data with our color information.  
@@ -225,7 +225,7 @@ namespace crown {
 
             // Draw text on top of everything
             // Draw a fancy rectangle.  
-            spriteBatch.Draw(pixel, new Rectangle(0, 0, 450, 150), Color.SlateGray);
+            spriteBatch.Draw(pixel, new Rectangle(0, 0, 450, 150), Color.Black);
             spriteBatch.DrawString(font, "Population: " + mechanics.Population + " / " + mechanics.MaxPop, new Vector2(16, 16), Color.White);
             spriteBatch.DrawString(font, "Available Workers: " + mechanics.Workers, new Vector2(16, 32), Color.White);
             spriteBatch.DrawString(font, "Gold: " + mechanics.Gold + "   " + mechanics.GoldDelta + " / tick", new Vector2(16, 48), Color.White);
@@ -237,11 +237,11 @@ namespace crown {
             // Draw infos for selection
             if (selectedBuilding != null) {
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
-                spriteBatch.Draw(pixel, new Rectangle(0, 175, 450, 150), Color.SlateGray);
+                spriteBatch.Draw(pixel, new Rectangle(0, 175, 450, 150), Color.DarkSlateBlue);
                 spriteBatch.DrawString(font, selectedBuilding.Type.ToString(), new Vector2(16, 191), Color.White);
                 if (selectedBuilding.Type == Building.BuildingTypes.HOUSE)
                     spriteBatch.DrawString(font, "Inhabitants: " + selectedBuilding.Inhabitants, new Vector2(16, 206), Color.White);
-                if (selectedBuilding.Type == Building.BuildingTypes.FARM)
+                if (selectedBuilding.Type == Building.BuildingTypes.FARM || selectedBuilding.Type == Building.BuildingTypes.WOODCUTTER)
                     spriteBatch.DrawString(font, "Workers: " + selectedBuilding.Inhabitants, new Vector2(16, 206), Color.White);
                 spriteBatch.End();
             }

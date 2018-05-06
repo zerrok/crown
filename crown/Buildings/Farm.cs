@@ -11,7 +11,7 @@ namespace crown.Buildings {
         public override void Initialize() {
             Inhabitants = 5;
             ResourcesProduced = Inhabitants * 3;
-            GoldUpkeep = 10;
+            GoldUpkeep = 15;
             mechanics.GoldDelta -= GoldUpkeep;
             mechanics.FoodDelta += ResourcesProduced;
         }

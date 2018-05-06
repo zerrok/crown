@@ -16,6 +16,8 @@
             this.food = food;
         }
 
+        // TODO: static methoden für kosten, später aus datei auslesen
+
         public int Stone {
             get => stone; set => stone = value;
         }
