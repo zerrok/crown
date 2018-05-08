@@ -69,7 +69,7 @@ namespace crown {
 
             IsMouseVisible = true;
 
-            cam.Pos = new Vector2(3000, 3000);
+            cam.Pos = new Vector2(10000, 10000);
             cam.Zoom = 0.5f;
 
             interactives = new List<Interactive>();

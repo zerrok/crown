@@ -17,12 +17,12 @@ namespace crown.Terrain {
             BlockTilesBehindMountains(tileMap, stone1Texture);
 
             // Water
-            GeneratorParameters waterParameters = new GeneratorParameters(60, 910, 70, 75);
+            GeneratorParameters waterParameters = new GeneratorParameters(100, 910, 45, 50);
             string[] forbiddenForWater = { stone1Texture };
             PutTerrainOnMap(tileMap, waterParameters, TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Water1, forbiddenForWater);
 
             // Sand
-            GeneratorParameters sandParameters = new GeneratorParameters(400, 960, 2, 3);
+            GeneratorParameters sandParameters = new GeneratorParameters(500, 960, 1, 2);
             string[] forbiddenForSand = { TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Water1, stone1Texture };
             PutTerrainOnMap(tileMap, sandParameters, TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Sand1, forbiddenForSand);
 
