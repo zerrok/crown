@@ -29,7 +29,7 @@ namespace crown {
         public static Mechanics mechanics;
         public static List<Interactive> interactives;
         public static Road[,] roads;
-        public static List<Menu> menu;
+        public static List<Button> menuButtons;
 
         // Seed for Random Generation
         public static Random random = new Random();
@@ -73,7 +73,7 @@ namespace crown {
             cam.Zoom = 0.5f;
 
             interactives = new List<Interactive>();
-            menu = new List<Menu>();
+            menuButtons = new List<Button>();
             roads = new Road[1, 1];
             tileMap = new Tile[1, 1];
             mechanics = new Mechanics();
@@ -142,7 +142,7 @@ namespace crown {
                     interactives.Add(inter);
                 }
 
-                menu = new List<Menu>();
+                menuButtons = new List<Button>();
                 MenuBuilder.BuildGameMenu();
             }
 
@@ -167,9 +167,9 @@ namespace crown {
 
         private void MouseControls(MouseState mouseState) {
             Point mousePoint = new Point(mouseState.X, mouseState.Y);
-            Menu main = new Menu();
-            foreach (Menu menuItem in menu)
-                if (menuItem != null && menuItem.Type == Menu.MenuType.MAIN)
+            Button main = new Button();
+            foreach (Button menuItem in menuButtons)
+                if (menuItem != null && menuItem.Type == Button.ButtonType.MAIN)
                     main = menuItem;
 
             if (main != null)
@@ -190,17 +190,17 @@ namespace crown {
         }
 
         private void MenuControls(Point mousePoint) {
-            foreach (Menu item in menu)
-                if (item.MainRect.Contains(mousePoint)) {
-                    if (item.Type == Menu.MenuType.BUTTON_TOWNHALL)
+            foreach (Button button in menuButtons)
+                if (button.MainRect.Contains(mousePoint)) {
+                    if (button.Type == Button.ButtonType.BUTTON_TOWNHALL)
                         mouseAction = MouseAction.TOWNHALL;
-                    else if (item.Type == Menu.MenuType.BUTTON_ROAD)
+                    else if (button.Type == Button.ButtonType.BUTTON_ROAD)
                         mouseAction = MouseAction.ROAD;
-                    else if (item.Type == Menu.MenuType.BUTTON_HOUSE)
+                    else if (button.Type == Button.ButtonType.BUTTON_HOUSE)
                         mouseAction = MouseAction.HOUSE;
-                    else if (item.Type == Menu.MenuType.BUTTON_FARM)
+                    else if (button.Type == Button.ButtonType.BUTTON_FARM)
                         mouseAction = MouseAction.FARM;
-                    else if (item.Type == Menu.MenuType.BUTTON_WOODCUTTER)
+                    else if (button.Type == Button.ButtonType.BUTTON_WOODCUTTER)
                         mouseAction = MouseAction.WOODCUTTER;
                 }
         }
@@ -221,7 +221,7 @@ namespace crown {
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
-            Drawing.DrawMenu(spriteRender, menu);
+            Drawing.DrawMenu(spriteRender, menuButtons);
 
             // Draw text on top of everything
             // Draw a fancy rectangle.  
