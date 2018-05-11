@@ -109,5 +109,19 @@ namespace crown {
             }
         }
 
+        internal static void DrawPeople(SpriteRender spriteRender, List<Citizen> citizens) {
+            GetRenderableTilesAndCenterTile(out int startCol, out int endCol, out int startRow, out int endRow);
+            if (citizens != null)
+                foreach (Citizen citizen in citizens) {
+                    if (citizen.Pos.X / tileSize > startCol &&
+                        citizen.Pos.X / tileSize < endCol &&
+                        citizen.Pos.Y / tileSize > startRow &&
+                        citizen.Pos.Y / tileSize < endRow) {
+                        spriteRender.Draw(citizen.SpriteFrame, citizen.Pos);
+                    }
+
+                }
+        }
+
     }
 }

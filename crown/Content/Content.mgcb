@@ -80,3 +80,18 @@
 /processorParam:TextureFormat=Compressed
 /build:maelFont.spritefont
 
+#begin people/peopleAtlas.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:people/peopleAtlas.png
+
+#begin people/peopleAtlas.txt
+/copy:people/peopleAtlas.txt
+

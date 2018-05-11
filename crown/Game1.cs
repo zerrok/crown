@@ -11,18 +11,20 @@ namespace crown {
     public class Game1 : Game {
 
         public static GraphicsDeviceManager graphics;
+        public static SpriteRender spriteRender;
 
         // player camera
         public static Camera2d cam = new Camera2d();
         public float camSpeed = 16f;
 
         // Textures
-        public static SpriteRender spriteRender;
         public static SpriteSheet mapTileSheet;
         public static SpriteSheet buildingTileSheet;
         public static SpriteSheet menuTileSheet;
         public static SpriteSheet interactiveTileSheet;
-        public static int tileSize = 32;
+        public static SpriteSheet peopleTileSheet;
+
+        public static int tileSize;
         public static Tile[,] tileMap;
 
         // Game relevant objects
@@ -30,6 +32,7 @@ namespace crown {
         public static List<Interactive> interactives;
         public static Road[,] roads;
         public static List<Button> menuButtons;
+        public static List<Citizen> citizens;
 
         // Seed for Random Generation
         public static Random random = new Random();
@@ -92,6 +95,7 @@ namespace crown {
             menuTileSheet = spriteSheetLoader.Load("menu/menuAtlas");
             buildingTileSheet = spriteSheetLoader.Load("buildings/buildingAtlas");
             interactiveTileSheet = spriteSheetLoader.Load("interactives/interactiveAtlas");
+            peopleTileSheet = spriteSheetLoader.Load("people/peopleAtlas");
 
             font = Content.Load<SpriteFont>("maelFont");
 
@@ -129,6 +133,7 @@ namespace crown {
                 interactives = new List<Interactive>();
                 tileMap = new Tile[1, 1];
                 mechanics = new Mechanics();
+                citizens = new List<Citizen>();
 
                 // Regenerate everything
                 tileMap = new MapGenerator().GetMap(250, 250);
@@ -214,10 +219,11 @@ namespace crown {
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, cam.GetTransformation(graphics.GraphicsDevice));
             Drawing.DrawTerrain(spriteRender);
-            Drawing.DrawMouseSelection(spriteRender, mousePositionInWorld, mouseAction);
-            Drawing.DrawBuildings(spriteRender, mechanics.Buildings);
             Drawing.DrawInteractives(spriteRender, interactives);
             Drawing.DrawRoads(spriteRender, roads);
+            Drawing.DrawBuildings(spriteRender, mechanics.Buildings);
+            Drawing.DrawPeople(spriteRender, citizens);
+            Drawing.DrawMouseSelection(spriteRender, mousePositionInWorld, mouseAction);
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);

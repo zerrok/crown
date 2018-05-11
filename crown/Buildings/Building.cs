@@ -58,10 +58,10 @@ namespace crown {
         }
 
         public void Updates() {
-            if (BuildingTick < 5)
+            if (BuildingTick < 2)
                 BuildingTick++;
 
-            if (BuildingTick >= 5) {
+            if (BuildingTick >= 2) {
                 if (BuildingState <= 3) {
                     // Go through the different build phases for every type
                     UpdateBuildingSprites();

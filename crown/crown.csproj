@@ -53,11 +53,13 @@
     <Compile Include="Interactive.cs" />
     <Compile Include="InteractiveGenerator.cs" />
     <Compile Include="Mechanics.cs" />
+    <Compile Include="Citizen.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpriteSheets\buildingAtlas.cs" />
     <Compile Include="SpriteSheets\interactiveAtlas.cs" />
     <Compile Include="SpriteSheets\menuAtlas.cs" />
+    <Compile Include="SpriteSheets\peopleAtlas.cs" />
     <Compile Include="SpriteSheets\SpriteFrame.cs" />
     <Compile Include="SpriteSheets\SpriteRender.cs" />
     <Compile Include="SpriteSheets\SpriteSheet.cs" />

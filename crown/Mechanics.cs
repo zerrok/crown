@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using static crown.Game1;
+using Microsoft.Xna.Framework;
+using crown.Terrain;
 
 namespace crown {
 
@@ -51,12 +54,15 @@ namespace crown {
         public void UpdateMechanics() {
             doomClock += 0.02f;
 
+            CitizenUpdates();
+
             // Things are happening every doomlock tick
             if (DoomClock > 1f) {
                 BuildingUpdates();
                 DoomClock = 0f;
             }
         }
+
 
         private void BuildingUpdates() {
             // Building updates
@@ -65,6 +71,40 @@ namespace crown {
             }
         }
 
+        private void CitizenUpdates() {
+            if (citizens != null) {
+                Vector2 position = new Vector2();
+                // Always spawn as much people as there is population
+                if (citizens.Count < population)
+                    // Get the position of a random road and spawn the people there
+                    foreach (Road road in roads) {
+                        if (road != null)
+                            if (random.Next(1, 50) > 48) {
+                                position = road.Coords;
+                                // Middle of the road tile calculation
+                                position.X += tileSize / 2 - 16;
+                                position.Y += tileSize / 2 - 16;
+                                Citizen citizen = new Citizen(position, GetPeopleSprite());
+                                citizens.Add(citizen);
+                                break;
+                            }
+                    }
+
+                foreach (Citizen citizen in citizens)
+                    citizen.Movement();
+            }
+        }
+
+        private static TexturePackerLoader.SpriteFrame GetPeopleSprite() {
+            int rand = random.Next(0, 3);
+            if (rand == 0)
+                return peopleTileSheet.Sprite(TexturePackerMonoGameDefinitions.peopleAtlas.Peop1);
+            if (rand == 1)
+                return peopleTileSheet.Sprite(TexturePackerMonoGameDefinitions.peopleAtlas.Peop2);
+            if (rand == 2)
+                return peopleTileSheet.Sprite(TexturePackerMonoGameDefinitions.peopleAtlas.Peop3);
+            return null;
+        }
 
         public int GetMaxPop() {
             int count = 0;

@@ -83,7 +83,7 @@ namespace crown {
                 if (isAllowed && mechanics.Gold - 5 >= 0) {
                     RemoveIntersectingTrees(rect);
 
-                    Road road = new Road(new Vector2(tile.Rect.X, tile.Rect.Y), rect);
+                    Road road = new Road(new Vector2(tile.Rect.X, tile.Rect.Y), new Rectangle(rect.X, rect.Y, rect.Width, rect.Height));
 
                     // Use standard road texture
                     SpriteFrame spriteFrame = mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.StreetHori);
