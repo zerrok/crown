@@ -8,14 +8,6 @@ namespace crown.Buildings {
         public Farm(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, BuildingTypes type, Costs costs) : base(spriteFrame, position, rect, type, costs) {
         }
 
-        public override void Initialize() {
-            Inhabitants = 5;
-            ResourcesProduced = Inhabitants * 3;
-            GoldUpkeep = 15;
-            mechanics.GoldDelta -= GoldUpkeep;
-            mechanics.FoodDelta += ResourcesProduced;
-        }
-
         public override void Update() {
             if (BuildingState == 4) {
                 Initialize();
@@ -25,13 +17,26 @@ namespace crown.Buildings {
                 // Update resources
                 if (ActionTick > 5) {
                     // Food
-                    if (mechanics.Food + ResourcesProduced < mechanics.FoodStorage)
-                        mechanics.Food += ResourcesProduced;
+                    if (mechanics.Food + Costs.FoodUpkeep < mechanics.FoodStorage)
+                        mechanics.Food += Costs.FoodUpkeep;
                     else {
                         mechanics.Food = mechanics.FoodStorage;
                     }
-                    // Gold
-                    mechanics.Gold -= GoldUpkeep;
+
+                    mechanics.Gold += Costs.GoldUpkeep;
+
+                    // Stone
+                    if (mechanics.Stone + Costs.StoneUpkeep < mechanics.StoneStorage)
+                        mechanics.Stone += Costs.StoneUpkeep;
+                    else {
+                        mechanics.Stone = mechanics.StoneStorage;
+                    }
+                    // Wood
+                    if (mechanics.Wood + Costs.WoodUpkeep < mechanics.WoodStorage)
+                        mechanics.Wood += Costs.WoodUpkeep;
+                    else {
+                        mechanics.Wood = mechanics.WoodStorage;
+                    }
 
                     ActionTick = 0;
                 }

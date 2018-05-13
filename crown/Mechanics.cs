@@ -27,32 +27,49 @@ namespace crown {
         float doomClock;
         List<Building> buildings;
 
-        public Mechanics() {
-            gold = 500;
-            wood = 0;
-            stone = 0;
-            population = 0;
-            food = 0;
+        public int Gold { get => gold; set => gold = value; }
+        public int Wood { get => wood; set => wood = value; }
+        public int Stone { get => stone; set => stone = value; }
+        public int Population { get => population; set => population = value; }
+        public int Food { get => food; set => food = value; }
+        public int MaxPop { get => maxPop; set => maxPop = value; }
+        public int StoneStorage { get => stoneStorage; set => stoneStorage = value; }
+        public int FoodStorage { get => foodStorage; set => foodStorage = value; }
+        public int WoodStorage { get => woodStorage; set => woodStorage = value; }
+        public int FoodDelta { get => foodDelta; set => foodDelta = value; }
+        public int GoldDelta { get => goldDelta; set => goldDelta = value; }
+        public int WoodDelta { get => woodDelta; set => woodDelta = value; }
+        public int StoneDelta { get => stoneDelta; set => stoneDelta = value; }
+        public int Workers { get => workers; set => workers = value; }
+        public float DoomClock { get => doomClock; set => doomClock = value; }
+        public List<Building> Buildings { get => buildings; set => buildings = value; }
 
-            foodDelta = 0;
-            goldDelta = 0;
-            woodDelta = 0;
-            stoneDelta = 0;
+        public Mechanics() {
+            Gold = 500;
+            Wood = 0;
+            Stone = 0;
+            Population = 0;
+            Food = 0;
+
+            FoodDelta = 0;
+            GoldDelta = 0;
+            WoodDelta = 0;
+            StoneDelta = 0;
 
             StoneStorage = 0;
             FoodStorage = 0;
             WoodStorage = 0;
 
-            doomClock = 0;
-            buildings = new List<Building>();
-            workers = 0;
+            DoomClock = 0;
+            Buildings = new List<Building>();
+            Workers = 0;
 
-            maxPop = 0;
+            MaxPop = 0;
         }
 
 
         public void UpdateMechanics() {
-            doomClock += 0.02f;
+            DoomClock += 0.02f;
 
             CitizenUpdates();
 
@@ -66,7 +83,7 @@ namespace crown {
 
         private void BuildingUpdates() {
             // Building updates
-            foreach (Building bld in buildings) {
+            foreach (Building bld in Buildings) {
                 bld.Updates();
             }
         }
@@ -75,7 +92,7 @@ namespace crown {
             if (citizens != null) {
                 Vector2 position = new Vector2();
                 // Always spawn as much people as there is population
-                if (citizens.Count < population)
+                if (citizens.Count < Population)
                     // Get the position of a random road and spawn the people there
                     foreach (Road road in roads) {
                         if (road != null)
@@ -108,54 +125,14 @@ namespace crown {
 
         public int GetMaxPop() {
             int count = 0;
-            foreach (Building building in buildings) {
+            foreach (Building building in Buildings) {
                 if (building.Type == Building.BuildingTypes.HOUSE)
                     count++;
             }
             return count * 2;
         }
 
-        public int Gold {
-            get => gold; set => gold = value;
-        }
-        public int Wood {
-            get => wood; set => wood = value;
-        }
-        public int Stone {
-            get => stone; set => stone = value;
-        }
-        public int Population {
-            get => population; set => population = value;
-        }
-        public int Food {
-            get => food; set => food = value;
-        }
-        public float DoomClock {
-            get => doomClock; set => doomClock = value;
-        }
-        public List<Building> Buildings {
-            get => buildings; set => buildings = value;
-        }
-        public int Workers {
-            get => workers; set => workers = value;
-        }
-        public int StoneStorage {
-            get => stoneStorage;
-            set => stoneStorage = value;
-        }
-        public int FoodStorage {
-            get => foodStorage;
-            set => foodStorage = value;
-        }
-        public int WoodStorage {
-            get => woodStorage;
-            set => woodStorage = value;
-        }
-        public int MaxPop { get => maxPop; set => maxPop = value; }
-        public int FoodDelta { get => foodDelta; set => foodDelta = value; }
-        public int GoldDelta { get => goldDelta; set => goldDelta = value; }
-        public int WoodDelta { get => woodDelta; set => woodDelta = value; }
-        public int StoneDelta { get => stoneDelta; set => stoneDelta = value; }
+
 
     }
 }

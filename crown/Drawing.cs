@@ -55,8 +55,6 @@ namespace crown {
         }
 
         public static void DrawMenu(SpriteRender spriteRender, List<Button> menu) {
-            // TODO: Muss noch skaliert werden für verschiedene auflösungen
-            SpriteFrame spriteFrame = null;
             foreach (Button button in menu) {
                     if (button.SpriteFrame != null)
                     spriteRender.Draw(button.SpriteFrame, button.Pos);

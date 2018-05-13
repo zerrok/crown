@@ -87,7 +87,7 @@ namespace crown {
                     possible.Remove(dirToRemove);
                     currentDirection = possible[random.Next(0, possible.Count)];
                 } else if (possible.Contains(lastDirection) && random.Next(0, 25000) > 5) {
-                    // Low chance of changing direction
+                    // Keep current direction
                     currentDirection = lastDirection;
                 } else
                     currentDirection = possible[random.Next(0, possible.Count)];

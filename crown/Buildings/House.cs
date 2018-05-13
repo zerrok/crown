@@ -8,27 +8,35 @@ namespace crown.Buildings {
         public House(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, BuildingTypes type, Costs costs) : base(spriteFrame, position, rect, type, costs) {
         }
 
-        public override void Initialize() {
-            Inhabitants = 2;
-            GoldUpkeep = Inhabitants * 3;
-            ResourcesProduced = Inhabitants;
-            mechanics.Population += Inhabitants;
-            mechanics.Workers += Inhabitants;
-            mechanics.GoldDelta += GoldUpkeep;
-            mechanics.FoodDelta -= ResourcesProduced;
-        }
-
         public override void Update() {
             if (BuildingState == 4) {
                 // People move in and are ready to work
                 Initialize();
                 BuildingState = 5;
             } else if (BuildingState == 5) {
-
                 // Update resources
                 if (ActionTick > 5) {
-                    mechanics.Food -= ResourcesProduced;
-                    mechanics.Gold += GoldUpkeep;
+                    // Food
+                    if (mechanics.Food + Costs.FoodUpkeep < mechanics.FoodStorage)
+                        mechanics.Food += Costs.FoodUpkeep;
+                    else {
+                        mechanics.Food = mechanics.FoodStorage;
+                    }
+
+                    mechanics.Gold += Costs.GoldUpkeep;
+
+                    // Stone
+                    if (mechanics.Stone + Costs.StoneUpkeep < mechanics.StoneStorage)
+                        mechanics.Stone += Costs.StoneUpkeep;
+                    else {
+                        mechanics.Stone = mechanics.StoneStorage;
+                    }
+                    // Wood
+                    if (mechanics.Wood + Costs.WoodUpkeep < mechanics.WoodStorage)
+                        mechanics.Wood += Costs.WoodUpkeep;
+                    else {
+                        mechanics.Wood = mechanics.WoodStorage;
+                    }
                     ActionTick = 0;
                 }
 

@@ -6,7 +6,6 @@ namespace crown {
     abstract public class Building {
 
         abstract public void Update();
-        abstract public void Initialize();
         abstract public void UpdateSprite();
 
         SpriteFrame spriteFrame;
@@ -14,12 +13,12 @@ namespace crown {
         Rectangle rect;
         int inhabitants;
 
-        int resourcesProduced;
-        int goldUpkeep;
-
         int buildingState;
         int buildingTick;
         int actionTick;
+        BuildingTypes type;
+
+        Costs costs;
 
         public enum BuildingTypes {
             TOWNHALL,
@@ -28,22 +27,50 @@ namespace crown {
             FARM,
             STORAGE
         };
-        BuildingTypes type;
+
+        public SpriteFrame SpriteFrame { get => spriteFrame; set => spriteFrame = value; }
+        public Vector2 Position { get => position; set => position = value; }
+        public Rectangle Rect { get => rect; set => rect = value; }
+        public int Inhabitants { get => inhabitants; set => inhabitants = value; }
+        public int BuildingState { get => buildingState; set => buildingState = value; }
+        public int BuildingTick { get => buildingTick; set => buildingTick = value; }
+        public int ActionTick { get => actionTick; set => actionTick = value; }
+        public BuildingTypes Type { get => type; set => type = value; }
+        public Costs Costs { get => costs; set => costs = value; }
+
+        public void Initialize() {
+            Inhabitants = Costs.Population;
+            mechanics.Population += Costs.Population;
+            mechanics.GoldDelta += Costs.GoldUpkeep;
+            mechanics.FoodDelta += Costs.FoodUpkeep;
+            mechanics.WoodDelta += Costs.WoodUpkeep;
+
+            if (Type == BuildingTypes.HOUSE)
+                mechanics.Workers += costs.Workers;
+
+            if (Type == BuildingTypes.TOWNHALL) {
+                mechanics.WoodStorage = 400;
+                mechanics.StoneStorage = 100;
+                mechanics.FoodStorage = 1000;
+                mechanics.Wood = 200;
+                mechanics.Food = 200;
+            }
+        }
 
         public Building(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, BuildingTypes type, Costs costs) {
-            this.spriteFrame = spriteFrame;
-            this.position = position;
-            this.rect = rect;
-            this.type = type;
+            SpriteFrame = spriteFrame;
+            Position = position;
+            Rect = rect;
+            Type = type;
 
             // For slowly building or degrading the building
             BuildingState = 0;
             if (type == BuildingTypes.TOWNHALL)
                 BuildingState = 2;
             BuildingTick = 0;
-            actionTick = 0;
-            resourcesProduced = 0;
-            goldUpkeep = 0;
+            ActionTick = 0;
+
+            Costs = costs;
 
             DeductCosts(costs);
         }
@@ -54,7 +81,8 @@ namespace crown {
             mechanics.Stone += costs.Stone;
             mechanics.Wood += costs.Wood;
             mechanics.Food += costs.Food;
-            mechanics.Workers += costs.Workers;
+            if (Type != BuildingTypes.HOUSE)
+                mechanics.Workers += costs.Workers;
         }
 
         public void Updates() {
@@ -77,37 +105,6 @@ namespace crown {
             BuildingState++;
         }
 
-        public SpriteFrame SpriteFrame {
-            get => spriteFrame;
-            set => spriteFrame = value;
-        }
-        public Vector2 Position {
-            get => position;
-            set => position = value;
-        }
-        public Rectangle Rect {
-            get => rect;
-            set => rect = value;
-        }
-        public int Inhabitants {
-            get => inhabitants;
-            set => inhabitants = value;
-        }
-        public int BuildingState {
-            get => buildingState;
-            set => buildingState = value;
-        }
-        public int BuildingTick {
-            get => buildingTick;
-            set => buildingTick = value;
-        }
-        public BuildingTypes Type {
-            get => type;
-            set => type = value;
-        }
-        public int ActionTick { get => actionTick; set => actionTick = value; }
-        public int ResourcesProduced { get => resourcesProduced; set => resourcesProduced = value; }
-        public int GoldUpkeep { get => goldUpkeep; set => goldUpkeep = value; }
 
     }
 }

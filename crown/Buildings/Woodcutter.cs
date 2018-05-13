@@ -8,14 +8,6 @@ namespace crown.Buildings {
         public Woodcutter(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, BuildingTypes type, Costs costs) : base(spriteFrame, position, rect, type, costs) {
         }
 
-        public override void Initialize() {
-            Inhabitants = 3;
-            GoldUpkeep = 15;
-            ResourcesProduced = 20;
-            mechanics.GoldDelta -= GoldUpkeep;
-            mechanics.WoodDelta += ResourcesProduced;
-        }
-
         public override void Update() {
             if (BuildingState == 4) {
                 // People move in and are ready to work
@@ -29,15 +21,30 @@ namespace crown.Buildings {
                         if (interactive.Type == Interactive.IntType.TREE
                         && interactive.Health > 0
                         && interactive.Rect.Intersects(new Rectangle(Rect.X - 4 * Rect.Width, Rect.Y - 4 * Rect.Height, Rect.Width * 9, Rect.Height * 9))) {
-                            if (mechanics.Wood + ResourcesProduced > mechanics.WoodStorage)
+                            if (mechanics.Wood + Costs.WoodUpkeep > mechanics.WoodStorage)
                                 break;
 
-                            mechanics.Wood += ResourcesProduced;
+                            mechanics.Wood += Costs.WoodUpkeep;
                             interactive.Health--;
                             break;
                         }
                     }
-                    mechanics.Gold -= GoldUpkeep;
+                    // Food
+                    if (mechanics.Food + Costs.FoodUpkeep < mechanics.FoodStorage)
+                        mechanics.Food += Costs.FoodUpkeep;
+                    else {
+                        mechanics.Food = mechanics.FoodStorage;
+                    }
+
+                    mechanics.Gold += Costs.GoldUpkeep;
+
+                    // Stone
+                    if (mechanics.Stone + Costs.StoneUpkeep < mechanics.StoneStorage)
+                        mechanics.Stone += Costs.StoneUpkeep;
+                    else {
+                        mechanics.Stone = mechanics.StoneStorage;
+                    }
+
                     ActionTick = 0;
                 }
 

@@ -8,14 +8,6 @@ namespace crown.Buildings {
         public Townhall(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, BuildingTypes type, Costs costs) : base(spriteFrame, position, rect, type, costs) {
         }
 
-        public override void Initialize() {
-            mechanics.WoodStorage = 400;
-            mechanics.StoneStorage = 100;
-            mechanics.FoodStorage = 1000;
-            mechanics.Wood = 200;
-            mechanics.Food = 200;
-        }
-
         public override void Update() {
             if (BuildingState == 4) {
                 Initialize();
