@@ -2,6 +2,7 @@
 using static crown.Game1;
 using Microsoft.Xna.Framework;
 using crown.Terrain;
+using System;
 
 namespace crown {
 
@@ -25,6 +26,8 @@ namespace crown {
 
         int workers;
         float doomClock;
+        int taxClock;
+
         List<Building> buildings;
 
         public int Gold { get => gold; set => gold = value; }
@@ -43,6 +46,7 @@ namespace crown {
         public int Workers { get => workers; set => workers = value; }
         public float DoomClock { get => doomClock; set => doomClock = value; }
         public List<Building> Buildings { get => buildings; set => buildings = value; }
+        public int TaxClock { get => taxClock; set => taxClock = value; }
 
         public Mechanics() {
             Gold = 500;
@@ -76,10 +80,44 @@ namespace crown {
             // Things are happening every doomlock tick
             if (DoomClock > 1f) {
                 BuildingUpdates();
+                ResourceUpdates();
+                InteractiveUpdates();
                 DoomClock = 0f;
             }
         }
 
+        private void InteractiveUpdates() {
+            foreach (Interactive inter in interactives) {
+                // When trees are chopped they will regrow after a while
+                if (inter.Type == Interactive.IntType.TREE) {
+                    inter.RespawnInteractive();
+                }
+            }
+        }
+
+        private void ResourceUpdates() {
+            if (taxClock >= 15) {
+                if (Food + FoodDelta <= FoodStorage)
+                    Food += FoodDelta;
+                else
+                    Food = FoodStorage;
+
+                if (Wood + WoodDelta <= WoodStorage)
+                    Wood += WoodDelta;
+                else
+                    Wood = WoodStorage;
+
+                if (Stone + StoneDelta <= FoodStorage)
+                    Stone += StoneDelta;
+                else
+                    Stone = StoneStorage;
+
+                Gold += GoldDelta;
+                taxClock = 0;
+            } else {
+                taxClock++;
+            }
+        }
 
         private void BuildingUpdates() {
             // Building updates

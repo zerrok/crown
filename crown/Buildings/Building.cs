@@ -49,9 +49,9 @@ namespace crown {
                 mechanics.Workers += costs.Workers;
 
             if (Type == BuildingTypes.TOWNHALL) {
-                mechanics.WoodStorage = 400;
+                mechanics.WoodStorage = 200;
                 mechanics.StoneStorage = 100;
-                mechanics.FoodStorage = 1000;
+                mechanics.FoodStorage = 500;
                 mechanics.Wood = 200;
                 mechanics.Food = 200;
             }
@@ -86,13 +86,14 @@ namespace crown {
         }
 
         public void Updates() {
-            if (BuildingTick < 2)
+            if (BuildingTick < 4)
                 BuildingTick++;
 
-            if (BuildingTick >= 2) {
+            if (BuildingTick >= 4) {
                 if (BuildingState <= 3) {
                     // Go through the different build phases for every type
                     UpdateBuildingSprites();
+                    BuildingState++;
                 }
                 Update();
                 BuildingTick = 0;
@@ -102,7 +103,6 @@ namespace crown {
         private void UpdateBuildingSprites() {
             // For gradually building buildings
             UpdateSprite();
-            BuildingState++;
         }
 
 

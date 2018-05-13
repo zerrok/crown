@@ -17,33 +17,21 @@ namespace crown.Buildings {
 
                 // Update resources
                 if (ActionTick > 5) {
+                    int trees = 0;
                     foreach (Interactive interactive in interactives) {
                         if (interactive.Type == Interactive.IntType.TREE
                         && interactive.Health > 0
                         && interactive.Rect.Intersects(new Rectangle(Rect.X - 4 * Rect.Width, Rect.Y - 4 * Rect.Height, Rect.Width * 9, Rect.Height * 9))) {
+                            trees++;
                             if (mechanics.Wood + Costs.WoodUpkeep > mechanics.WoodStorage)
                                 break;
 
-                            mechanics.Wood += Costs.WoodUpkeep;
                             interactive.Health--;
                             break;
                         }
                     }
-                    // Food
-                    if (mechanics.Food + Costs.FoodUpkeep < mechanics.FoodStorage)
-                        mechanics.Food += Costs.FoodUpkeep;
-                    else {
-                        mechanics.Food = mechanics.FoodStorage;
-                    }
-
-                    mechanics.Gold += Costs.GoldUpkeep;
-
-                    // Stone
-                    if (mechanics.Stone + Costs.StoneUpkeep < mechanics.StoneStorage)
-                        mechanics.Stone += Costs.StoneUpkeep;
-                    else {
-                        mechanics.Stone = mechanics.StoneStorage;
-                    }
+                    if (trees == 0)
+                        mechanics.WoodDelta -= Costs.WoodUpkeep;
 
                     ActionTick = 0;
                 }

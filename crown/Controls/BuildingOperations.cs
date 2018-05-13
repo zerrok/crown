@@ -1,6 +1,7 @@
 ﻿using crown.Buildings;
 using crown.Terrain;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using TexturePackerLoader;
 using static crown.Game1;
 
@@ -157,12 +158,14 @@ namespace crown {
         }
 
         public static void RemoveIntersectingTrees(Rectangle rectangle) {
+            List<Interactive> interactivesToRemove = new List<Interactive>();
             foreach (Interactive inter in interactives) {
                 if (inter.Rect.Intersects(rectangle) && inter.Type == Interactive.IntType.TREE) {
-                    inter.Health = 0;
-                    inter.Rect = new Rectangle();
+                    interactivesToRemove.Add(inter);
                 }
             }
+            foreach (Interactive inter in interactivesToRemove)
+                interactives.Remove(interactives.Find(interactive => interactive.Equals(inter)));
         }
 
         public static bool CheckIntersections(bool isAllowed, Rectangle rectangle) {

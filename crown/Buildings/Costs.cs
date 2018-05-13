@@ -3,41 +3,41 @@
 
         public static Costs HouseCosts() {
             return new Costs(0,     // Stone 
-                             -5,    // Wood
+                             -10,    // Wood
                              -10,   // Gold
                              2,     // Workers
                              2,     // Population
                              0,     // Food
-                             1,     // GoldUpkeep
+                             2,     // GoldUpkeep
                              -1,     // WoodUpkeep
                              0,     // StoneUpkeep
-                             -1);   // FoodUpkeep
+                             -2);   // FoodUpkeep
         }
 
         public static Costs WoodcutterCosts() {
             return new Costs(0,     // Stone 
                              0,     // Wood
-                             15,    // Gold
-                             -4,    // Workers
+                             -30,    // Gold
+                             -10,    // Workers
                              0,     // Population
                              0,     // Food
-                             -8,     // GoldUpkeep
-                             8,     // WoodUpkeep
+                             -10,     // GoldUpkeep
+                             20,     // WoodUpkeep
                              0,     // StoneUpkeep
                              0);    // FoodUpkeep
         }
 
         public static Costs FarmCosts() {
             return new Costs(0,     // Stone 
-                             15,    // Wood
-                             20,    // Gold
-                             -4,    // Workers
+                             -5,    // Wood
+                             -30,    // Gold
+                             -10,    // Workers
                              0,     // Population
                              0,     // Food
-                             -8,     // GoldUpkeep
+                             -10,     // GoldUpkeep
                              0,     // WoodUpkeep
                              0,     // StoneUpkeep
-                             8);    // FoodUpkeep
+                             30);    // FoodUpkeep
         }
 
         int stone;
