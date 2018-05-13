@@ -81,7 +81,7 @@ namespace crown {
             }
 
             if (possible.Count > 0) {
-                if (possible.Contains(lastDirection) && possible.Count >= 2 && random.Next(0, 20) > 5) {
+                if (possible.Contains(lastDirection) && possible.Count > 2 && random.Next(0, 20) > 5) {
                     // Chance to change direction at an intersection
                     Direction dirToRemove = possible.Find(direction => direction.Equals(lastDirection));
                     possible.Remove(dirToRemove);

@@ -79,7 +79,7 @@ namespace crown {
                     // Get the position of a random road and spawn the people there
                     foreach (Road road in roads) {
                         if (road != null)
-                            if (random.Next(1, 50) > 48) {
+                            if (random.Next(1, 1000) > 990) {
                                 position = road.Coords;
                                 // Middle of the road tile calculation
                                 position.X += tileSize / 2 - 16;

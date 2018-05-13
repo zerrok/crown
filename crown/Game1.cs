@@ -172,13 +172,10 @@ namespace crown {
 
         private void MouseControls(MouseState mouseState) {
             Point mousePoint = new Point(mouseState.X, mouseState.Y);
-            Button main = new Button();
-            foreach (Button menuItem in menuButtons)
-                if (menuItem != null && menuItem.Type == Button.ButtonType.MAIN)
-                    main = menuItem;
+            Rectangle mainRect = new Rectangle(0, MenuBuilder.menuYPosition, 400, 300);
 
-            if (main != null)
-                if (!main.MainRect.Contains(mousePoint)
+            if (mainRect != null)
+                if (!mainRect.Contains(mousePoint)
                     && (oldState.LeftButton == ButtonState.Released || mouseAction == MouseAction.ROAD)) {
                     // Mouse interaction with the game world
                     if (mouseAction != MouseAction.NOTHING) {
@@ -188,7 +185,7 @@ namespace crown {
                     }
 
                     // Mouse interaction with the menu
-                } else if (main.MainRect.Contains(mousePoint)) {
+                } else if (mainRect.Contains(mousePoint)) {
                     MenuControls(mousePoint);
                 }
 
@@ -196,7 +193,7 @@ namespace crown {
 
         private void MenuControls(Point mousePoint) {
             foreach (Button button in menuButtons)
-                if (button.MainRect.Contains(mousePoint)) {
+                if (button.Rect.Contains(mousePoint)) {
                     if (button.Type == Button.ButtonType.BUTTON_TOWNHALL)
                         mouseAction = MouseAction.TOWNHALL;
                     else if (button.Type == Button.ButtonType.BUTTON_ROAD)

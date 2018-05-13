@@ -57,26 +57,9 @@ namespace crown {
         public static void DrawMenu(SpriteRender spriteRender, List<Button> menu) {
             // TODO: Muss noch skaliert werden für verschiedene auflösungen
             SpriteFrame spriteFrame = null;
-            foreach (Button item in menu) {
-                if (item.Type == Button.ButtonType.MAIN)
-                    spriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Maincontrols);
-                else if (item.Type == Button.ButtonType.BUTTON_HOUSE)
-                    spriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonhouse);
-                else if (item.Type == Button.ButtonType.BUTTON_FARMLAND)
-                    spriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland);
-                else if (item.Type == Button.ButtonType.BUTTON_ROAD)
-                    spriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonroad);
-                else if (item.Type == Button.ButtonType.BUTTON_TOWNHALL)
-                    spriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttontownhall);
-                else if (item.Type == Button.ButtonType.BUTTON_FARM)
-                    spriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarm);
-                else if (item.Type == Button.ButtonType.BUTTON_STORAGE)
-                    spriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonstorage);
-                else if (item.Type == Button.ButtonType.BUTTON_WOODCUTTER)
-                    spriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonwoodcutter);
-                if (spriteFrame != null)
-
-                    spriteRender.Draw(spriteFrame, item.MainPos);
+            foreach (Button button in menu) {
+                    if (button.SpriteFrame != null)
+                    spriteRender.Draw(button.SpriteFrame, button.Pos);
             }
         }
 

@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.6.1</string>
         <key>fileName</key>
-        <string>D:/game projects/crown/crown/crown/Content/menu/menuAtlas.tps</string>
+        <string>F:/game projects/crown/crown/crown/Content/menu/menuAtlas.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -235,26 +235,12 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">maincontrols.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>480,68,960,135</rect>
-                <key>scale9Paddings</key>
-                <rect>480,68,960,135</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
         </map>
         <key>fileList</key>
         <array>
             <filename>buttonfarmland.png</filename>
             <filename>buttonhouse.png</filename>
             <filename>buttontownhall.png</filename>
-            <filename>maincontrols.png</filename>
             <filename>buttonroad.png</filename>
             <filename>buttonstorage.png</filename>
             <filename>buttonwoodcutter.png</filename>
