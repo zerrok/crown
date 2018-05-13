@@ -247,6 +247,33 @@ namespace crown {
                 if (selectedBuilding.Type == Building.BuildingTypes.FARM || selectedBuilding.Type == Building.BuildingTypes.WOODCUTTER)
                     spriteBatch.DrawString(font, "Workers: " + selectedBuilding.Inhabitants, new Vector2(16, 206), Color.White);
                 spriteBatch.End();
+
+            }
+
+            // Draw infos for menu selection
+            if (mouseAction != MouseAction.NOTHING) {
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
+                spriteBatch.Draw(pixel, new Rectangle(0, 350, 450, 150), Color.OrangeRed);
+
+                Costs costs = null;
+                if (mouseAction == MouseAction.HOUSE)
+                    costs = Costs.HouseCosts();
+                if (mouseAction == MouseAction.FARM)
+                    costs = Costs.FarmCosts();
+                if (mouseAction == MouseAction.WOODCUTTER)
+                    costs = Costs.WoodcutterCosts();
+
+                if (costs != null) {
+                    spriteBatch.DrawString(font, mouseAction.ToString(), new Vector2(16, 351), Color.White);
+                    spriteBatch.DrawString(font, "Gold: " + costs.Gold, new Vector2(16, 366), Color.White);
+                    spriteBatch.DrawString(font, "Wood: " + costs.Wood, new Vector2(16, 381), Color.White);
+                    spriteBatch.DrawString(font, "Stone: " + costs.Stone, new Vector2(16, 396), Color.White);
+                    spriteBatch.DrawString(font, "Workers: " + costs.Workers, new Vector2(16, 411), Color.White);
+                    spriteBatch.DrawString(font, "Gold Upkeep: " + costs.GoldUpkeep, new Vector2(16, 426), Color.White);
+                    spriteBatch.DrawString(font, "Wood Upkeep: " + costs.WoodUpkeep, new Vector2(16, 441), Color.White);
+                    spriteBatch.DrawString(font, "Stone Upkeep: " + costs.StoneUpkeep, new Vector2(16, 456), Color.White);
+                }
+                spriteBatch.End();
             }
 
             base.Draw(gameTime);
