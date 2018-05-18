@@ -7,42 +7,64 @@ namespace crown {
     public class InteractiveGenerator {
 
         public static void PlaceInteractives(Tile[,] tileMap) {
-            // Trees can only grow on grass tiles      
             PlaceTrees(tileMap);
+            PlaceStones(tileMap);
         }
 
         private static void PlaceTrees(Tile[,] tileMap) {
             // First add sources for the forests
             int treeSources = random.Next(100, 120);
-            PlaceSources(tileMap, treeSources);
+            string sprite = getRandomTreeSprite();
+            PlaceSources(tileMap, treeSources, 64, 128, "Tree", Interactive.IntType.TREE, sprite);
 
             // Grow the sources
             GrowForest(tileMap);
 
             // Add single trees
             treeSources = random.Next(120, 150);
-            PlaceSources(tileMap, treeSources);
+            PlaceSources(tileMap, treeSources, 64, 128, "Tree", Interactive.IntType.TREE, sprite);
         }
 
-        private static void PlaceSources(Tile[,] tileMap, int treeSources) {
-            // Places the sources
+        private static void PlaceStones(Tile[,] tileMap) {
+            // First add sources for the forests
+            int stoneSources = random.Next(100, 120);
+            string sprite = TexturePackerMonoGameDefinitions.interactiveAtlas.Stones;
+            PlaceSources(tileMap, stoneSources, 128, 128, "Some stones", Interactive.IntType.STONE, sprite);
+        }
+
+        private static void PlaceSources(Tile[,] tileMap, int treeSources, int sizeX, int sizeY, string text, Interactive.IntType type, string sprite) {
             while (treeSources != 0) {
                 int randomX = random.Next(0, tileMap.GetUpperBound(0));
                 int randomY = random.Next(0, tileMap.GetUpperBound(1));
 
-                string sprite = getRandomTreeSprite();
-
                 if (tileMap[randomX, randomY].IsClear && !tileMap[randomX, randomY].Type.Contains("sand")) {
-                    Interactive tree = new Interactive(Interactive.IntType.TREE
-                                                     , "Tree"
-                                                     , 3
-                                                     , 1
-                                                     , new Rectangle(randomX * tileSize, randomY * tileSize, 16, 32)
-                                                     , new Vector2(randomX * tileSize, randomY * tileSize)
-                                                     , interactiveTileSheet.Sprite(sprite));
-                    interactives.Add(tree);
+                    Rectangle rect = new Rectangle(randomX * tileSize, randomY * tileSize, sizeX, sizeY);
 
-                    treeSources--;
+                    bool isAllowed = true;
+                    if (type == Interactive.IntType.STONE) {
+                        foreach (Interactive interactive in interactives) {
+                            // Stones may not intersect trees
+                            if (interactive.Type == Interactive.IntType.TREE && rect.Intersects(interactive.Rect)) {
+                                isAllowed = false;
+                                break;
+                            }
+                        }
+                    }
+                    if (isAllowed) {
+                        // Stones will make the tile under it unbuildable (except for quarries)
+                        if (type == Interactive.IntType.STONE)
+                            tileMap[randomX, randomY].IsClear = false;
+
+                        Interactive inter = new Interactive(type
+                                                         , text
+                                                         , 1
+                                                         , rect
+                                                         , new Vector2(randomX * tileSize, randomY * tileSize)
+                                                         , interactiveTileSheet.Sprite(sprite));
+                        interactives.Add(inter);
+
+                        treeSources--;
+                    }
                 }
             }
         }
@@ -119,7 +141,6 @@ namespace crown {
 
                                         Interactive tree = new Interactive(Interactive.IntType.TREE
                                                                          , "Tree"
-                                                                         , 1
                                                                          , 1
                                                                          , new Rectangle(xTile * tileSize + randX, yTile * tileSize + randY, tileSize / 2, tileSize)
                                                                          , new Vector2(xTile * tileSize + randX, yTile * tileSize + randY)

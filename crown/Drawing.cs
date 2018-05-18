@@ -56,7 +56,7 @@ namespace crown {
 
         public static void DrawMenu(SpriteRender spriteRender, List<Button> menu) {
             foreach (Button button in menu) {
-                    if (button.SpriteFrame != null)
+                if (button.SpriteFrame != null)
                     spriteRender.Draw(button.SpriteFrame, button.Pos);
             }
         }
@@ -84,7 +84,7 @@ namespace crown {
                        interactive.Coords.Y / tileSize > startRow &&
                        interactive.Coords.Y / tileSize < endRow)
                         // Only draw interactives with health bigger than 0 - it is harvested if health is <= 0
-                        if (interactive.Type == Interactive.IntType.TREE && interactive.Health > 0)
+                        if (interactive.Health > 0)
                             spriteRender.Draw(interactive.SpriteFrame, interactive.Coords);
                 }
             }

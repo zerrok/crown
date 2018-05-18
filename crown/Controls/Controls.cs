@@ -51,6 +51,7 @@ namespace crown {
             foreach (Interactive inter in interactives) {
                 if (inter.Type == Interactive.IntType.TREE) {
                     if (inter.Rect.Contains(mousePositionInWorld)) {
+                        inter.Health--;
                         // TODO: Select interactive and show info
                         break;
                     }

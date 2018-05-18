@@ -15,10 +15,10 @@ namespace crown {
                 Rectangle rect = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize, tileSize);
 
                 if (!isFirstRoad)
-                    isAllowed = BuildingOperations.IsBesidesRoad(isAllowed, rect, true);
+                    isAllowed = IsBesidesRoad(isAllowed, rect, true);
 
                 if (isAllowed && mechanics.Gold - 5 >= 0) {
-                    BuildingOperations.RemoveIntersectingTrees(rect);
+                    RemoveIntersectingTrees(rect);
 
                     Road road = new Road(new Vector2(tile.Rect.X, tile.Rect.Y), new Rectangle(rect.X, rect.Y, rect.Width, rect.Height));
 
@@ -30,7 +30,7 @@ namespace crown {
                     roads[tile.Rect.X / tileSize, tile.Rect.Y / tileSize] = road;
                     tile.IsClear = false;
 
-                    BuildingOperations.ReplaceRoads(tile, spriteFrame);
+                    ReplaceRoads(tile, spriteFrame);
 
                     // Subtract roadCost
                     mechanics.Gold -= 5;

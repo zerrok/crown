@@ -4,10 +4,11 @@
 # To learn how to import these sprites into your MonoGame project visit:
 # http://www.codeandweb.com/texturepacker/monogame
 #
-# Sprite sheet: interactiveAtlas.png (196 x 112)
-# $TexturePacker:SmartUpdate:76584af45907cf82a97d6cbcfa21c1a6:8adc7d1885681f7c36686bb5400d8d0a:e54b12530905a7f2f23d43a9b4c7e53a$
+# Sprite sheet: interactiveAtlas.png (196 x 260)
+# $TexturePacker:SmartUpdate:ce8aed685eb979e41f1b7a45d1e657cd:09f9352208a628a442a68677926a3a3f:e54b12530905a7f2f23d43a9b4c7e53a$
 #
 
-tree;0;133;1;62;105;64;128;0.4838709677419355;0.45714285714285713
-tree2;0;1;1;64;107;64;128;0.5;0.4485981308411215
-tree3;0;67;1;64;107;64;128;0.5;0.4485981308411215
+stones;0;1;1;128;128;128;128;0.5;0.5
+tree;0;1;131;64;128;64;128;0.5;0.5
+tree2;0;67;131;64;128;64;128;0.5;0.5
+tree3;0;131;1;64;128;64;128;0.5;0.5
