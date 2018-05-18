@@ -15,7 +15,7 @@ namespace crown {
 
         // player camera
         public static Camera2d cam = new Camera2d();
-        public float camSpeed = 16f;
+        public float camSpeed = 32f;
 
         // Textures
         public static SpriteSheet mapTileSheet;
