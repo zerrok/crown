@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using Microsoft.Xna.Framework;
+using System.Linq;
 using static crown.Game1;
 
 namespace crown.Terrain {
@@ -27,6 +28,13 @@ namespace crown.Terrain {
             PutTerrainOnMap(tileMap, sandParameters, TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Sand1, forbiddenForSand);
 
             SetTerrainBorders(tileMap);
+
+            // Stone tiles are bigger, so make the rectangle larger
+            foreach (Tile tile in tileMap) {
+                if (tile != null && tile.Type.Contains("stone")) {
+                    tile.Rect = new Rectangle(tile.Rect.X, tile.Rect.Y - tileSize, tile.Rect.Width, tile.Rect.Height * 2);
+                }
+            }
 
             return tileMap;
         }

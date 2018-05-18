@@ -23,7 +23,23 @@ namespace crown {
             // Add single trees
             treeSources = random.Next(120, 150);
             PlaceSources(tileMap, treeSources, 64, 128, "Tree", Interactive.IntType.TREE, sprite);
+
+            // Remove trees which are intersecting with mountains and water
+            List<Interactive> treesToRemove = new List<Interactive>();
+
+            foreach (Interactive tree in interactives) {
+                if (tree.Type == Interactive.IntType.TREE) {
+                    int xPos = tree.Rect.X / tileSize;
+                    int yPos = tree.Rect.Y / tileSize;
+                    if (CheckForForbiddenTileIntersections(tileMap, tree, xPos, yPos))
+                        treesToRemove.Add(tree);
+                }
+            }
+
+            foreach (Interactive delTree in treesToRemove)
+                interactives.Remove(delTree);
         }
+
 
         private static void PlaceStones(Tile[,] tileMap) {
             // First add sources for the forests
@@ -40,31 +56,32 @@ namespace crown {
                 if (tileMap[randomX, randomY].IsClear && !tileMap[randomX, randomY].Type.Contains("sand")) {
                     Rectangle rect = new Rectangle(randomX * tileSize, randomY * tileSize, sizeX, sizeY);
 
-                    bool isAllowed = true;
                     if (type == Interactive.IntType.STONE) {
+                        // Stones may not intersect trees so we remove em
+                        List<Interactive> treesToRemove = new List<Interactive>();
                         foreach (Interactive interactive in interactives) {
-                            // Stones may not intersect trees
                             if (interactive.Type == Interactive.IntType.TREE && rect.Intersects(interactive.Rect)) {
-                                isAllowed = false;
-                                break;
+                                treesToRemove.Add(interactive);
                             }
                         }
+                        foreach (Interactive tree in treesToRemove) {
+                            interactives.Remove(tree);
+                        }
                     }
-                    if (isAllowed) {
-                        // Stones will make the tile under it unbuildable (except for quarries)
-                        if (type == Interactive.IntType.STONE)
-                            tileMap[randomX, randomY].IsClear = false;
+                    // Stones will make the tile under it unbuildable (except for quarries)
+                    if (type == Interactive.IntType.STONE)
+                        tileMap[randomX, randomY].IsClear = false;
 
-                        Interactive inter = new Interactive(type
-                                                         , text
-                                                         , 1
-                                                         , rect
-                                                         , new Vector2(randomX * tileSize, randomY * tileSize)
-                                                         , interactiveTileSheet.Sprite(sprite));
-                        interactives.Add(inter);
+                    Interactive inter = new Interactive(type
+                                                     , text
+                                                     , 1
+                                                     , rect
+                                                     , new Vector2(randomX * tileSize, randomY * tileSize)
+                                                     , interactiveTileSheet.Sprite(sprite));
+                    interactives.Add(inter);
 
-                        treeSources--;
-                    }
+                    treeSources--;
+
                 }
             }
         }
@@ -109,45 +126,10 @@ namespace crown {
 
                             // Only if the surrounding tiles are grass
                             if (SurroundingTilesClearAndNoSand(tileMap, xTile, yTile)) {
-                                int probability = 15;
-                                int minTrees = 5;
-                                int maxTrees = 7;
-                                // Spawn less trees outwards
-                                if (x < initX + 3 || y < initY + 3 || x >= maxX - 3 || y >= maxY - 3) {
-                                    probability = 45;
-                                    minTrees = 3;
-                                    maxTrees = 6;
-                                }
-                                if (x < initX + 2 || y < initY + 2 || x >= maxX - 2 || y >= maxY - 2) {
-                                    probability = 65;
-                                    minTrees = 2;
-                                    maxTrees = 4;
-                                }
-                                if (x < initX + 1 || y < initY + 1 || x >= maxX - 1 || y >= maxY - 1) {
-                                    probability = 85;
-                                    minTrees = 1;
-                                    maxTrees = 2;
-                                }
+                                int probability, minTrees, maxTrees;
+                                CalculateTreeGrowingProbability(initX, initY, maxX, maxY, x, y, out probability, out minTrees, out maxTrees);
 
-
-                                if (random.Next(0, 100) > probability) {
-                                    // To shift the trees by a random amount of pixels
-                                    // Do it twice or thrice to spawn more trees in one spot
-                                    for (int i = 0; i < random.Next(minTrees, maxTrees); i++) {
-                                        int randX = random.Next(-64, 64);
-                                        int randY = random.Next(-64, 64);
-
-                                        string sprite = getRandomTreeSprite();
-
-                                        Interactive tree = new Interactive(Interactive.IntType.TREE
-                                                                         , "Tree"
-                                                                         , 1
-                                                                         , new Rectangle(xTile * tileSize + randX, yTile * tileSize + randY, tileSize / 2, tileSize)
-                                                                         , new Vector2(xTile * tileSize + randX, yTile * tileSize + randY)
-                                                                         , interactiveTileSheet.Sprite(sprite));
-                                        newInteractives.Add(tree);
-                                    }
-                                }
+                                SpawnShiftedGrownTree(tileMap, newInteractives, xTile, yTile, probability, minTrees, maxTrees);
                             }
                         }
                     }
@@ -158,15 +140,83 @@ namespace crown {
                 interactives.Add(tree);
         }
 
+        private static bool CheckForForbiddenTileIntersections(Tile[,] tileMap, Interactive tree, int xPos, int yPos) {
+            if ((tileMap[xPos, yPos].Type.Contains("stone") || tileMap[xPos, yPos].Type.Contains("water")) && tileMap[xPos, yPos].Rect.Intersects(tree.Rect))
+                return true;
+            if (xPos < tileMap.GetUpperBound(0) - 1 && (tileMap[xPos + 1, yPos].Type.Contains("stone") || tileMap[xPos + 1, yPos].Type.Contains("water")) && tileMap[xPos + 1, yPos].Rect.Intersects(tree.Rect))
+                return true;
+            if (xPos > 1 && (tileMap[xPos - 1, yPos].Type.Contains("stone") || tileMap[xPos - 1, yPos].Type.Contains("water")) && tileMap[xPos - 1, yPos].Rect.Intersects(tree.Rect))
+                return true;
+            if (yPos < tileMap.GetUpperBound(1) - 1 && (tileMap[xPos, yPos + 1].Type.Contains("stone") || tileMap[xPos, yPos + 1].Type.Contains("water")) && tileMap[xPos, yPos + 1].Rect.Intersects(tree.Rect))
+                return true;
+            if (yPos < tileMap.GetUpperBound(1) - 2 && (tileMap[xPos, yPos + 2].Type.Contains("stone") || tileMap[xPos, yPos + 2].Type.Contains("water")) && tileMap[xPos, yPos + 2].Rect.Intersects(tree.Rect))
+                return true;
+            if (yPos > 1 && tileMap[xPos, yPos - 1].Type.Contains("stone") && tileMap[xPos, yPos - 1].Rect.Intersects(tree.Rect))
+                return true;
+            if (xPos < tileMap.GetUpperBound(0) - 1 && yPos < tileMap.GetUpperBound(1) - 1 && tileMap[xPos + 1, yPos + 1].Type.Contains("stone") && tileMap[xPos + 1, yPos + 1].Rect.Intersects(tree.Rect))
+                return true;
+            if (xPos < tileMap.GetUpperBound(0) - 1 && yPos < tileMap.GetUpperBound(1) - 2 && tileMap[xPos + 1, yPos + 2].Type.Contains("stone") && tileMap[xPos + 1, yPos + 2].Rect.Intersects(tree.Rect))
+                return true;
+            if (xPos > 1 && yPos < tileMap.GetUpperBound(1) - 1 && tileMap[xPos - 1, yPos + 1].Type.Contains("stone") && tileMap[xPos - 1, yPos + 1].Rect.Intersects(tree.Rect))
+                return true;
+            if (xPos > 1 && yPos < tileMap.GetUpperBound(1) - 2 && tileMap[xPos - 1, yPos + 2].Type.Contains("stone") && tileMap[xPos - 1, yPos + 2].Rect.Intersects(tree.Rect))
+                return true;
+            return false;
+        }
+
+        private static void SpawnShiftedGrownTree(Tile[,] tileMap, List<Interactive> newInteractives, int xTile, int yTile, int probability, int minTrees, int maxTrees) {
+            if (random.Next(0, 100) > probability) {
+                // To shift the trees by a random amount of pixels
+                // Do it twice or thrice to spawn more trees in one spot
+                for (int i = 0; i < random.Next(minTrees, maxTrees); i++) {
+                    int randX = random.Next(-64, 64);
+                    int randY = random.Next(-64, 64);
+
+                    string sprite = getRandomTreeSprite();
+
+                    Rectangle rect = new Rectangle(xTile * tileSize + randX, yTile * tileSize + randY, tileSize / 2, tileSize);
+                    Interactive tree = new Interactive(Interactive.IntType.TREE
+                                                     , "Tree"
+                                                     , 1
+                                                     , rect
+                                                     , new Vector2(xTile * tileSize + randX, yTile * tileSize + randY)
+                                                     , interactiveTileSheet.Sprite(sprite));
+                    newInteractives.Add(tree);
+                }
+            }
+        }
+
+        private static void CalculateTreeGrowingProbability(int initX, int initY, int maxX, int maxY, int x, int y, out int probability, out int minTrees, out int maxTrees) {
+            probability = 15;
+            minTrees = 5;
+            maxTrees = 7;
+            // Spawn less trees outwards
+            if (x < initX + 3 || y < initY + 3 || x >= maxX - 3 || y >= maxY - 3) {
+                probability = 45;
+                minTrees = 3;
+                maxTrees = 6;
+            }
+            if (x < initX + 2 || y < initY + 2 || x >= maxX - 2 || y >= maxY - 2) {
+                probability = 65;
+                minTrees = 2;
+                maxTrees = 4;
+            }
+            if (x < initX + 1 || y < initY + 1 || x >= maxX - 1 || y >= maxY - 1) {
+                probability = 85;
+                minTrees = 1;
+                maxTrees = 2;
+            }
+        }
+
         private static bool SurroundingTilesClearAndNoSand(Tile[,] tileMap, int xTile, int yTile) {
-            return tileMap[xTile, yTile + 1].IsClear && !tileMap[xTile, yTile + 1].Type.Contains("sand")
-                            && tileMap[xTile + 1, yTile].IsClear && !tileMap[xTile + 1, yTile].Type.Contains("sand")
-                            && tileMap[xTile, yTile - 1].IsClear && !tileMap[xTile, yTile - 1].Type.Contains("sand")
-                            && tileMap[xTile - 1, yTile].IsClear && !tileMap[xTile - 1, yTile].Type.Contains("sand")
-                            && tileMap[xTile - 1, yTile - 1].IsClear && !tileMap[xTile - 1, yTile - 1].Type.Contains("sand")
-                            && tileMap[xTile + 1, yTile + 1].IsClear && !tileMap[xTile + 1, yTile + 1].Type.Contains("sand")
-                            && tileMap[xTile - 1, yTile + 1].IsClear && !tileMap[xTile - 1, yTile + 1].Type.Contains("sand")
-                            && tileMap[xTile + 1, yTile - 1].IsClear && !tileMap[xTile + 1, yTile - 1].Type.Contains("sand");
+            return tileMap[xTile, yTile].IsClear && !tileMap[xTile, yTile + 1].Type.Contains("sand")
+                              && !tileMap[xTile + 1, yTile].Type.Contains("sand")
+                              && !tileMap[xTile, yTile - 1].Type.Contains("sand")
+                              && !tileMap[xTile - 1, yTile].Type.Contains("sand")
+                              && !tileMap[xTile - 1, yTile - 1].Type.Contains("sand")
+                              && !tileMap[xTile + 1, yTile + 1].Type.Contains("sand")
+                              && !tileMap[xTile - 1, yTile + 1].Type.Contains("sand")
+                              && !tileMap[xTile + 1, yTile - 1].Type.Contains("sand");
         }
     }
 }
