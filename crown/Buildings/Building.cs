@@ -25,6 +25,8 @@ namespace crown {
             HOUSE,
             WOODCUTTER,
             FARM,
+            QUARRY,
+            SCIENTIST,
             STORAGE
         };
 
@@ -44,6 +46,7 @@ namespace crown {
             mechanics.GoldDelta += Costs.GoldUpkeep;
             mechanics.FoodDelta += Costs.FoodUpkeep;
             mechanics.WoodDelta += Costs.WoodUpkeep;
+            mechanics.StoneDelta += Costs.StoneUpkeep;
 
             if (Type == BuildingTypes.HOUSE)
                 mechanics.Workers += costs.Workers;

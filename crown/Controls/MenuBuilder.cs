@@ -67,6 +67,15 @@ namespace crown {
             buttonStorage.Type = Button.ButtonType.BUTTON_STORAGE;
             buttonStorage.SpriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonstorage);
             menuButtons.Add(buttonStorage);
+
+            xPos += xOffset;
+
+            Button buttonQuarry = new Button();
+            buttonQuarry.Pos = new Vector2(xPos, yPos);
+            buttonQuarry.Rect = new Rectangle(xPos, yPos, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.X, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.Y);
+            buttonQuarry.Type = Button.ButtonType.BUTTON_QUARRY;
+            buttonQuarry.SpriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonstorage);
+            menuButtons.Add(buttonQuarry);
         }
 
     }

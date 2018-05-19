@@ -1,6 +1,7 @@
 ﻿using crown.Buildings;
 using crown.Terrain;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using TexturePackerLoader;
 using static crown.Game1;
@@ -73,7 +74,14 @@ namespace crown {
 
                 // Unlocks the first menu tier
                 MenuBuilder.MenuTierOne();
-                BuildingOperations.RemoveIntersectingTrees(rectangle);
+                RemoveIntersectingTrees(rectangle);
+            }
+        }
+
+        internal static void BuildQuarry(Tile tile, Building.BuildingTypes type, Costs costs) {
+            foreach (Interactive inter in interactives) {
+                if (inter.Type == Interactive.IntType.STONE && inter.Rect.Contains(tile.Rect))
+                    BuildSmallBuilding(tile, type, Costs.QuarryCosts());
             }
         }
 
@@ -83,9 +91,9 @@ namespace crown {
             int tilePosX = (tile.Rect.X) / tileSize + 1;
             int tilePosY = (tile.Rect.Y) / tileSize + 1;
 
-            isAllowed = BuildingOperations.CheckIntersections(isAllowed, rectangle);
-            isAllowed = BuildingOperations.IsBesidesRoad(isAllowed, rectangle, false);
-            isAllowed = BuildingOperations.CheckCosts(costs, isAllowed);
+            isAllowed = CheckIntersections(isAllowed, rectangle);
+            isAllowed = IsBesidesRoad(isAllowed, rectangle, false);
+            isAllowed = CheckCosts(costs, isAllowed);
 
             if (tile.Type.Contains("grass")
                 && tileMap[tilePosX, tile.Rect.Y / tileSize].IsClear
@@ -106,7 +114,7 @@ namespace crown {
                 tileMap[tile.Rect.X / tileSize, tilePosY].IsClear = false;
                 tile.IsClear = false;
 
-                BuildingOperations.RemoveIntersectingTrees(rectangle);
+                RemoveIntersectingTrees(rectangle);
             }
         }
 
@@ -114,13 +122,14 @@ namespace crown {
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize, tileSize);
 
-            isAllowed = BuildingOperations.CheckIntersections(isAllowed, rectangle);
-            isAllowed = BuildingOperations.IsBesidesRoad(isAllowed, rectangle, true);
-            isAllowed = BuildingOperations.CheckCosts(costs, isAllowed);
+            if (type != Building.BuildingTypes.QUARRY)
+                isAllowed = CheckIntersections(isAllowed, rectangle);
+            isAllowed = IsBesidesRoad(isAllowed, rectangle, true);
+            isAllowed = CheckCosts(costs, isAllowed);
 
             if (tile.Type.Contains("grass")
               && isAllowed
-              && tile.IsClear == true) {
+              && (tile.IsClear == true || type == Building.BuildingTypes.QUARRY)) {
                 mechanics.Buildings.Add(GetSmallBuilding(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.SmallSelect)
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
                                       , rectangle
@@ -128,7 +137,7 @@ namespace crown {
                                       , costs));
                 tile.IsClear = false;
 
-                BuildingOperations.RemoveIntersectingTrees(rectangle);
+                RemoveIntersectingTrees(rectangle);
             }
         }
 
@@ -144,6 +153,8 @@ namespace crown {
                 return new House(spriteFrame, pos, rect, type, costs);
             if (type == Building.BuildingTypes.WOODCUTTER)
                 return new Woodcutter(spriteFrame, pos, rect, type, costs);
+            if (type == Building.BuildingTypes.QUARRY)
+                return new Quarry(spriteFrame, pos, rect, type, costs);
 
             return null;
         }

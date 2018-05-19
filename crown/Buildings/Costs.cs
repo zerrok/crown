@@ -1,4 +1,6 @@
-﻿namespace crown {
+﻿using System;
+
+namespace crown {
     public class Costs {
 
         public static Costs HouseCosts() {
@@ -21,7 +23,7 @@
                              -10,    // Workers
                              0,     // Population
                              0,     // Food
-                             -10,     // GoldUpkeep
+                             -5,     // GoldUpkeep
                              20,     // WoodUpkeep
                              0,     // StoneUpkeep
                              0);    // FoodUpkeep
@@ -34,10 +36,23 @@
                              -10,    // Workers
                              0,     // Population
                              0,     // Food
-                             -10,     // GoldUpkeep
+                             -5,     // GoldUpkeep
                              0,     // WoodUpkeep
                              0,     // StoneUpkeep
                              30);    // FoodUpkeep
+        }
+
+        public static Costs QuarryCosts() {
+            return new Costs(0,     // Stone 
+                             -20,    // Wood
+                             -50,   // Gold
+                             -30,     // Workers
+                             0,     // Population
+                             0,     // Food
+                             -30,     // GoldUpkeep
+                             -1,     // WoodUpkeep
+                             5,     // StoneUpkeep
+                             0);   // FoodUpkeep
         }
 
         int stone;
@@ -75,5 +90,6 @@
         public int WoodUpkeep { get => woodUpkeep; set => woodUpkeep = value; }
         public int StoneUpkeep { get => stoneUpkeep; set => stoneUpkeep = value; }
         public int FoodUpkeep { get => foodUpkeep; set => foodUpkeep = value; }
+
     }
 }

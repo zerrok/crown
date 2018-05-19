@@ -30,6 +30,9 @@ namespace crown {
                     if (mouseAction == MouseAction.WOODCUTTER) {
                         BuildingOperations.BuildSmallBuilding(tile, Building.BuildingTypes.WOODCUTTER, Costs.WoodcutterCosts());
                     }
+                    if (mouseAction == MouseAction.QUARRY) {
+                        BuildingOperations.BuildQuarry(tile, Building.BuildingTypes.QUARRY, Costs.WoodcutterCosts());
+                    }
                     if (mouseAction == MouseAction.ROAD) {
                         BuildingOperations.BuildRoad(tile, false);
                     }

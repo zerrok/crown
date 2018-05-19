@@ -26,7 +26,7 @@ namespace crown {
 
             if (mouseAction == MouseAction.TOWNHALL || mouseAction == MouseAction.FARM)
                 spriteframe = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect);
-            if (mouseAction == MouseAction.HOUSE || mouseAction == MouseAction.ROAD || mouseAction == MouseAction.WOODCUTTER)
+            if (mouseAction == MouseAction.HOUSE || mouseAction == MouseAction.ROAD || mouseAction == MouseAction.WOODCUTTER || mouseAction == MouseAction.QUARRY)
                 spriteframe = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.SmallSelect);
 
             foreach (Tile tile in tileMap)

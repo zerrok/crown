@@ -15,7 +15,7 @@ namespace crown {
         public SpriteFrame SpriteFrame { get => spriteFrame; set => spriteFrame = value; }
 
         public enum ButtonType {
-            MAIN, BUTTON_HOUSE, BUTTON_TOWNHALL, BUTTON_FARMLAND, BUTTON_ROAD, BUTTON_FARM, BUTTON_WOODCUTTER, BUTTON_STORAGE
+            MAIN, BUTTON_HOUSE, BUTTON_TOWNHALL, BUTTON_FARMLAND, BUTTON_ROAD, BUTTON_FARM, BUTTON_WOODCUTTER, BUTTON_STORAGE, BUTTON_QUARRY
         }
 
 
