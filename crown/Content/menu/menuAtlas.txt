@@ -5,13 +5,15 @@
 # http://www.codeandweb.com/texturepacker/monogame
 #
 # Sprite sheet: menuAtlas.png (232 x 232)
-# $TexturePacker:SmartUpdate:267c17b291541c1dbedcd2bfd5741068:39ed80fc22ec5ae2918c075b45abb164:bd0f4c71b5cb59f99b3ec3385caa636d$
+# $TexturePacker:SmartUpdate:916c2e3144c7f988415c70a210acb71f:9ea768b555e2dcd7e1e16591c20fc2ed:bd0f4c71b5cb59f99b3ec3385caa636d$
 #
 
 buttonfarm;0;1;1;75;75;75;75;0.5;0.5
 buttonfarmland;0;78;1;75;75;75;75;0.5;0.5
 buttonhouse;0;155;1;75;75;75;75;0.5;0.5
-buttonroad;0;1;78;75;75;75;75;0.5;0.5
-buttonstorage;0;78;78;75;75;75;75;0.5;0.5
-buttontownhall;0;155;78;75;75;75;75;0.5;0.5
-buttonwoodcutter;0;1;155;75;75;75;75;0.5;0.5
+buttonquarry;0;1;78;75;75;75;75;0.5;0.5
+buttonroad;0;78;78;75;75;75;75;0.5;0.5
+buttonscientist;0;155;78;75;75;75;75;0.5;0.5
+buttonstorage;0;1;155;75;75;75;75;0.5;0.5
+buttontownhall;0;78;155;75;75;75;75;0.5;0.5
+buttonwoodcutter;0;155;155;75;75;75;75;0.5;0.5

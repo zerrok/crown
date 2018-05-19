@@ -205,7 +205,9 @@
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
             <key type="filename">buttonfarm.png</key>
+            <key type="filename">buttonquarry.png</key>
             <key type="filename">buttonroad.png</key>
+            <key type="filename">buttonscientist.png</key>
             <key type="filename">buttonstorage.png</key>
             <key type="filename">buttonwoodcutter.png</key>
             <struct type="IndividualSpriteSettings">
@@ -245,6 +247,8 @@
             <filename>buttonstorage.png</filename>
             <filename>buttonwoodcutter.png</filename>
             <filename>buttonfarm.png</filename>
+            <filename>buttonquarry.png</filename>
+            <filename>buttonscientist.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

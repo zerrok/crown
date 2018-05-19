@@ -208,6 +208,7 @@
             <key type="filename">farm1.png</key>
             <key type="filename">farm2.png</key>
             <key type="filename">farm4.png</key>
+            <key type="filename">scientist.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -303,6 +304,7 @@
             <filename>farm4.png</filename>
             <filename>woodcutter4.png</filename>
             <filename>quarry.png</filename>
+            <filename>scientist.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

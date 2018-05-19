@@ -4,7 +4,7 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:a16777abdbeb0a4d11603705e89cb2c3:6cf66f83230fe79a0c79dbd8865472a0:905072b72ea92acf8fa5b0216a681f3c$
+ * $TexturePacker:SmartUpdate:d5ff0d81d94fb42e95c36da221316700:89f18e023deb2ed8f717be74ee758396:905072b72ea92acf8fa5b0216a681f3c$
  *
  */
 namespace TexturePackerMonoGameDefinitions
@@ -26,6 +26,7 @@ namespace TexturePackerMonoGameDefinitions
 		public const string House8 = "house8";
 		public const string LargeSelect = "largeSelect";
 		public const string Quarry = "quarry";
+		public const string Scientist = "scientist";
 		public const string SmallSelect = "smallSelect";
 		public const string Townhall = "townhall";
 		public const string Woodcutter4 = "woodcutter4";

@@ -194,18 +194,20 @@ namespace crown {
         private void MenuControls(Point mousePoint) {
             foreach (Button button in menuButtons)
                 if (button.Rect.Contains(mousePoint)) {
-                    if (button.Type == Button.ButtonType.BUTTON_TOWNHALL)
+                    if (button.Type == Button.ButtonType.TOWNHALL)
                         mouseAction = MouseAction.TOWNHALL;
-                    else if (button.Type == Button.ButtonType.BUTTON_ROAD)
+                    else if (button.Type == Button.ButtonType.ROAD)
                         mouseAction = MouseAction.ROAD;
-                    else if (button.Type == Button.ButtonType.BUTTON_HOUSE)
+                    else if (button.Type == Button.ButtonType.HOUSE)
                         mouseAction = MouseAction.HOUSE;
-                    else if (button.Type == Button.ButtonType.BUTTON_FARM)
+                    else if (button.Type == Button.ButtonType.FARM)
                         mouseAction = MouseAction.FARM;
-                    else if (button.Type == Button.ButtonType.BUTTON_WOODCUTTER)
+                    else if (button.Type == Button.ButtonType.WOODCUTTER)
                         mouseAction = MouseAction.WOODCUTTER;
-                    else if (button.Type == Button.ButtonType.BUTTON_QUARRY)
+                    else if (button.Type == Button.ButtonType.QUARRY)
                         mouseAction = MouseAction.QUARRY;
+                    else if (button.Type == Button.ButtonType.SCIENTIST)
+                        mouseAction = MouseAction.SCIENTIST;
                 }
         }
 
@@ -264,6 +266,10 @@ namespace crown {
                     costs = Costs.FarmCosts();
                 if (mouseAction == MouseAction.WOODCUTTER)
                     costs = Costs.WoodcutterCosts();
+                if (mouseAction == MouseAction.QUARRY)
+                    costs = Costs.QuarryCosts();
+                if (mouseAction == MouseAction.SCIENTIST)
+                    costs = Costs.ScientistCosts();
 
                 if (costs != null) {
                     spriteBatch.DrawString(font, mouseAction.ToString(), new Vector2(16, 351), Color.White);

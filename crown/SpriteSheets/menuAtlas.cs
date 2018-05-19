@@ -4,7 +4,7 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:267c17b291541c1dbedcd2bfd5741068:39ed80fc22ec5ae2918c075b45abb164:bd0f4c71b5cb59f99b3ec3385caa636d$
+ * $TexturePacker:SmartUpdate:916c2e3144c7f988415c70a210acb71f:9ea768b555e2dcd7e1e16591c20fc2ed:bd0f4c71b5cb59f99b3ec3385caa636d$
  *
  */
 namespace TexturePackerMonoGameDefinitions
@@ -14,7 +14,9 @@ namespace TexturePackerMonoGameDefinitions
 		public const string Buttonfarm = "buttonfarm";
 		public const string Buttonfarmland = "buttonfarmland";
 		public const string Buttonhouse = "buttonhouse";
+		public const string Buttonquarry = "buttonquarry";
 		public const string Buttonroad = "buttonroad";
+		public const string Buttonscientist = "buttonscientist";
 		public const string Buttonstorage = "buttonstorage";
 		public const string Buttontownhall = "buttontownhall";
 		public const string Buttonwoodcutter = "buttonwoodcutter";

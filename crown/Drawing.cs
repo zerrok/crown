@@ -24,7 +24,7 @@ namespace crown {
         public static void DrawMouseSelection(SpriteRender spriteRender, Vector2 mousePosition, MouseAction mouseAction) {
             SpriteFrame spriteframe = null;
 
-            if (mouseAction == MouseAction.TOWNHALL || mouseAction == MouseAction.FARM)
+            if (mouseAction == MouseAction.TOWNHALL || mouseAction == MouseAction.FARM || mouseAction == MouseAction.SCIENTIST)
                 spriteframe = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect);
             if (mouseAction == MouseAction.HOUSE || mouseAction == MouseAction.ROAD || mouseAction == MouseAction.WOODCUTTER || mouseAction == MouseAction.QUARRY)
                 spriteframe = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.SmallSelect);

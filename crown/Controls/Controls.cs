@@ -33,6 +33,9 @@ namespace crown {
                     if (mouseAction == MouseAction.QUARRY) {
                         BuildingOperations.BuildQuarry(tile, Building.BuildingTypes.QUARRY, Costs.WoodcutterCosts());
                     }
+                    if (mouseAction == MouseAction.SCIENTIST) {
+                        BuildingOperations.BuildLargeBuilding(tile, Building.BuildingTypes.SCIENTIST, Costs.ScientistCosts());
+                    }
                     if (mouseAction == MouseAction.ROAD) {
                         BuildingOperations.BuildRoad(tile, false);
                     }

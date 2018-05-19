@@ -144,6 +144,8 @@ namespace crown {
         private static Building GetLargeBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Building.BuildingTypes type, Costs costs) {
             if (type == Building.BuildingTypes.FARM)
                 return new Farm(spriteFrame, pos, rect, type, costs);
+            if (type == Building.BuildingTypes.SCIENTIST)
+                return new Scientist(spriteFrame, pos, rect, type, costs);
 
             return null;
         }

@@ -55,6 +55,19 @@ namespace crown {
                              0);   // FoodUpkeep
         }
 
+        internal static Costs ScientistCosts() {
+            return new Costs(0,     // Stone 
+                             -100,    // Wood
+                             -500,   // Gold
+                             0,     // Workers
+                             0,     // Population
+                             0,     // Food
+                             -50,     // GoldUpkeep
+                             -10,     // WoodUpkeep
+                             -8,     // StoneUpkeep
+                             -5);   // FoodUpkeep
+        }
+
         int stone;
         int wood;
         int gold;
