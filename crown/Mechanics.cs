@@ -107,7 +107,7 @@ namespace crown {
                 else
                     Wood = WoodStorage;
 
-                if (Stone + StoneDelta <= FoodStorage)
+                if (Stone + StoneDelta <= StoneStorage)
                     Stone += StoneDelta;
                 else
                     Stone = StoneStorage;

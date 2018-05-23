@@ -233,6 +233,7 @@ namespace crown {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
             Drawing.DrawMenu(spriteRender, buttons);
 
+            // DRAW RESOURCES UI
             // Population and workers
             spriteBatch.DrawString(font, mechanics.Population + " / " + mechanics.MaxPop, new Vector2(10, 36), Color.White);
             spriteBatch.DrawString(font, mechanics.Workers.ToString(), new Vector2(10, 84), Color.White);
