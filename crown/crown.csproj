@@ -48,6 +48,7 @@
     <Compile Include="Buildings\House.cs" />
     <Compile Include="camera2D.cs" />
     <Compile Include="Controls\BuildingOperations.cs" />
+    <Compile Include="Controls\UIElement.cs" />
     <Compile Include="Controls\Controls.cs" />
     <Compile Include="Controls\Button.cs" />
     <Compile Include="Controls\MenuBuilder.cs" />

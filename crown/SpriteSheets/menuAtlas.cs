@@ -4,7 +4,7 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:916c2e3144c7f988415c70a210acb71f:9ea768b555e2dcd7e1e16591c20fc2ed:bd0f4c71b5cb59f99b3ec3385caa636d$
+ * $TexturePacker:SmartUpdate:b1b0eab84c0af603eec25b7c8f95ac6d:b56590b340a89447042bfb08d9ebd497:bd0f4c71b5cb59f99b3ec3385caa636d$
  *
  */
 namespace TexturePackerMonoGameDefinitions
@@ -20,5 +20,6 @@ namespace TexturePackerMonoGameDefinitions
 		public const string Buttonstorage = "buttonstorage";
 		public const string Buttontownhall = "buttontownhall";
 		public const string Buttonwoodcutter = "buttonwoodcutter";
+		public const string Menu1 = "menu1";
 	}
 }

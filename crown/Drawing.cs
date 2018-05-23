@@ -55,6 +55,11 @@ namespace crown {
         }
 
         public static void DrawMenu(SpriteRender spriteRender, List<Button> menu) {
+            foreach (UIElement element in uiElements) {
+                if (element != null) {
+                    spriteRender.Draw(element.SpriteFrame, element.Pos);
+                }
+            }
             foreach (Button button in menu) {
                 if (button.SpriteFrame != null)
                     spriteRender.Draw(button.SpriteFrame, button.Pos);

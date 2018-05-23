@@ -31,7 +31,8 @@ namespace crown {
         public static Mechanics mechanics;
         public static List<Interactive> interactives;
         public static Road[,] roads;
-        public static List<Button> menuButtons;
+        public static List<Button> buttons;
+        public static List<UIElement> uiElements;
         public static List<Citizen> citizens;
 
         // Seed for Random Generation
@@ -76,7 +77,8 @@ namespace crown {
             cam.Zoom = 0.5f;
 
             interactives = new List<Interactive>();
-            menuButtons = new List<Button>();
+            buttons = new List<Button>();
+            uiElements = new List<UIElement>();
             roads = new Road[1, 1];
             tileMap = new Tile[1, 1];
             mechanics = new Mechanics();
@@ -147,7 +149,8 @@ namespace crown {
                     interactives.Add(inter);
                 }
 
-                menuButtons = new List<Button>();
+                buttons = new List<Button>();
+                uiElements = new List<UIElement>();
                 MenuBuilder.BuildGameMenu();
             }
 
@@ -192,7 +195,7 @@ namespace crown {
         }
 
         private void MenuControls(Point mousePoint) {
-            foreach (Button button in menuButtons)
+            foreach (Button button in buttons)
                 if (button.Rect.Contains(mousePoint)) {
                     if (button.Type == Button.ButtonType.TOWNHALL)
                         mouseAction = MouseAction.TOWNHALL;
@@ -228,17 +231,23 @@ namespace crown {
             spriteBatch.End();
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
-            Drawing.DrawMenu(spriteRender, menuButtons);
+            Drawing.DrawMenu(spriteRender, buttons);
 
-            // Draw text on top of everything
-            // Draw a fancy rectangle.  
-            spriteBatch.Draw(pixel, new Rectangle(0, 0, 450, 150), Color.Black);
-            spriteBatch.DrawString(font, "Population: " + mechanics.Population + " / " + mechanics.MaxPop, new Vector2(16, 16), Color.White);
-            spriteBatch.DrawString(font, "Available Workers: " + mechanics.Workers, new Vector2(16, 32), Color.White);
-            spriteBatch.DrawString(font, "Gold: " + mechanics.Gold + "   " + mechanics.GoldDelta + " / tick", new Vector2(16, 48), Color.White);
-            spriteBatch.DrawString(font, "Wood: " + mechanics.Wood + " / " + mechanics.WoodStorage + "   " + mechanics.WoodDelta + " / tick", new Vector2(16, 64), Color.White);
-            spriteBatch.DrawString(font, "Stone: " + mechanics.Stone + " / " + mechanics.StoneStorage + "   " + mechanics.StoneDelta + " / tick", new Vector2(16, 80), Color.White);
-            spriteBatch.DrawString(font, "Food: " + mechanics.Food + " / " + mechanics.FoodStorage + "   " + mechanics.FoodDelta + " / tick", new Vector2(16, 96), Color.White);
+            // Population and workers
+            spriteBatch.DrawString(font, mechanics.Population + " / " + mechanics.MaxPop, new Vector2(10, 36), Color.White);
+            spriteBatch.DrawString(font, mechanics.Workers.ToString(), new Vector2(10, 84), Color.White);
+            // Gold
+            spriteBatch.DrawString(font, mechanics.Gold.ToString(), new Vector2(146, 11), Color.White);
+            spriteBatch.DrawString(font, mechanics.GoldDelta.ToString(), new Vector2(146, 36), Color.White);
+            // Wood
+            spriteBatch.DrawString(font, mechanics.Wood + " / " + mechanics.WoodStorage, new Vector2(313, 11), Color.White);
+            spriteBatch.DrawString(font, mechanics.WoodDelta.ToString(), new Vector2(313, 36), Color.White);
+            // Food
+            spriteBatch.DrawString(font, mechanics.Food + " / " + mechanics.FoodStorage, new Vector2(146, 60), Color.White);
+            spriteBatch.DrawString(font, mechanics.FoodDelta.ToString(), new Vector2(146, 84), Color.White);
+            // Stone
+            spriteBatch.DrawString(font, mechanics.Stone+" / " + mechanics.StoneStorage, new Vector2(313, 60), Color.White);
+            spriteBatch.DrawString(font, mechanics.StoneDelta.ToString(), new Vector2(313, 84), Color.White);
             spriteBatch.End();
 
             // Draw infos for selection

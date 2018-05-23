@@ -192,7 +192,7 @@
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">Trim</enum>
+            <enum type="SpriteSettings::TrimMode">None</enum>
             <key>tracerTolerance</key>
             <int>200</int>
             <key>heuristicMask</key>
@@ -237,6 +237,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">menu1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>75,24,150,47</rect>
+                <key>scale9Paddings</key>
+                <rect>75,24,150,47</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -249,6 +262,7 @@
             <filename>buttonfarm.png</filename>
             <filename>buttonquarry.png</filename>
             <filename>buttonscientist.png</filename>
+            <filename>menu1.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

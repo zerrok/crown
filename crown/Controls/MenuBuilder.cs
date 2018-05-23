@@ -8,6 +8,9 @@ namespace crown {
         static int yOffset = 80;
 
         public static void BuildGameMenu() {
+            UIElement element = new UIElement(new Vector2(0,0), menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Menu1));
+            uiElements.Add(element);
+
             int xPos = 0;
             int yPos = menuYPosition;
 
@@ -16,7 +19,7 @@ namespace crown {
             buttonTownhall.Rect = new Rectangle(xPos + 20, yPos + 20, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.X, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.Y);
             buttonTownhall.Type = Button.ButtonType.TOWNHALL;
             buttonTownhall.SpriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttontownhall);
-            menuButtons.Add(buttonTownhall);
+            buttons.Add(buttonTownhall);
         }
 
         public static void MenuTierOne() {
@@ -29,7 +32,7 @@ namespace crown {
             buttonHouse.Rect = new Rectangle(xPos, yPos, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.X, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.Y);
             buttonHouse.Type = Button.ButtonType.HOUSE;
             buttonHouse.SpriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonhouse);
-            menuButtons.Add(buttonHouse);
+            buttons.Add(buttonHouse);
 
             xPos += xOffset;
 
@@ -38,7 +41,7 @@ namespace crown {
             buttonRoads.Rect = new Rectangle(xPos, yPos, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.X, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.Y);
             buttonRoads.Type = Button.ButtonType.ROAD;
             buttonRoads.SpriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonroad);
-            menuButtons.Add(buttonRoads);
+            buttons.Add(buttonRoads);
 
             xPos += xOffset;
 
@@ -47,7 +50,7 @@ namespace crown {
             buttonFarm.Rect = new Rectangle(xPos, yPos, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.X, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.Y);
             buttonFarm.Type = Button.ButtonType.FARM;
             buttonFarm.SpriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarm);
-            menuButtons.Add(buttonFarm);
+            buttons.Add(buttonFarm);
 
             xPos += xOffset;
 
@@ -56,7 +59,7 @@ namespace crown {
             buttonWoodcutter.Rect = new Rectangle(xPos, yPos, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.X, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.Y);
             buttonWoodcutter.Type = Button.ButtonType.WOODCUTTER;
             buttonWoodcutter.SpriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonwoodcutter);
-            menuButtons.Add(buttonWoodcutter);
+            buttons.Add(buttonWoodcutter);
 
             xPos = 20;
             yPos += yOffset;
@@ -66,7 +69,7 @@ namespace crown {
             buttonStorage.Rect = new Rectangle(xPos, yPos, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.X, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.Y);
             buttonStorage.Type = Button.ButtonType.STORAGE;
             buttonStorage.SpriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonstorage);
-            menuButtons.Add(buttonStorage);
+            buttons.Add(buttonStorage);
 
             xPos += xOffset;
 
@@ -75,7 +78,7 @@ namespace crown {
             buttonQuarry.Rect = new Rectangle(xPos, yPos, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.X, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.Y);
             buttonQuarry.Type = Button.ButtonType.QUARRY;
             buttonQuarry.SpriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonquarry);
-            menuButtons.Add(buttonQuarry);
+            buttons.Add(buttonQuarry);
 
             xPos += xOffset;
 
@@ -84,7 +87,7 @@ namespace crown {
             buttonScientist.Rect = new Rectangle(xPos, yPos, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.X, (int)menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonfarmland).Size.Y);
             buttonScientist.Type = Button.ButtonType.SCIENTIST;
             buttonScientist.SpriteFrame = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Buttonscientist);
-            menuButtons.Add(buttonScientist);
+            buttons.Add(buttonScientist);
         }
 
     }
