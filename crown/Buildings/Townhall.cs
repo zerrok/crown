@@ -26,8 +26,6 @@ namespace crown.Buildings {
             mechanics.FoodStorage = 500;
             mechanics.Wood = 200;
             mechanics.Food = 200;
-
-            mechanics.Workers = 1000;
         }
 
         public override void UpdateSprite() {
