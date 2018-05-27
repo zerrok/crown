@@ -20,6 +20,14 @@ namespace crown.Buildings {
 
             Name = "Town hall";
             Description = "The mayor resides here with his staff. \n There is also a big storage room in the back.";
+
+            mechanics.WoodStorage = 200;
+            mechanics.StoneStorage = 100;
+            mechanics.FoodStorage = 500;
+            mechanics.Wood = 200;
+            mechanics.Food = 200;
+
+            mechanics.Workers = 1000;
         }
 
         public override void UpdateSprite() {

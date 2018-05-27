@@ -80,8 +80,12 @@ namespace crown {
 
         internal static void BuildQuarry(Tile tile, Building.BuildingTypes type, Costs costs) {
             foreach (Interactive inter in interactives) {
-                if (inter.Type == Interactive.IntType.STONE && inter.Rect.Contains(tile.Rect))
-                    BuildSmallBuilding(tile, type, Costs.QuarryCosts());
+                if (inter.Type == Interactive.IntType.STONE) {
+                    if (new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize * 2, tileSize * 2).Intersects(inter.Rect)) {
+                        BuildLargeBuilding(tile, type, Costs.QuarryCosts());
+                        break;
+                    }
+                }
             }
         }
 
@@ -91,16 +95,19 @@ namespace crown {
             int tilePosX = (tile.Rect.X) / tileSize + 1;
             int tilePosY = (tile.Rect.Y) / tileSize + 1;
 
-            isAllowed = CheckIntersections(isAllowed, rectangle);
             isAllowed = IsBesidesRoad(isAllowed, rectangle, false);
             isAllowed = CheckCosts(costs, isAllowed);
 
+            if (type != Building.BuildingTypes.Quarry)
+                isAllowed = CheckIntersections(isAllowed, rectangle);
+
             if (tile.Type.Contains("grass")
+                && isAllowed
+                && ((tile.IsClear
                 && tileMap[tilePosX, tile.Rect.Y / tileSize].IsClear
                 && tileMap[tilePosX, tilePosY].IsClear
-                && tileMap[tile.Rect.X / tileSize, tilePosY].IsClear
-                && isAllowed
-                && tile.IsClear) {
+                && tileMap[tile.Rect.X / tileSize, tilePosY].IsClear)
+                || type == Building.BuildingTypes.Quarry)) {
                 mechanics.Buildings.Add(GetLargeBuilding(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect)
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
                                       , rectangle
@@ -122,14 +129,12 @@ namespace crown {
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize, tileSize);
 
-            if (type != Building.BuildingTypes.Quarry)
-                isAllowed = CheckIntersections(isAllowed, rectangle);
             isAllowed = IsBesidesRoad(isAllowed, rectangle, true);
             isAllowed = CheckCosts(costs, isAllowed);
 
             if (tile.Type.Contains("grass")
               && isAllowed
-              && (tile.IsClear == true || type == Building.BuildingTypes.Quarry)) {
+              && tile.IsClear == true) {
                 mechanics.Buildings.Add(GetSmallBuilding(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.SmallSelect)
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
                                       , rectangle
@@ -146,6 +151,8 @@ namespace crown {
                 return new Farm(spriteFrame, pos, rect, type, costs);
             if (type == Building.BuildingTypes.Scientist)
                 return new Scientist(spriteFrame, pos, rect, type, costs);
+            if (type == Building.BuildingTypes.Quarry)
+                return new Quarry(spriteFrame, pos, rect, type, costs);
 
             return null;
         }
@@ -155,8 +162,6 @@ namespace crown {
                 return new House(spriteFrame, pos, rect, type, costs);
             if (type == Building.BuildingTypes.Woodcutter)
                 return new Woodcutter(spriteFrame, pos, rect, type, costs);
-            if (type == Building.BuildingTypes.Quarry)
-                return new Quarry(spriteFrame, pos, rect, type, costs);
 
             return null;
         }

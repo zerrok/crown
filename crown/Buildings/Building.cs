@@ -53,17 +53,6 @@ namespace crown {
             mechanics.WoodDelta += Costs.WoodUpkeep;
             mechanics.StoneDelta += Costs.StoneUpkeep;
 
-            if (Type == BuildingTypes.House)
-                mechanics.Workers += costs.Workers;
-
-            if (Type == BuildingTypes.Townhall) {
-                mechanics.WoodStorage = 200;
-                mechanics.StoneStorage = 100;
-                mechanics.FoodStorage = 500;
-                mechanics.Wood = 200;
-                mechanics.Food = 200;
-            }
-
             description = "default";
             name = "default";
         }

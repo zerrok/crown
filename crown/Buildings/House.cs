@@ -21,6 +21,8 @@ namespace crown.Buildings {
 
             Name = "House";
             Description = "It's a small and cozy house. \n A wooden place called home.";
+
+            mechanics.Workers += Costs.Workers;
         }
 
         public override void UpdateSprite() {
