@@ -4,17 +4,22 @@
 # To learn how to import these sprites into your MonoGame project visit:
 # http://www.codeandweb.com/texturepacker/monogame
 #
-# Sprite sheet: menuAtlas.png (680 x 192)
-# $TexturePacker:SmartUpdate:b1b0eab84c0af603eec25b7c8f95ac6d:b56590b340a89447042bfb08d9ebd497:bd0f4c71b5cb59f99b3ec3385caa636d$
+# Sprite sheet: menuAtlas.png (820 x 616)
+# $TexturePacker:SmartUpdate:2a1d686be974a61abea25bd848c0b4f4:0ccfc19f96c2d96c479571e5dcbee5f3:bd0f4c71b5cb59f99b3ec3385caa636d$
 #
 
-buttonfarm;0;1;1;75;75;75;75;0.5;0.5
-buttonfarmland;0;78;1;75;75;75;75;0.5;0.5
-buttonhouse;0;155;1;75;75;75;75;0.5;0.5
-buttonquarry;0;232;1;75;75;75;75;0.5;0.5
-buttonroad;0;309;1;75;75;75;75;0.5;0.5
-buttonscientist;0;386;1;75;75;75;75;0.5;0.5
-buttonstorage;0;463;1;75;75;75;75;0.5;0.5
-buttontownhall;0;540;1;75;75;75;75;0.5;0.5
-buttonwoodcutter;0;1;78;75;75;75;75;0.5;0.5
-menu1;0;78;78;600;110;600;110;0.5;0.5
+buttonfarm;0;386;1;75;75;75;75;0.5;0.5
+buttonfarmland;0;540;1;75;75;75;75;0.5;0.5
+buttonhouse;0;617;1;75;75;75;75;0.5;0.5
+buttonquarry;0;463;1;75;75;75;75;0.5;0.5
+buttonroad;0;1;1;75;75;75;75;0.5;0.5
+buttonscientist;0;78;1;75;75;75;75;0.5;0.5
+buttonstorage;0;232;1;75;75;75;75;0.5;0.5
+buttontownhall;0;309;1;75;75;75;75;0.5;0.5
+buttonwoodcutter;0;155;1;75;75;75;75;0.5;0.5
+continueButton;0;441;78;218;113;218;113;0.5;0.5
+menu1;0;1;503;600;110;600;110;0.5;0.5
+menu2;0;1;193;408;308;408;308;0.5;0.5
+menu3;0;411;193;408;308;408;308;0.5;0.5
+quitButton;0;1;78;218;113;218;113;0.5;0.5
+startButton;0;221;78;218;113;218;113;0.5;0.5

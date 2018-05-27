@@ -58,7 +58,7 @@ namespace crown {
                 mechanics.Buildings.Add(new Townhall(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect)
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
                                       , rectangle
-                                      , Building.BuildingTypes.TOWNHALL
+                                      , Building.BuildingTypes.Townhall
                                       , costs
                                       ));
 
@@ -122,14 +122,14 @@ namespace crown {
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize, tileSize);
 
-            if (type != Building.BuildingTypes.QUARRY)
+            if (type != Building.BuildingTypes.Quarry)
                 isAllowed = CheckIntersections(isAllowed, rectangle);
             isAllowed = IsBesidesRoad(isAllowed, rectangle, true);
             isAllowed = CheckCosts(costs, isAllowed);
 
             if (tile.Type.Contains("grass")
               && isAllowed
-              && (tile.IsClear == true || type == Building.BuildingTypes.QUARRY)) {
+              && (tile.IsClear == true || type == Building.BuildingTypes.Quarry)) {
                 mechanics.Buildings.Add(GetSmallBuilding(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.SmallSelect)
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
                                       , rectangle
@@ -142,20 +142,20 @@ namespace crown {
         }
 
         private static Building GetLargeBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Building.BuildingTypes type, Costs costs) {
-            if (type == Building.BuildingTypes.FARM)
+            if (type == Building.BuildingTypes.Farm)
                 return new Farm(spriteFrame, pos, rect, type, costs);
-            if (type == Building.BuildingTypes.SCIENTIST)
+            if (type == Building.BuildingTypes.Scientist)
                 return new Scientist(spriteFrame, pos, rect, type, costs);
 
             return null;
         }
 
         private static Building GetSmallBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Building.BuildingTypes type, Costs costs) {
-            if (type == Building.BuildingTypes.HOUSE)
+            if (type == Building.BuildingTypes.House)
                 return new House(spriteFrame, pos, rect, type, costs);
-            if (type == Building.BuildingTypes.WOODCUTTER)
+            if (type == Building.BuildingTypes.Woodcutter)
                 return new Woodcutter(spriteFrame, pos, rect, type, costs);
-            if (type == Building.BuildingTypes.QUARRY)
+            if (type == Building.BuildingTypes.Quarry)
                 return new Quarry(spriteFrame, pos, rect, type, costs);
 
             return null;

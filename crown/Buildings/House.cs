@@ -16,6 +16,13 @@ namespace crown.Buildings {
             }
         }
 
+        public override void Initialize() {
+            base.Initialize();
+
+            Name = "House";
+            Description = "It's a small and cozy house. \n A wooden place called home.";
+        }
+
         public override void UpdateSprite() {
             if (BuildingState == 0)
                 SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House0);

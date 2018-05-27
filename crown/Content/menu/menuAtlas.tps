@@ -237,6 +237,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">continueButton.png</key>
+            <key type="filename">quitButton.png</key>
+            <key type="filename">startButton.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>55,28,109,57</rect>
+                <key>scale9Paddings</key>
+                <rect>55,28,109,57</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">menu1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -247,6 +262,32 @@
                 <rect>75,24,150,47</rect>
                 <key>scale9Paddings</key>
                 <rect>75,24,150,47</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">menu2.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>100,75,200,150</rect>
+                <key>scale9Paddings</key>
+                <rect>100,75,200,150</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">menu3.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>102,77,204,154</rect>
+                <key>scale9Paddings</key>
+                <rect>102,77,204,154</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -263,6 +304,11 @@
             <filename>buttonquarry.png</filename>
             <filename>buttonscientist.png</filename>
             <filename>menu1.png</filename>
+            <filename>menu2.png</filename>
+            <filename>menu3.png</filename>
+            <filename>quitButton.png</filename>
+            <filename>startButton.png</filename>
+            <filename>continueButton.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -40,6 +40,13 @@ namespace crown.Buildings {
             }
         }
 
+        public override void Initialize() {
+            base.Initialize();
+
+            Name = "Woodcutter's lodge";
+            Description = "The woodcutters are cutting wood in the surrounding woods. \n They try to make it sustainable. \n Most of the time it works.";
+        }
+
         public override void UpdateSprite() {
             if (BuildingState == 0)
                 SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House0);

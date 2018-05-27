@@ -25,6 +25,13 @@ namespace crown.Buildings {
             }
         }
 
+        public override void Initialize() {
+            base.Initialize();
+
+            Name = "Quarry";
+            Description = "Lots of workers are extracting stone \n from the ground. \n Masons are making bricks from the stones.";
+        }
+
         public override void UpdateSprite() {
             if (BuildingState == 0)
                 SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House0);

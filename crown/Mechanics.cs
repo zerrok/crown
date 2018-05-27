@@ -164,7 +164,7 @@ namespace crown {
         public int GetMaxPop() {
             int count = 0;
             foreach (Building building in Buildings) {
-                if (building.Type == Building.BuildingTypes.HOUSE)
+                if (building.Type == Building.BuildingTypes.House)
                     count++;
             }
             return count * 2;

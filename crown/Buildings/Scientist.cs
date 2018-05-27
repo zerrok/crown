@@ -25,6 +25,13 @@ namespace crown.Buildings {
             }
         }
 
+        public override void Initialize() {
+            base.Initialize();
+
+            Name = "Scientist Laboratory";
+            Description = "Dr. Snukelbert is researching ways to improve \n living for the people. \n Sometimes his experiments take a wrong turn \n somehow.";
+        }
+
         public override void UpdateSprite() {
             if (BuildingState == 0)
                 SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect);

@@ -32,8 +32,12 @@ namespace crown {
         public static List<Interactive> interactives;
         public static Road[,] roads;
         public static List<Button> buttons;
+        public static List<Button> mainButtons;
         public static List<UIElement> uiElements;
         public static List<Citizen> citizens;
+
+        public enum GameState { MENU, GAME };
+        public GameState gameState = GameState.MENU;
 
         // Seed for Random Generation
         public static Random random = new Random();
@@ -44,15 +48,17 @@ namespace crown {
 
         // Which action is the mouse currently doing
         public enum MouseAction {
-            FARM, HOUSE, TOWNHALL, NOTHING, ROAD,
-            WOODCUTTER, QUARRY, STORAGE, SCIENTIST
+            Farm, House, Townhall, Nothing, Road,
+            Woodcutter, Quarry, Storage, Scientist
         }
 
-        public MouseAction mouseAction = MouseAction.NOTHING;
+        public MouseAction mouseAction = MouseAction.Nothing;
         Vector2 mousePositionInWorld;
 
         // Saves the last mouse state
         MouseState oldState;
+        // Saves the last keyboard state
+        KeyboardState oldKeyState;
 
         // Menu font
         public static SpriteFont font;
@@ -78,10 +84,12 @@ namespace crown {
 
             interactives = new List<Interactive>();
             buttons = new List<Button>();
+            mainButtons = new List<Button>();
             uiElements = new List<UIElement>();
             roads = new Road[1, 1];
             tileMap = new Tile[1, 1];
             mechanics = new Mechanics();
+            MenuBuilder.BuildMainMenu();
 
             tileSize = (int)mapTileSheet.Sprite(TexturePackerMonoGameDefinitions.texturePackerSpriteAtlas.Grass1).Size.X;
         }
@@ -120,39 +128,16 @@ namespace crown {
 
         protected override void Update(GameTime gameTime) {
             // Exit the game
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape)) {
-                UnloadContent();
-                Exit();
+            KeyboardState keyboardState = Keyboard.GetState();
+            if (oldKeyState.IsKeyUp(Keys.Escape) && keyboardState.IsKeyDown(Keys.Escape)) {
+                if (gameState == GameState.GAME)
+                    gameState = GameState.MENU;
+                else if (gameState == GameState.MENU)
+                    gameState = GameState.GAME;
             }
 
             // Keyboard Controls
             Controls.CameraControls(cam, camSpeed);
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Q)) {
-                // Reset everything
-                GC.Collect();
-                mechanics.Buildings = new List<Building>();
-                interactives = new List<Interactive>();
-                tileMap = new Tile[1, 1];
-                mechanics = new Mechanics();
-                citizens = new List<Citizen>();
-
-                // Regenerate everything
-                tileMap = new MapGenerator().GetMap(250, 250);
-                roads = new Road[250, 250];
-                InteractiveGenerator.PlaceInteractives(tileMap);
-
-                // Sort trees so they are rendered correctly
-                IOrderedEnumerable<Interactive> sortedInteractives = interactives.OrderBy(interactive => interactive.Coords.Y);
-                interactives = new List<Interactive>();
-                foreach (Interactive inter in sortedInteractives) {
-                    interactives.Add(inter);
-                }
-
-                buttons = new List<Button>();
-                uiElements = new List<UIElement>();
-                MenuBuilder.BuildGameMenu();
-            }
 
             // Mouse Controls
             MouseState mouseState = Mouse.GetState();
@@ -162,13 +147,15 @@ namespace crown {
 
             // Cancel current action
             if (mouseState.RightButton == ButtonState.Pressed) {
-                mouseAction = MouseAction.NOTHING;
+                mouseAction = MouseAction.Nothing;
                 selectedBuilding = null;
             }
 
             oldState = mouseState;
+            oldKeyState = keyboardState;
 
-            mechanics.UpdateMechanics();
+            if (gameState == GameState.GAME)
+                mechanics.UpdateMechanics();
 
             base.Update(gameTime);
         }
@@ -179,38 +166,81 @@ namespace crown {
 
             if (mainRect != null)
                 if (!mainRect.Contains(mousePoint)
-                    && (oldState.LeftButton == ButtonState.Released || mouseAction == MouseAction.ROAD)) {
+                    && (oldState.LeftButton == ButtonState.Released || mouseAction == MouseAction.Road) && gameState == GameState.GAME) {
                     // Mouse interaction with the game world
-                    if (mouseAction != MouseAction.NOTHING) {
+                    if (mouseAction != MouseAction.Nothing) {
                         mouseAction = Controls.BuildStuff(mouseAction, mousePositionInWorld);
                     } else {
                         Controls.InteractWithStuff(mousePositionInWorld);
                     }
 
                     // Mouse interaction with the menu
-                } else if (mainRect.Contains(mousePoint)) {
+                } else if (mainRect.Contains(mousePoint) && gameState == GameState.GAME) {
                     MenuControls(mousePoint);
+                    selectedBuilding = null;
+                } else if (gameState == GameState.MENU) {
+                    foreach (Button button in mainButtons)
+                        if (button.Rect.Contains(mousePoint)) {
+                            if (button.Type == Button.ButtonType.Start) {
+                                InitializeGame();
+
+                                gameState = GameState.GAME;
+                            }
+                            if (button.Type == Button.ButtonType.Quit) {
+                                UnloadContent();
+                                Exit();
+                            }
+                            if (button.Type == Button.ButtonType.Continue) {
+                                gameState = GameState.GAME;
+                            }
+                        }
                 }
 
+        }
+
+        private static void InitializeGame() {
+            // Reset everything
+            GC.Collect();
+            mechanics.Buildings = new List<Building>();
+            interactives = new List<Interactive>();
+            tileMap = new Tile[1, 1];
+            mechanics = new Mechanics();
+            citizens = new List<Citizen>();
+
+            // Regenerate everything
+            tileMap = new MapGenerator().GetMap(250, 250);
+            roads = new Road[250, 250];
+            InteractiveGenerator.PlaceInteractives(tileMap);
+
+            // Sort trees so they are rendered correctly
+            IOrderedEnumerable<Interactive> sortedInteractives = interactives.OrderBy(interactive => interactive.Coords.Y);
+            interactives = new List<Interactive>();
+            foreach (Interactive inter in sortedInteractives) {
+                interactives.Add(inter);
+            }
+
+            buttons = new List<Button>();
+            uiElements = new List<UIElement>();
+            MenuBuilder.BuildGameMenu();
         }
 
         private void MenuControls(Point mousePoint) {
             foreach (Button button in buttons)
                 if (button.Rect.Contains(mousePoint)) {
-                    if (button.Type == Button.ButtonType.TOWNHALL)
-                        mouseAction = MouseAction.TOWNHALL;
-                    else if (button.Type == Button.ButtonType.ROAD)
-                        mouseAction = MouseAction.ROAD;
-                    else if (button.Type == Button.ButtonType.HOUSE)
-                        mouseAction = MouseAction.HOUSE;
-                    else if (button.Type == Button.ButtonType.FARM)
-                        mouseAction = MouseAction.FARM;
-                    else if (button.Type == Button.ButtonType.WOODCUTTER)
-                        mouseAction = MouseAction.WOODCUTTER;
-                    else if (button.Type == Button.ButtonType.QUARRY)
-                        mouseAction = MouseAction.QUARRY;
-                    else if (button.Type == Button.ButtonType.SCIENTIST)
-                        mouseAction = MouseAction.SCIENTIST;
+                    if (button.Type == Button.ButtonType.Townhall)
+                        mouseAction = MouseAction.Townhall;
+                    else if (button.Type == Button.ButtonType.Road)
+                        mouseAction = MouseAction.Road;
+                    else if (button.Type == Button.ButtonType.House)
+                        mouseAction = MouseAction.House;
+                    else if (button.Type == Button.ButtonType.Farm)
+                        mouseAction = MouseAction.Farm;
+                    else if (button.Type == Button.ButtonType.Woodcutter)
+                        mouseAction = MouseAction.Woodcutter;
+                    else if (button.Type == Button.ButtonType.Quarry)
+                        mouseAction = MouseAction.Quarry;
+                    else if (button.Type == Button.ButtonType.Scientist)
+                        mouseAction = MouseAction.Scientist;
                 }
         }
 
@@ -230,67 +260,13 @@ namespace crown {
             Drawing.DrawMouseSelection(spriteRender, mousePositionInWorld, mouseAction);
             spriteBatch.End();
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
-            Drawing.DrawMenu(spriteRender, buttons);
-
-            // DRAW RESOURCES UI
-            // Population and workers
-            spriteBatch.DrawString(font, mechanics.Population + " / " + mechanics.MaxPop, new Vector2(10, 36), Color.White);
-            spriteBatch.DrawString(font, mechanics.Workers.ToString(), new Vector2(10, 84), Color.White);
-            // Gold
-            spriteBatch.DrawString(font, mechanics.Gold.ToString(), new Vector2(146, 11), Color.White);
-            spriteBatch.DrawString(font, mechanics.GoldDelta.ToString(), new Vector2(146, 36), Color.White);
-            // Wood
-            spriteBatch.DrawString(font, mechanics.Wood + " / " + mechanics.WoodStorage, new Vector2(313, 11), Color.White);
-            spriteBatch.DrawString(font, mechanics.WoodDelta.ToString(), new Vector2(313, 36), Color.White);
-            // Food
-            spriteBatch.DrawString(font, mechanics.Food + " / " + mechanics.FoodStorage, new Vector2(146, 60), Color.White);
-            spriteBatch.DrawString(font, mechanics.FoodDelta.ToString(), new Vector2(146, 84), Color.White);
-            // Stone
-            spriteBatch.DrawString(font, mechanics.Stone+" / " + mechanics.StoneStorage, new Vector2(313, 60), Color.White);
-            spriteBatch.DrawString(font, mechanics.StoneDelta.ToString(), new Vector2(313, 84), Color.White);
-            spriteBatch.End();
-
-            // Draw infos for selection
-            if (selectedBuilding != null) {
+            if (gameState == GameState.GAME) {
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
-                spriteBatch.Draw(pixel, new Rectangle(0, 175, 450, 150), Color.DarkSlateBlue);
-                spriteBatch.DrawString(font, selectedBuilding.Type.ToString(), new Vector2(16, 191), Color.White);
-                if (selectedBuilding.Type == Building.BuildingTypes.HOUSE)
-                    spriteBatch.DrawString(font, "Inhabitants: " + selectedBuilding.Inhabitants, new Vector2(16, 206), Color.White);
-                if (selectedBuilding.Type == Building.BuildingTypes.FARM || selectedBuilding.Type == Building.BuildingTypes.WOODCUTTER)
-                    spriteBatch.DrawString(font, "Workers: " + selectedBuilding.Inhabitants, new Vector2(16, 206), Color.White);
+                Drawing.DrawMenu(spriteRender, buttons, spriteBatch, mouseAction);
                 spriteBatch.End();
-
-            }
-
-            // Draw infos for menu selection
-            if (mouseAction != MouseAction.NOTHING) {
+            } else if (gameState == GameState.MENU) {
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
-                spriteBatch.Draw(pixel, new Rectangle(0, 350, 450, 150), Color.OrangeRed);
-
-                Costs costs = null;
-                if (mouseAction == MouseAction.HOUSE)
-                    costs = Costs.HouseCosts();
-                if (mouseAction == MouseAction.FARM)
-                    costs = Costs.FarmCosts();
-                if (mouseAction == MouseAction.WOODCUTTER)
-                    costs = Costs.WoodcutterCosts();
-                if (mouseAction == MouseAction.QUARRY)
-                    costs = Costs.QuarryCosts();
-                if (mouseAction == MouseAction.SCIENTIST)
-                    costs = Costs.ScientistCosts();
-
-                if (costs != null) {
-                    spriteBatch.DrawString(font, mouseAction.ToString(), new Vector2(16, 351), Color.White);
-                    spriteBatch.DrawString(font, "Gold: " + costs.Gold, new Vector2(16, 366), Color.White);
-                    spriteBatch.DrawString(font, "Wood: " + costs.Wood, new Vector2(16, 381), Color.White);
-                    spriteBatch.DrawString(font, "Stone: " + costs.Stone, new Vector2(16, 396), Color.White);
-                    spriteBatch.DrawString(font, "Workers: " + costs.Workers, new Vector2(16, 411), Color.White);
-                    spriteBatch.DrawString(font, "Gold Upkeep: " + costs.GoldUpkeep, new Vector2(16, 426), Color.White);
-                    spriteBatch.DrawString(font, "Wood Upkeep: " + costs.WoodUpkeep, new Vector2(16, 441), Color.White);
-                    spriteBatch.DrawString(font, "Stone Upkeep: " + costs.StoneUpkeep, new Vector2(16, 456), Color.White);
-                }
+                Drawing.DrawMainMenu(spriteRender, mainButtons);
                 spriteBatch.End();
             }
 

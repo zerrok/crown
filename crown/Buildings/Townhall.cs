@@ -15,6 +15,13 @@ namespace crown.Buildings {
             }
         }
 
+        public override void Initialize() {
+            base.Initialize();
+
+            Name = "Town hall";
+            Description = "The mayor resides here with his staff. \n There is also a big storage room in the back.";
+        }
+
         public override void UpdateSprite() {
             if (BuildingState == 0)
                 SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect);

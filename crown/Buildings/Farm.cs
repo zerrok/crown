@@ -8,6 +8,13 @@ namespace crown.Buildings {
         public Farm(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, BuildingTypes type, Costs costs) : base(spriteFrame, position, rect, type, costs) {
         }
 
+        public override void Initialize(){
+            base.Initialize();
+
+            Name = "Farm";
+            Description = "Provides food for the people.";
+        }
+
         public override void Update() {
             if (BuildingState == 4) {
                 Initialize();

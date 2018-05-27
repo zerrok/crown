@@ -15,7 +15,7 @@ namespace crown {
         int steps;
         int speed;
 
-        public enum Direction { INIT, LEFT, RIGHT, UP, DOWN };
+        public enum Direction { Init, Left, Right, Up, Down };
 
         public Citizen(Vector2 pos, SpriteFrame spriteFrame) {
             this.pos = pos;
@@ -23,7 +23,7 @@ namespace crown {
             int randomDir = random.Next(1, 5);
             rect = new Rectangle((int)pos.X + 8, (int)pos.Y + 8, 16, 16);
 
-            currentDirection = Direction.INIT;
+            currentDirection = Direction.Init;
             steps = 0;
             speed = 1;
             lastDirection = currentDirection;
@@ -31,7 +31,7 @@ namespace crown {
 
         public void Movement() {
             List<Direction> possible = new List<Direction>();
-            if (lastDirection == Direction.INIT) {
+            if (lastDirection == Direction.Init) {
                 SetNextDirection(possible);
             }
             // Walk the size of one texture in a direction
@@ -42,19 +42,19 @@ namespace crown {
                 steps = 0;
             }
 
-            if (currentDirection == Direction.RIGHT) {
+            if (currentDirection == Direction.Right) {
                 pos.X += speed;
                 rect.X += speed;
             }
-            if (currentDirection == Direction.LEFT) {
+            if (currentDirection == Direction.Left) {
                 pos.X -= speed;
                 rect.X -= speed;
             }
-            if (currentDirection == Direction.UP) {
+            if (currentDirection == Direction.Up) {
                 pos.Y -= speed;
                 rect.Y -= speed;
             }
-            if (currentDirection == Direction.DOWN) {
+            if (currentDirection == Direction.Down) {
                 pos.Y += speed;
                 rect.Y += speed;
             }
@@ -97,24 +97,24 @@ namespace crown {
 
         private void CheckForFutureIntersection(List<Direction> possible, int x, int y) {
             if (roads[x + 1, y] != null && roads[x + 1, y].Rect.Intersects(new Rectangle(rect.X + tileSize, rect.Y, rect.Width, rect.Height)))
-                possible.Add(Direction.RIGHT);
+                possible.Add(Direction.Right);
             if (roads[x - 1, y] != null && roads[x - 1, y].Rect.Intersects(new Rectangle(rect.X - tileSize, rect.Y, rect.Width, rect.Height)))
-                possible.Add(Direction.LEFT);
+                possible.Add(Direction.Left);
             if (roads[x, y - 1] != null && roads[x, y - 1].Rect.Intersects(new Rectangle(rect.X, rect.Y - tileSize, rect.Width, rect.Height)))
-                possible.Add(Direction.UP);
+                possible.Add(Direction.Up);
             if (roads[x, y + 1] != null && roads[x, y + 1].Rect.Intersects(new Rectangle(rect.X, rect.Y + tileSize, rect.Width, rect.Height)))
-                possible.Add(Direction.DOWN);
+                possible.Add(Direction.Down);
         }
 
         private void ReverseDirection() {
-            if (lastDirection == Direction.RIGHT)
-                currentDirection = Direction.LEFT;
-            if (lastDirection == Direction.LEFT)
-                currentDirection = Direction.RIGHT;
-            if (lastDirection == Direction.UP)
-                currentDirection = Direction.DOWN;
-            if (lastDirection == Direction.DOWN)
-                currentDirection = Direction.UP;
+            if (lastDirection == Direction.Right)
+                currentDirection = Direction.Left;
+            if (lastDirection == Direction.Left)
+                currentDirection = Direction.Right;
+            if (lastDirection == Direction.Up)
+                currentDirection = Direction.Down;
+            if (lastDirection == Direction.Down)
+                currentDirection = Direction.Up;
         }
 
         public SpriteFrame SpriteFrame { get => spriteFrame; set => spriteFrame = value; }
