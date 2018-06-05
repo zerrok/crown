@@ -4,7 +4,7 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:544b0e2b7c80af96d05287489ff3d1a1:1bc74cd108f95b9f2e8875a574fa8c54:905072b72ea92acf8fa5b0216a681f3c$
+ * $TexturePacker:SmartUpdate:5779f026ec706d6e1422789d42e1e11b:540145dc8686f825310407a78170e005:905072b72ea92acf8fa5b0216a681f3c$
  *
  */
 namespace TexturePackerMonoGameDefinitions
