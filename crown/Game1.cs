@@ -52,7 +52,7 @@ namespace crown {
             Woodcutter, Quarry, Storage, Scientist
         }
 
-        public MouseAction mouseAction = MouseAction.Nothing;
+        public static MouseAction mouseAction = MouseAction.Nothing;
         Vector2 mousePositionInWorld;
 
         // Saves the last mouse state

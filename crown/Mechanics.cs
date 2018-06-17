@@ -76,6 +76,7 @@ namespace crown {
             DoomClock += 0.02f;
 
             CitizenUpdates();
+            UIUpdates();
 
             // Things are happening every doomlock tick
             if (DoomClock > 1f) {
@@ -83,6 +84,70 @@ namespace crown {
                 ResourceUpdates();
                 InteractiveUpdates();
                 DoomClock = 0f;
+            }
+        }
+
+        private void UIUpdates() {
+            foreach (UIElement ui in uiElements) {
+                if (ui.Type == UIElement.ElementType.Resources) {
+                    if (ui.Resource1 == UIElement.Resource.Population) {
+                        ui.TextBottom = mechanics.Population + " / " + mechanics.MaxPop;
+                    }
+                    if (ui.Resource1 == UIElement.Resource.Workers) {
+                        ui.TextBottom = mechanics.Workers.ToString();
+                    }
+                    if (ui.Resource1 == UIElement.Resource.Gold) {
+                        ui.TextTop = mechanics.Gold.ToString();
+                        ui.TextBottom = mechanics.GoldDelta.ToString();
+                    }
+                    if (ui.Resource1 == UIElement.Resource.Wood) {
+                        ui.TextTop = mechanics.Wood + " / " + mechanics.WoodStorage;
+                        ui.TextBottom = mechanics.WoodDelta.ToString();
+                    }
+                    if (ui.Resource1 == UIElement.Resource.Stone) {
+                        ui.TextTop = mechanics.Stone + " / " + mechanics.StoneStorage;
+                        ui.TextBottom = mechanics.StoneDelta.ToString();
+                    }
+                    if (ui.Resource1 == UIElement.Resource.Food) {
+                        ui.TextTop = mechanics.Food + " / " + mechanics.FoodStorage;
+                        ui.TextBottom = mechanics.FoodDelta.ToString();
+                    }
+                }
+                if (ui.Type == UIElement.ElementType.MenuSelection) {
+                    Costs costs = null;
+                    if (mouseAction == MouseAction.House)
+                        costs = Costs.HouseCosts();
+                    if (mouseAction == MouseAction.Farm)
+                        costs = Costs.FarmCosts();
+                    if (mouseAction == MouseAction.Woodcutter)
+                        costs = Costs.WoodcutterCosts();
+                    if (mouseAction == MouseAction.Quarry)
+                        costs = Costs.QuarryCosts();
+                    if (mouseAction == MouseAction.Scientist)
+                        costs = Costs.ScientistCosts();
+                    if (costs != null) {
+                        if (ui.Resource1 == UIElement.Resource.Food) {
+                            ui.TextTop = costs.Food.ToString();
+                            ui.TextBottom = costs.FoodUpkeep.ToString();
+                        }
+                        if (ui.Resource1 == UIElement.Resource.Stone) {
+                            ui.TextTop = costs.Stone.ToString();
+                            ui.TextBottom = costs.StoneUpkeep.ToString();
+                        }
+                        if (ui.Resource1 == UIElement.Resource.Wood) {
+                            ui.TextTop = costs.Wood.ToString();
+                            ui.TextBottom = costs.WoodUpkeep.ToString();
+                        }
+                        if (ui.Resource1 == UIElement.Resource.Workers) {
+                            ui.TextTop = "";
+                            ui.TextBottom = costs.Workers.ToString();
+                        }
+                        if (ui.Resource1 == UIElement.Resource.Gold) {
+                            ui.TextTop = costs.Gold.ToString();
+                            ui.TextBottom = costs.GoldUpkeep.ToString();
+                        }
+                    }
+                }
             }
         }
 

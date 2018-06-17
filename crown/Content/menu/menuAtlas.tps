@@ -252,29 +252,19 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">menu1.png</key>
+            <key type="filename">food.png</key>
+            <key type="filename">gold.png</key>
+            <key type="filename">stone.png</key>
+            <key type="filename">wood.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>75,24,150,47</rect>
+                <rect>42,12,83,24</rect>
                 <key>scale9Paddings</key>
-                <rect>75,24,150,47</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">menu2.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>100,75,200,150</rect>
-                <key>scale9Paddings</key>
-                <rect>100,75,200,150</rect>
+                <rect>42,12,83,24</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -291,6 +281,20 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">pop.png</key>
+            <key type="filename">workers.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>26,12,51,24</rect>
+                <key>scale9Paddings</key>
+                <rect>26,12,51,24</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -303,12 +307,16 @@
             <filename>buttonfarm.png</filename>
             <filename>buttonquarry.png</filename>
             <filename>buttonscientist.png</filename>
-            <filename>menu1.png</filename>
-            <filename>menu2.png</filename>
             <filename>menu3.png</filename>
             <filename>quitButton.png</filename>
             <filename>startButton.png</filename>
             <filename>continueButton.png</filename>
+            <filename>food.png</filename>
+            <filename>gold.png</filename>
+            <filename>pop.png</filename>
+            <filename>stone.png</filename>
+            <filename>wood.png</filename>
+            <filename>workers.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

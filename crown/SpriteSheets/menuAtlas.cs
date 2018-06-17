@@ -4,7 +4,7 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:2a1d686be974a61abea25bd848c0b4f4:0ccfc19f96c2d96c479571e5dcbee5f3:bd0f4c71b5cb59f99b3ec3385caa636d$
+ * $TexturePacker:SmartUpdate:adacc5834d620fb1253224dde28493c4:9aa7c3a877c41d6aac517646e307435e:bd0f4c71b5cb59f99b3ec3385caa636d$
  *
  */
 namespace TexturePackerMonoGameDefinitions
@@ -21,10 +21,14 @@ namespace TexturePackerMonoGameDefinitions
 		public const string Buttontownhall = "buttontownhall";
 		public const string Buttonwoodcutter = "buttonwoodcutter";
 		public const string ContinueButton = "continueButton";
-		public const string Menu1 = "menu1";
-		public const string Menu2 = "menu2";
+		public const string Food = "food";
+		public const string Gold = "gold";
 		public const string Menu3 = "menu3";
+		public const string Pop = "pop";
 		public const string QuitButton = "quitButton";
 		public const string StartButton = "startButton";
+		public const string Stone = "stone";
+		public const string Wood = "wood";
+		public const string Workers = "workers";
 	}
 }
