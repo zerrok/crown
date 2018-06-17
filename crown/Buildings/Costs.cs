@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace crown {
+﻿namespace crown {
     public class Costs {
 
         public static Costs HouseCosts() {

@@ -4,7 +4,6 @@ using TexturePackerLoader;
 using static crown.Game1;
 using System.Collections.Generic;
 using crown.Terrain;
-using System.Linq;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace crown {

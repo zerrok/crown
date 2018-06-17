@@ -2,7 +2,6 @@
 using static crown.Game1;
 using Microsoft.Xna.Framework;
 using crown.Terrain;
-using System;
 
 namespace crown {
 
