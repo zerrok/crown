@@ -3,9 +3,9 @@ using TexturePackerLoader;
 using static crown.Game1;
 
 namespace crown.Buildings {
-    class Quarry : Building {
+    class Tavern : Building {
 
-        public Quarry(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, Actions type, Costs costs) : base(spriteFrame, position, rect, type, costs) {
+        public Tavern(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, Actions type, Costs costs) : base(spriteFrame, position, rect, type, costs) {
         }
 
         public override void Update() {
@@ -28,8 +28,8 @@ namespace crown.Buildings {
         public override void Initialize() {
             base.Initialize();
 
-            Name = "Quarry";
-            Description = "Lots of workers are extracting stone \n from the ground. \n Masons are making bricks from the stones.";
+            Name = "Tavern";
+            Description = "Drink and eat here. Fool.";
         }
 
         public override void UpdateSprite() {
@@ -40,7 +40,7 @@ namespace crown.Buildings {
             if (BuildingState == 2)
                 SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.House2);
             if (BuildingState == 3)
-                SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Quarry);
+                SpriteFrame = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.Tavern);
         }
 
     }

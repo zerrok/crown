@@ -204,11 +204,13 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">buttonbrewery.png</key>
             <key type="filename">buttonfarm.png</key>
             <key type="filename">buttonquarry.png</key>
             <key type="filename">buttonroad.png</key>
             <key type="filename">buttonscientist.png</key>
             <key type="filename">buttonstorage.png</key>
+            <key type="filename">buttontavern.png</key>
             <key type="filename">buttonwoodcutter.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -317,6 +319,8 @@
             <filename>stone.png</filename>
             <filename>wood.png</filename>
             <filename>workers.png</filename>
+            <filename>buttonbrewery.png</filename>
+            <filename>buttontavern.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

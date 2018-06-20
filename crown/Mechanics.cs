@@ -114,15 +114,15 @@ namespace crown {
                 }
                 if (ui.Type == UIElement.ElementType.MenuSelection) {
                     Costs costs = null;
-                    if (mouseAction == MouseAction.House)
+                    if (mouseAction == Actions.House)
                         costs = Costs.HouseCosts();
-                    if (mouseAction == MouseAction.Farm)
+                    if (mouseAction == Actions.Farm)
                         costs = Costs.FarmCosts();
-                    if (mouseAction == MouseAction.Woodcutter)
+                    if (mouseAction == Actions.Woodcutter)
                         costs = Costs.WoodcutterCosts();
-                    if (mouseAction == MouseAction.Quarry)
+                    if (mouseAction == Actions.Quarry)
                         costs = Costs.QuarryCosts();
-                    if (mouseAction == MouseAction.Scientist)
+                    if (mouseAction == Actions.Scientist)
                         costs = Costs.ScientistCosts();
                     if (costs != null) {
                         if (ui.Resource1 == UIElement.Resource.Food) {
@@ -228,7 +228,7 @@ namespace crown {
         public int GetMaxPop() {
             int count = 0;
             foreach (Building building in Buildings) {
-                if (building.Type == Building.BuildingTypes.House)
+                if (building.Type == Actions.House)
                     count++;
             }
             return count * 2;

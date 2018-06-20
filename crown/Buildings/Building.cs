@@ -16,22 +16,12 @@ namespace crown {
         int buildingState;
         int buildingTick;
         int actionTick;
-        BuildingTypes type;
+        Actions type;
 
         string name;
         string description;
 
         Costs costs;
-
-        public enum BuildingTypes {
-            Townhall,
-            House,
-            Woodcutter,
-            Farm,
-            Quarry,
-            Scientist,
-            Storage
-        };
 
         public SpriteFrame SpriteFrame { get => spriteFrame; set => spriteFrame = value; }
         public Vector2 Position { get => position; set => position = value; }
@@ -40,7 +30,7 @@ namespace crown {
         public int BuildingState { get => buildingState; set => buildingState = value; }
         public int BuildingTick { get => buildingTick; set => buildingTick = value; }
         public int ActionTick { get => actionTick; set => actionTick = value; }
-        public BuildingTypes Type { get => type; set => type = value; }
+        public Actions Type { get => type; set => type = value; }
         public Costs Costs { get => costs; set => costs = value; }
         public string Description { get => description; set => description = value; }
         public string Name { get => name; set => name = value; }
@@ -52,12 +42,9 @@ namespace crown {
             mechanics.FoodDelta += Costs.FoodUpkeep;
             mechanics.WoodDelta += Costs.WoodUpkeep;
             mechanics.StoneDelta += Costs.StoneUpkeep;
-
-            description = "default";
-            name = "default";
         }
 
-        public Building(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, BuildingTypes type, Costs costs) {
+        public Building(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, Actions type, Costs costs) {
             SpriteFrame = spriteFrame;
             Position = position;
             Rect = rect;
@@ -65,7 +52,7 @@ namespace crown {
 
             // For slowly building or degrading the building
             BuildingState = 0;
-            if (type == BuildingTypes.Townhall)
+            if (type == Actions.Townhall)
                 BuildingState = 2;
             BuildingTick = 0;
             ActionTick = 0;
@@ -73,6 +60,9 @@ namespace crown {
             Costs = costs;
 
             DeductCosts(costs);
+
+            description = "Is being built";
+            name = "Something";
         }
 
         public void DeductCosts(Costs costs) {
@@ -81,7 +71,7 @@ namespace crown {
             mechanics.Stone += costs.Stone;
             mechanics.Wood += costs.Wood;
             mechanics.Food += costs.Food;
-            if (Type != BuildingTypes.House)
+            if (Type != Actions.House)
                 mechanics.Workers += costs.Workers;
         }
 

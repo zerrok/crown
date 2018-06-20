@@ -57,7 +57,7 @@ namespace crown {
                 mechanics.Buildings.Add(new Townhall(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect)
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
                                       , rectangle
-                                      , Building.BuildingTypes.Townhall
+                                      , Actions.Townhall
                                       , costs
                                       ));
 
@@ -77,7 +77,7 @@ namespace crown {
             }
         }
 
-        internal static void BuildQuarry(Tile tile, Building.BuildingTypes type, Costs costs) {
+        internal static void BuildQuarry(Tile tile, Actions type, Costs costs) {
             foreach (Interactive inter in interactives) {
                 if (inter.Type == Interactive.IntType.STONE) {
                     if (new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize * 2, tileSize * 2).Intersects(inter.Rect)) {
@@ -88,7 +88,7 @@ namespace crown {
             }
         }
 
-        public static void BuildLargeBuilding(Tile tile, Building.BuildingTypes type, Costs costs) {
+        public static void BuildLargeBuilding(Tile tile, Actions type, Costs costs) {
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize * 2, tileSize * 2);
             int tilePosX = (tile.Rect.X) / tileSize + 1;
@@ -97,7 +97,7 @@ namespace crown {
             isAllowed = IsBesidesRoad(isAllowed, rectangle, false);
             isAllowed = CheckCosts(costs, isAllowed);
 
-            if (type != Building.BuildingTypes.Quarry)
+            if (type != Actions.Quarry)
                 isAllowed = CheckIntersections(isAllowed, rectangle);
 
             if (tile.Type.Contains("grass")
@@ -106,7 +106,7 @@ namespace crown {
                 && tileMap[tilePosX, tile.Rect.Y / tileSize].IsClear
                 && tileMap[tilePosX, tilePosY].IsClear
                 && tileMap[tile.Rect.X / tileSize, tilePosY].IsClear)
-                || type == Building.BuildingTypes.Quarry)) {
+                || type == Actions.Quarry)) {
                 mechanics.Buildings.Add(GetLargeBuilding(buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect)
                                       , new Vector2(tile.Rect.X, tile.Rect.Y)
                                       , rectangle
@@ -124,7 +124,7 @@ namespace crown {
             }
         }
 
-        public static void BuildSmallBuilding(Tile tile, Building.BuildingTypes type, Costs costs) {
+        public static void BuildSmallBuilding(Tile tile, Actions type, Costs costs) {
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize, tileSize);
 
@@ -145,21 +145,27 @@ namespace crown {
             }
         }
 
-        private static Building GetLargeBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Building.BuildingTypes type, Costs costs) {
-            if (type == Building.BuildingTypes.Farm)
+        private static Building GetLargeBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Actions type, Costs costs) {
+            if (type == Actions.Farm)
                 return new Farm(spriteFrame, pos, rect, type, costs);
-            if (type == Building.BuildingTypes.Scientist)
+            if (type == Actions.Scientist)
                 return new Scientist(spriteFrame, pos, rect, type, costs);
-            if (type == Building.BuildingTypes.Quarry)
+            if (type == Actions.Quarry)
                 return new Quarry(spriteFrame, pos, rect, type, costs);
+            if (type == Actions.Tavern)
+                return new Tavern(spriteFrame, pos, rect, type, costs);
+            if (type == Actions.Brewery)
+                return new Brewery(spriteFrame, pos, rect, type, costs);
+            if (type == Actions.Storage)
+                return new Storage(spriteFrame, pos, rect, type, costs);
 
             return null;
         }
 
-        private static Building GetSmallBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Building.BuildingTypes type, Costs costs) {
-            if (type == Building.BuildingTypes.House)
+        private static Building GetSmallBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Actions type, Costs costs) {
+            if (type == Actions.House)
                 return new House(spriteFrame, pos, rect, type, costs);
-            if (type == Building.BuildingTypes.Woodcutter)
+            if (type == Actions.Woodcutter)
                 return new Woodcutter(spriteFrame, pos, rect, type, costs);
 
             return null;

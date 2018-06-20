@@ -4,12 +4,13 @@
 # To learn how to import these sprites into your MonoGame project visit:
 # http://www.codeandweb.com/texturepacker/monogame
 #
-# Sprite sheet: buildingAtlas.png (912 x 1000)
-# $TexturePacker:SmartUpdate:7bdff50d2609cf5f83f8b92c3a5a48a2:353759734809b0eba55f293d71d1e88a:905072b72ea92acf8fa5b0216a681f3c$
+# Sprite sheet: buildingAtlas.png (912 x 1292)
+# $TexturePacker:SmartUpdate:c19bec8caead4f6d057e712a87a9b881:f33586e05b06cca817ec12712be8f035:905072b72ea92acf8fa5b0216a681f3c$
 #
 
-farm0;0;517;421;256;288;256;288;0.5;0.5
-farm1;0;1;711;256;288;256;288;0.5;0.5
+brewery;0;1;1001;256;288;256;288;0.5;0.5
+farm0;0;259;1001;256;288;256;288;0.5;0.5
+farm1;0;517;1001;256;288;256;288;0.5;0.5
 farm2;0;259;711;256;288;256;288;0.5;0.5
 farm4;0;517;711;256;288;256;288;0.5;0.5
 house;0;261;163;128;160;128;160;0.5;0.5
@@ -23,7 +24,9 @@ house7;0;651;1;128;160;128;160;0.5;0.5
 house8;0;521;1;128;160;128;160;0.5;0.5
 largeSelect;0;391;163;256;256;256;256;0.5;0.5
 quarry;0;649;163;256;256;256;256;0.5;0.5
-scientist;0;259;421;256;288;256;288;0.5;0.5
+scientist;0;1;711;256;288;256;288;0.5;0.5
 smallSelect;0;1;1;128;128;128;128;0.5;0.5
+storage;0;517;421;256;288;256;288;0.5;0.5
+tavern;0;259;421;256;288;256;288;0.5;0.5
 townhall;0;1;421;256;288;256;288;0.5;0.5
 woodcutter4;0;1;163;128;160;128;160;0.5;0.5

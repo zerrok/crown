@@ -8,6 +8,14 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace crown {
+
+    public enum Actions {
+        // Buttons only
+        Main, Start, Quit, Continue,
+        // Buttons, buildings and mouseactions
+        Farm, House, Townhall, Nothing, Road, Woodcutter, Quarry, Storage, Scientist, Tavern, Brewery
+    }
+
     public class Game1 : Game {
 
         public static GraphicsDeviceManager graphics;
@@ -36,8 +44,8 @@ namespace crown {
         public static List<UIElement> uiElements;
         public static List<Citizen> citizens;
 
-        public enum GameState { MENU, GAME };
-        public GameState gameState = GameState.MENU;
+        public enum GameState { Menu, Game };
+        public GameState gameState = GameState.Menu;
 
         // Seed for Random Generation
         public static Random random = new Random();
@@ -46,13 +54,7 @@ namespace crown {
 
         SpriteBatch spriteBatch;
 
-        // Which action is the mouse currently doing
-        public enum MouseAction {
-            Farm, House, Townhall, Nothing, Road,
-            Woodcutter, Quarry, Storage, Scientist
-        }
-
-        public static MouseAction mouseAction = MouseAction.Nothing;
+        public static Actions mouseAction = Actions.Nothing;
         Vector2 mousePositionInWorld;
 
         // Saves the last mouse state
@@ -130,10 +132,10 @@ namespace crown {
             // Exit the game
             KeyboardState keyboardState = Keyboard.GetState();
             if (oldKeyState.IsKeyUp(Keys.Escape) && keyboardState.IsKeyDown(Keys.Escape)) {
-                if (gameState == GameState.GAME)
-                    gameState = GameState.MENU;
-                else if (gameState == GameState.MENU)
-                    gameState = GameState.GAME;
+                if (gameState == GameState.Game)
+                    gameState = GameState.Menu;
+                else if (gameState == GameState.Menu)
+                    gameState = GameState.Game;
             }
 
             // Keyboard Controls
@@ -147,14 +149,14 @@ namespace crown {
 
             // Cancel current action
             if (mouseState.RightButton == ButtonState.Pressed) {
-                mouseAction = MouseAction.Nothing;
+                mouseAction = Actions.Nothing;
                 selectedBuilding = null;
             }
 
             oldState = mouseState;
             oldKeyState = keyboardState;
 
-            if (gameState == GameState.GAME)
+            if (gameState == GameState.Game)
                 mechanics.UpdateMechanics();
 
             base.Update(gameTime);
@@ -166,32 +168,32 @@ namespace crown {
 
             if (mainRect != null)
                 if (!mainRect.Contains(mousePoint)
-                    && (oldState.LeftButton == ButtonState.Released || mouseAction == MouseAction.Road) && gameState == GameState.GAME) {
+                    && (oldState.LeftButton == ButtonState.Released || mouseAction == Actions.Road) && gameState == GameState.Game) {
                     // Mouse interaction with the game world
-                    if (mouseAction != MouseAction.Nothing) {
+                    if (mouseAction != Actions.Nothing) {
                         mouseAction = Controls.BuildStuff(mouseAction, mousePositionInWorld);
                     } else {
                         Controls.InteractWithStuff(mousePositionInWorld);
                     }
 
                     // Mouse interaction with the menu
-                } else if (mainRect.Contains(mousePoint) && gameState == GameState.GAME) {
+                } else if (mainRect.Contains(mousePoint) && gameState == GameState.Game) {
                     MenuControls(mousePoint);
                     selectedBuilding = null;
-                } else if (gameState == GameState.MENU) {
+                } else if (gameState == GameState.Menu) {
                     foreach (Button button in mainButtons)
                         if (button.Rect.Contains(mousePoint)) {
-                            if (button.Type == Button.ButtonType.Start) {
+                            if (button.Action == Actions.Start) {
                                 InitializeGame();
 
-                                gameState = GameState.GAME;
+                                gameState = GameState.Game;
                             }
-                            if (button.Type == Button.ButtonType.Quit) {
+                            if (button.Action == Actions.Quit) {
                                 UnloadContent();
                                 Exit();
                             }
-                            if (button.Type == Button.ButtonType.Continue) {
-                                gameState = GameState.GAME;
+                            if (button.Action == Actions.Continue) {
+                                gameState = GameState.Game;
                             }
                         }
                 }
@@ -227,20 +229,7 @@ namespace crown {
         private void MenuControls(Point mousePoint) {
             foreach (Button button in buttons)
                 if (button.Rect.Contains(mousePoint)) {
-                    if (button.Type == Button.ButtonType.Townhall)
-                        mouseAction = MouseAction.Townhall;
-                    else if (button.Type == Button.ButtonType.Road)
-                        mouseAction = MouseAction.Road;
-                    else if (button.Type == Button.ButtonType.House)
-                        mouseAction = MouseAction.House;
-                    else if (button.Type == Button.ButtonType.Farm)
-                        mouseAction = MouseAction.Farm;
-                    else if (button.Type == Button.ButtonType.Woodcutter)
-                        mouseAction = MouseAction.Woodcutter;
-                    else if (button.Type == Button.ButtonType.Quarry)
-                        mouseAction = MouseAction.Quarry;
-                    else if (button.Type == Button.ButtonType.Scientist)
-                        mouseAction = MouseAction.Scientist;
+                        mouseAction = button.Action;
                 }
         }
 
@@ -260,11 +249,11 @@ namespace crown {
             Drawing.DrawMouseSelection(spriteRender, mousePositionInWorld, mouseAction);
             spriteBatch.End();
 
-            if (gameState == GameState.GAME) {
+            if (gameState == GameState.Game) {
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
                 Drawing.DrawMenu(spriteRender, buttons, spriteBatch, mouseAction);
                 spriteBatch.End();
-            } else if (gameState == GameState.MENU) {
+            } else if (gameState == GameState.Menu) {
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, null);
                 Drawing.DrawMainMenu(spriteRender, mainButtons);
                 spriteBatch.End();

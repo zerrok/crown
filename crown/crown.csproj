@@ -41,6 +41,9 @@
     <Compile Include="Buildings\Building.cs" />
     <Compile Include="Buildings\Costs.cs" />
     <Compile Include="Buildings\Farm.cs" />
+    <Compile Include="Buildings\Brewery.cs" />
+    <Compile Include="Buildings\Storage.cs" />
+    <Compile Include="Buildings\Tavern.cs" />
     <Compile Include="Buildings\Scientist.cs" />
     <Compile Include="Buildings\Quarry.cs" />
     <Compile Include="Buildings\Woodcutter.cs" />

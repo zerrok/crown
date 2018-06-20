@@ -4,26 +4,28 @@
 # To learn how to import these sprites into your MonoGame project visit:
 # http://www.codeandweb.com/texturepacker/monogame
 #
-# Sprite sheet: menuAtlas.png (464 x 720)
-# $TexturePacker:SmartUpdate:adacc5834d620fb1253224dde28493c4:9aa7c3a877c41d6aac517646e307435e:bd0f4c71b5cb59f99b3ec3385caa636d$
+# Sprite sheet: menuAtlas.png (440 x 796)
+# $TexturePacker:SmartUpdate:198365c93d991a5637cc559d4df68b04:c466d6cb29266bbc8fc4bc51e8ddcf3a:bd0f4c71b5cb59f99b3ec3385caa636d$
 #
 
-buttonfarm;0;78;101;75;75;75;75;0.5;0.5
-buttonfarmland;0;155;101;75;75;75;75;0.5;0.5
-buttonhouse;0;232;101;75;75;75;75;0.5;0.5
-buttonquarry;0;386;101;75;75;75;75;0.5;0.5
-buttonroad;0;155;178;75;75;75;75;0.5;0.5
-buttonscientist;0;1;178;75;75;75;75;0.5;0.5
-buttonstorage;0;78;178;75;75;75;75;0.5;0.5
-buttontownhall;0;309;101;75;75;75;75;0.5;0.5
-buttonwoodcutter;0;1;101;75;75;75;75;0.5;0.5
-continueButton;0;232;178;218;113;218;113;0.5;0.5
+buttonbrewery;0;1;101;75;75;75;75;0.5;0.5
+buttonfarm;0;1;178;75;75;75;75;0.5;0.5
+buttonfarmland;0;78;178;75;75;75;75;0.5;0.5
+buttonhouse;0;155;178;75;75;75;75;0.5;0.5
+buttonquarry;0;232;101;75;75;75;75;0.5;0.5
+buttonroad;0;232;178;75;75;75;75;0.5;0.5
+buttonscientist;0;1;255;75;75;75;75;0.5;0.5
+buttonstorage;0;309;178;75;75;75;75;0.5;0.5
+buttontavern;0;309;101;75;75;75;75;0.5;0.5
+buttontownhall;0;78;101;75;75;75;75;0.5;0.5
+buttonwoodcutter;0;155;101;75;75;75;75;0.5;0.5
+continueButton;0;221;370;218;113;218;113;0.5;0.5
 food;0;1;1;166;48;166;48;0.5;0.5
-gold;0;169;1;166;48;166;48;0.5;0.5
-menu3;0;1;408;408;308;408;308;0.5;0.5
-pop;0;337;1;102;48;102;48;0.5;0.5
-quitButton;0;221;293;218;113;218;113;0.5;0.5
-startButton;0;1;293;218;113;218;113;0.5;0.5
-stone;0;273;51;166;48;166;48;0.5;0.5
-wood;0;1;51;166;48;166;48;0.5;0.5
+gold;0;273;1;166;48;166;48;0.5;0.5
+menu3;0;1;485;408;308;408;308;0.5;0.5
+pop;0;169;1;102;48;102;48;0.5;0.5
+quitButton;0;1;370;218;113;218;113;0.5;0.5
+startButton;0;78;255;218;113;218;113;0.5;0.5
+stone;0;1;51;166;48;166;48;0.5;0.5
+wood;0;273;51;166;48;166;48;0.5;0.5
 workers;0;169;51;102;48;102;48;0.5;0.5

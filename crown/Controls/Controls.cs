@@ -8,35 +8,44 @@ using static crown.Game1;
 namespace crown {
     public class Controls {
 
-        public static MouseAction BuildStuff(MouseAction mouseAction, Vector2 mousePositionInWorld) {
+        public static Actions BuildStuff(Actions mouseAction, Vector2 mousePositionInWorld) {
             foreach (Tile tile in tileMap)
                 if (tile != null && tile.Rect.Contains(mousePositionInWorld)) {
-                    if (mouseAction == MouseAction.Townhall) {
+                    if (mouseAction == Actions.Townhall) {
                         // Only allowed to build it once
                         foreach (Building building in mechanics.Buildings)
-                            if (building.Type == Building.BuildingTypes.Townhall) {
-                                mouseAction = MouseAction.Nothing;
+                            if (building.Type == Actions.Townhall) {
+                                mouseAction = Actions.Nothing;
                                 return mouseAction;
                             }
                         BuildingOperations.BuildTownHall(tile, new Costs(0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
-                        mouseAction = MouseAction.Nothing;
+                        mouseAction = Actions.Nothing;
                     }
-                    if (mouseAction == MouseAction.House) {
-                        BuildingOperations.BuildSmallBuilding(tile, Building.BuildingTypes.House, Costs.HouseCosts());
+                    if (mouseAction == Actions.House) {
+                        BuildingOperations.BuildSmallBuilding(tile, mouseAction, Costs.HouseCosts());
                     }
-                    if (mouseAction == MouseAction.Farm) {
-                        BuildingOperations.BuildLargeBuilding(tile, Building.BuildingTypes.Farm, Costs.FarmCosts());
+                    if (mouseAction == Actions.Farm) {
+                        BuildingOperations.BuildLargeBuilding(tile, mouseAction, Costs.FarmCosts());
                     }
-                    if (mouseAction == MouseAction.Woodcutter) {
-                        BuildingOperations.BuildSmallBuilding(tile, Building.BuildingTypes.Woodcutter, Costs.WoodcutterCosts());
+                    if (mouseAction == Actions.Woodcutter) {
+                        BuildingOperations.BuildSmallBuilding(tile, mouseAction, Costs.WoodcutterCosts());
                     }
-                    if (mouseAction == MouseAction.Quarry) {
-                        BuildingOperations.BuildQuarry(tile, Building.BuildingTypes.Quarry, Costs.WoodcutterCosts());
+                    if (mouseAction == Actions.Quarry) {
+                        BuildingOperations.BuildQuarry(tile, mouseAction, Costs.WoodcutterCosts());
                     }
-                    if (mouseAction == MouseAction.Scientist) {
-                        BuildingOperations.BuildLargeBuilding(tile, Building.BuildingTypes.Scientist, Costs.ScientistCosts());
+                    if (mouseAction == Actions.Scientist) {
+                        BuildingOperations.BuildLargeBuilding(tile, mouseAction, Costs.ScientistCosts());
                     }
-                    if (mouseAction == MouseAction.Road) {
+                    if (mouseAction == Actions.Brewery) {
+                        BuildingOperations.BuildLargeBuilding(tile, mouseAction, Costs.BreweryCosts());
+                    }
+                    if (mouseAction == Actions.Tavern) {
+                        BuildingOperations.BuildLargeBuilding(tile, mouseAction, Costs.TavernCosts());
+                    }
+                    if (mouseAction == Actions.Storage) {
+                        BuildingOperations.BuildLargeBuilding(tile, mouseAction, Costs.StorageCosts());
+                    }
+                    if (mouseAction == Actions.Road) {
                         BuildingOperations.BuildRoad(tile, false);
                     }
 

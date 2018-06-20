@@ -53,7 +53,7 @@
                              0);   // FoodUpkeep
         }
 
-        internal static Costs ScientistCosts() {
+        public static Costs ScientistCosts() {
             return new Costs(0,     // Stone 
                              -100,    // Wood
                              -500,   // Gold
@@ -64,6 +64,44 @@
                              -10,     // WoodUpkeep
                              -8,     // StoneUpkeep
                              -5);   // FoodUpkeep
+        }
+        public static Costs TavernCosts() {
+            return new Costs(0,     // Stone 
+                             0,    // Wood
+                             0,   // Gold
+                             0,     // Workers
+                             0,     // Population
+                             0,     // Food
+                             0,     // GoldUpkeep
+                             0,     // WoodUpkeep
+                             0,     // StoneUpkeep
+                             0);   // FoodUpkeep
+        }
+
+        public static Costs BreweryCosts() {
+            return new Costs(0,     // Stone 
+                             0,    // Wood
+                             0,   // Gold
+                             0,     // Workers
+                             0,     // Population
+                             0,     // Food
+                             0,     // GoldUpkeep
+                             0,     // WoodUpkeep
+                             0,     // StoneUpkeep
+                             0);   // FoodUpkeep
+        }
+
+        public static Costs StorageCosts() {
+            return new Costs(0,     // Stone 
+                             0,    // Wood
+                             0,   // Gold
+                             0,     // Workers
+                             0,     // Population
+                             0,     // Food
+                             0,     // GoldUpkeep
+                             0,     // WoodUpkeep
+                             0,     // StoneUpkeep
+                             0);   // FoodUpkeep
         }
 
         int stone;

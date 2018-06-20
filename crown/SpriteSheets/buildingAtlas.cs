@@ -4,13 +4,14 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:7bdff50d2609cf5f83f8b92c3a5a48a2:353759734809b0eba55f293d71d1e88a:905072b72ea92acf8fa5b0216a681f3c$
+ * $TexturePacker:SmartUpdate:c19bec8caead4f6d057e712a87a9b881:f33586e05b06cca817ec12712be8f035:905072b72ea92acf8fa5b0216a681f3c$
  *
  */
 namespace TexturePackerMonoGameDefinitions
 {
 	public class buildingAtlas
 	{
+		public const string Brewery = "brewery";
 		public const string Farm0 = "farm0";
 		public const string Farm1 = "farm1";
 		public const string Farm2 = "farm2";
@@ -28,6 +29,8 @@ namespace TexturePackerMonoGameDefinitions
 		public const string Quarry = "quarry";
 		public const string Scientist = "scientist";
 		public const string SmallSelect = "smallSelect";
+		public const string Storage = "storage";
+		public const string Tavern = "tavern";
 		public const string Townhall = "townhall";
 		public const string Woodcutter4 = "woodcutter4";
 	}

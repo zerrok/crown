@@ -5,7 +5,7 @@ using static crown.Game1;
 namespace crown.Buildings {
     class Woodcutter : Building {
 
-        public Woodcutter(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, BuildingTypes type, Costs costs) : base(spriteFrame, position, rect, type, costs) {
+        public Woodcutter(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, Actions type, Costs costs) : base(spriteFrame, position, rect, type, costs) {
         }
 
         public override void Update() {

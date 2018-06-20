@@ -204,11 +204,14 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">brewery.png</key>
             <key type="filename">farm0.png</key>
             <key type="filename">farm1.png</key>
             <key type="filename">farm2.png</key>
             <key type="filename">farm4.png</key>
             <key type="filename">scientist.png</key>
+            <key type="filename">storage.png</key>
+            <key type="filename">tavern.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -305,6 +308,9 @@
             <filename>woodcutter4.png</filename>
             <filename>quarry.png</filename>
             <filename>scientist.png</filename>
+            <filename>brewery.png</filename>
+            <filename>storage.png</filename>
+            <filename>tavern.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

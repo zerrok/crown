@@ -21,12 +21,12 @@ namespace crown {
                 }
         }
 
-        public static void DrawMouseSelection(SpriteRender spriteRender, Vector2 mousePosition, MouseAction mouseAction) {
+        public static void DrawMouseSelection(SpriteRender spriteRender, Vector2 mousePosition, Actions mouseAction) {
             SpriteFrame spriteframe = null;
 
-            if (mouseAction == MouseAction.Townhall || mouseAction == MouseAction.Farm || mouseAction == MouseAction.Scientist || mouseAction == MouseAction.Quarry)
+            if (mouseAction == Actions.Townhall || mouseAction == Actions.Farm || mouseAction == Actions.Scientist || mouseAction == Actions.Quarry || mouseAction == Actions.Brewery || mouseAction == Actions.Tavern || mouseAction == Actions.Storage)
                 spriteframe = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.LargeSelect);
-            if (mouseAction == MouseAction.House || mouseAction == MouseAction.Road || mouseAction == MouseAction.Woodcutter)
+            if (mouseAction == Actions.House || mouseAction == Actions.Road || mouseAction == Actions.Woodcutter)
                 spriteframe = buildingTileSheet.Sprite(TexturePackerMonoGameDefinitions.buildingAtlas.SmallSelect);
 
             foreach (Tile tile in tileMap)
@@ -61,7 +61,7 @@ namespace crown {
             }
         }
 
-        public static void DrawMenu(SpriteRender spriteRender, List<Button> menu, SpriteBatch spriteBatch, MouseAction mouseAction) {
+        public static void DrawMenu(SpriteRender spriteRender, List<Button> menu, SpriteBatch spriteBatch, Actions mouseAction) {
             foreach (UIElement ui in uiElements) {
                 if (ui != null) {
                     if (ui.Type == UIElement.ElementType.Resources) {
@@ -71,7 +71,7 @@ namespace crown {
                     }
                     if (ui.Type == UIElement.ElementType.MenuSelection) {
                         // Draw infos for menu selection
-                        if (mouseAction != MouseAction.Nothing) {
+                        if (mouseAction != Actions.Nothing) {
                             spriteRender.Draw(ui.SpriteFrame, ui.Pos);
                             spriteBatch.DrawString(font, ui.TextTop, new Vector2(ui.Pos.X + (ui.Resource1 != UIElement.Resource.Population && ui.Resource1 != UIElement.Resource.Workers ? 33 : 0), ui.Pos.Y + 4), Color.White);
                             spriteBatch.DrawString(font, ui.TextBottom, new Vector2(ui.Pos.X + (ui.Resource1 != UIElement.Resource.Population && ui.Resource1 != UIElement.Resource.Workers ? 33 : 0), ui.Pos.Y + 29), Color.White);
