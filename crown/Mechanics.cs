@@ -7,45 +7,57 @@ namespace crown {
 
     public class Mechanics {
 
-        int gold;
-        int wood;
-        int stone;
-        int population;
-        int food;
-        int maxPop;
+        double gold;
+        double wood;
+        double stone;
+        double wheat; 
+        double beer;
+        double population;
+        double food;
+        double maxPop;
 
-        int stoneStorage;
-        int foodStorage;
-        int woodStorage;
+        double stoneStorage;
+        double foodStorage;
+        double woodStorage;
+        double wheatStorage;
+        double beerStorage;
 
-        int foodDelta;
-        int goldDelta;
-        int woodDelta;
-        int stoneDelta;
+        double foodDelta;
+        double goldDelta;
+        double woodDelta;
+        double stoneDelta;
+        double wheatDelta;
+        double beerDelta;
+        double workers;
 
-        int workers;
         float doomClock;
         int taxClock;
 
         List<Building> buildings;
 
-        public int Gold { get => gold; set => gold = value; }
-        public int Wood { get => wood; set => wood = value; }
-        public int Stone { get => stone; set => stone = value; }
-        public int Population { get => population; set => population = value; }
-        public int Food { get => food; set => food = value; }
-        public int MaxPop { get => maxPop; set => maxPop = value; }
-        public int StoneStorage { get => stoneStorage; set => stoneStorage = value; }
-        public int FoodStorage { get => foodStorage; set => foodStorage = value; }
-        public int WoodStorage { get => woodStorage; set => woodStorage = value; }
-        public int FoodDelta { get => foodDelta; set => foodDelta = value; }
-        public int GoldDelta { get => goldDelta; set => goldDelta = value; }
-        public int WoodDelta { get => woodDelta; set => woodDelta = value; }
-        public int StoneDelta { get => stoneDelta; set => stoneDelta = value; }
-        public int Workers { get => workers; set => workers = value; }
+        public double Gold { get => gold; set => gold = value; }
+        public double Wood { get => wood; set => wood = value; }
+        public double Stone { get => stone; set => stone = value; }
+        public double Population { get => population; set => population = value; }
+        public double Food { get => food; set => food = value; }
+        public double MaxPop { get => maxPop; set => maxPop = value; }
+        public double StoneStorage { get => stoneStorage; set => stoneStorage = value; }
+        public double FoodStorage { get => foodStorage; set => foodStorage = value; }
+        public double WoodStorage { get => woodStorage; set => woodStorage = value; }
+        public double FoodDelta { get => foodDelta; set => foodDelta = value; }
+        public double GoldDelta { get => goldDelta; set => goldDelta = value; }
+        public double WoodDelta { get => woodDelta; set => woodDelta = value; }
+        public double StoneDelta { get => stoneDelta; set => stoneDelta = value; }
+        public double Workers { get => workers; set => workers = value; }
         public float DoomClock { get => doomClock; set => doomClock = value; }
         public List<Building> Buildings { get => buildings; set => buildings = value; }
         public int TaxClock { get => taxClock; set => taxClock = value; }
+        public double Wheat { get => wheat; set => wheat = value; }
+        public double Beer { get => beer; set => beer = value; }
+        public double WheatDelta { get => wheatDelta; set => wheatDelta = value; }
+        public double BeerDelta { get => beerDelta; set => beerDelta = value; }
+        public double WheatStorage { get => wheatStorage; set => wheatStorage = value; }
+        public double BeerStorage { get => beerStorage; set => beerStorage = value; }
 
         public Mechanics() {
             Gold = 500;
@@ -53,15 +65,21 @@ namespace crown {
             Stone = 0;
             Population = 0;
             Food = 0;
+            Wheat = 0;
+            Beer = 0;
 
             FoodDelta = 0;
             GoldDelta = 0;
             WoodDelta = 0;
             StoneDelta = 0;
+            WheatDelta = 0;
+            BeerDelta = 0;
 
             StoneStorage = 0;
             FoodStorage = 0;
             WoodStorage = 0;
+            BeerStorage = 0;
+            WheatStorage = 0;
 
             DoomClock = 0;
             Buildings = new List<Building>();
@@ -111,6 +129,14 @@ namespace crown {
                         ui.TextTop = mechanics.Food + " / " + mechanics.FoodStorage;
                         ui.TextBottom = mechanics.FoodDelta.ToString();
                     }
+                    if (ui.Resource1 == UIElement.Resource.Beer) {
+                        ui.TextTop = mechanics.Beer + " / " + mechanics.BeerStorage;
+                        ui.TextBottom = mechanics.BeerDelta.ToString();
+                    }
+                    if (ui.Resource1 == UIElement.Resource.Wheat) {
+                        ui.TextTop = mechanics.Wheat + " / " + mechanics.WheatStorage;
+                        ui.TextBottom = mechanics.WheatDelta.ToString();
+                    }
                 }
                 if (ui.Type == UIElement.ElementType.MenuSelection) {
                     Costs costs = null;
@@ -124,6 +150,10 @@ namespace crown {
                         costs = Costs.QuarryCosts();
                     if (mouseAction == Actions.Scientist)
                         costs = Costs.ScientistCosts();
+                    if (mouseAction == Actions.Brewery)
+                        costs = Costs.BreweryCosts();
+                    if (mouseAction == Actions.Tavern)
+                        costs = Costs.TavernCosts();
                     if (costs != null) {
                         if (ui.Resource1 == UIElement.Resource.Food) {
                             ui.TextTop = costs.Food.ToString();
@@ -144,6 +174,14 @@ namespace crown {
                         if (ui.Resource1 == UIElement.Resource.Gold) {
                             ui.TextTop = costs.Gold.ToString();
                             ui.TextBottom = costs.GoldUpkeep.ToString();
+                        }
+                        if (ui.Resource1 == UIElement.Resource.Beer) {
+                            ui.TextTop = costs.Beer.ToString();
+                            ui.TextBottom = costs.BeerUpkeep.ToString();
+                        }
+                        if (ui.Resource1 == UIElement.Resource.Wheat) {
+                            ui.TextTop = costs.Wheat.ToString();
+                            ui.TextBottom = costs.WheatUpkeep.ToString();
                         }
                     }
                 }
@@ -175,6 +213,16 @@ namespace crown {
                     Stone += StoneDelta;
                 else
                     Stone = StoneStorage;
+
+                if (Beer + BeerDelta <= BeerStorage)
+                    Beer += BeerDelta;
+                else
+                    Beer = BeerStorage;
+
+                if (Wheat + WheatDelta <= WheatStorage)
+                    Wheat += WheatDelta;
+                else
+                    Wheat = WheatStorage;
 
                 Gold += GoldDelta;
                 taxClock = 0;

@@ -204,6 +204,24 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">beer.png</key>
+            <key type="filename">food.png</key>
+            <key type="filename">gold.png</key>
+            <key type="filename">stone.png</key>
+            <key type="filename">wheat.png</key>
+            <key type="filename">wood.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>42,12,83,24</rect>
+                <key>scale9Paddings</key>
+                <rect>42,12,83,24</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">buttonbrewery.png</key>
             <key type="filename">buttonfarm.png</key>
             <key type="filename">buttonquarry.png</key>
@@ -251,22 +269,6 @@
                 <rect>55,28,109,57</rect>
                 <key>scale9Paddings</key>
                 <rect>55,28,109,57</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">food.png</key>
-            <key type="filename">gold.png</key>
-            <key type="filename">stone.png</key>
-            <key type="filename">wood.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>42,12,83,24</rect>
-                <key>scale9Paddings</key>
-                <rect>42,12,83,24</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -321,6 +323,8 @@
             <filename>workers.png</filename>
             <filename>buttonbrewery.png</filename>
             <filename>buttontavern.png</filename>
+            <filename>beer.png</filename>
+            <filename>wheat.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

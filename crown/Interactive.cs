@@ -39,7 +39,7 @@ namespace crown {
 
         public void RespawnInteractive() {
             if (Health <= 0) {
-                if (respawnCounter > 25) {
+                if (respawnCounter > 120) {
                     respawnCounter = 0;
                     Health = 1;
                 }

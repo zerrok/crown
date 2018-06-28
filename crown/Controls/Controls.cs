@@ -18,7 +18,7 @@ namespace crown {
                                 mouseAction = Actions.Nothing;
                                 return mouseAction;
                             }
-                        BuildingOperations.BuildTownHall(tile, new Costs(0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+                        BuildingOperations.BuildTownHall(tile, new Costs(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
                         mouseAction = Actions.Nothing;
                     }
                     if (mouseAction == Actions.House) {

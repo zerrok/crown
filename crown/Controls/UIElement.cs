@@ -5,7 +5,7 @@ namespace crown {
     public class UIElement {
 
         public enum ElementType { Resources, MenuSelection, GameSelection }
-        public enum Resource { Details, Population, Gold, Wood, Workers, Stone, Food }
+        public enum Resource { Details, Population, Gold, Wood, Workers, Stone, Food , Beer, Wheat}
 
         Vector2 pos;
         SpriteFrame spriteFrame;

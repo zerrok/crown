@@ -11,7 +11,7 @@ namespace crown {
         SpriteFrame spriteFrame;
         Vector2 position;
         Rectangle rect;
-        int inhabitants;
+        double inhabitants;
 
         int buildingState;
         int buildingTick;
@@ -26,7 +26,7 @@ namespace crown {
         public SpriteFrame SpriteFrame { get => spriteFrame; set => spriteFrame = value; }
         public Vector2 Position { get => position; set => position = value; }
         public Rectangle Rect { get => rect; set => rect = value; }
-        public int Inhabitants { get => inhabitants; set => inhabitants = value; }
+        public double Inhabitants { get => inhabitants; set => inhabitants = value; }
         public int BuildingState { get => buildingState; set => buildingState = value; }
         public int BuildingTick { get => buildingTick; set => buildingTick = value; }
         public int ActionTick { get => actionTick; set => actionTick = value; }
@@ -42,6 +42,8 @@ namespace crown {
             mechanics.FoodDelta += Costs.FoodUpkeep;
             mechanics.WoodDelta += Costs.WoodUpkeep;
             mechanics.StoneDelta += Costs.StoneUpkeep;
+            mechanics.BeerDelta += Costs.BeerUpkeep;
+            mechanics.WheatDelta += Costs.WheatUpkeep;
         }
 
         public Building(SpriteFrame spriteFrame, Vector2 position, Rectangle rect, Actions type, Costs costs) {

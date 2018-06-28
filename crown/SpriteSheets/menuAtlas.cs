@@ -4,13 +4,14 @@
  * Contains references to each image within the sprite sheet.
  *
  * http://www.codeandweb.com/texturepacker
- * $TexturePacker:SmartUpdate:198365c93d991a5637cc559d4df68b04:c466d6cb29266bbc8fc4bc51e8ddcf3a:bd0f4c71b5cb59f99b3ec3385caa636d$
+ * $TexturePacker:SmartUpdate:222080ae6579108975cde78c6aa3501d:4e9549c107c15a76d49d18edb310fe10:bd0f4c71b5cb59f99b3ec3385caa636d$
  *
  */
 namespace TexturePackerMonoGameDefinitions
 {
 	public class menuAtlas
 	{
+		public const string Beer = "beer";
 		public const string Buttonbrewery = "buttonbrewery";
 		public const string Buttonfarm = "buttonfarm";
 		public const string Buttonfarmland = "buttonfarmland";
@@ -30,6 +31,7 @@ namespace TexturePackerMonoGameDefinitions
 		public const string QuitButton = "quitButton";
 		public const string StartButton = "startButton";
 		public const string Stone = "stone";
+		public const string Wheat = "wheat";
 		public const string Wood = "wood";
 		public const string Workers = "workers";
 	}

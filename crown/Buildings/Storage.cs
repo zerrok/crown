@@ -28,6 +28,12 @@ namespace crown.Buildings {
         public override void Initialize() {
             base.Initialize();
 
+            mechanics.BeerStorage += 200;
+            mechanics.FoodStorage += 200;
+            mechanics.StoneStorage += 200;
+            mechanics.WheatStorage += 200;
+            mechanics.WoodStorage += 200;
+
             Name = "Storage";
             Description = "Everything can be stored here. More space, more room, more stuff!";
         }

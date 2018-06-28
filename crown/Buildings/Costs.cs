@@ -3,142 +3,185 @@
 
         public static Costs HouseCosts() {
             return new Costs(0,     // Stone 
-                             -10,    // Wood
-                             -10,   // Gold
+                             0,     // Wood
+                             0,     // Gold
                              2,     // Workers
-                             2,     // Population
+                             0,     // Population
                              0,     // Food
+                             0,     // Wheat
+                             0,     // Beer
+                             0,     // WheatUpkeep
+                             -0.25,     // BeerUpkeep
                              2,     // GoldUpkeep
-                             -1,     // WoodUpkeep
+                             0,     // WoodUpkeep
                              0,     // StoneUpkeep
-                             -2);   // FoodUpkeep
+                             -1);    // FoodUpkeep
         }
 
         public static Costs WoodcutterCosts() {
             return new Costs(0,     // Stone 
                              0,     // Wood
-                             -30,    // Gold
-                             -10,    // Workers
+                             0,     // Gold
+                             -5,     // Workers
                              0,     // Population
                              0,     // Food
+                             0,     // Wheat
+                             0,     // Beer
+                             0,     // WheatUpkeep
+                             0,     // BeerUpkeep
                              -5,     // GoldUpkeep
-                             20,     // WoodUpkeep
+                             10,     // WoodUpkeep
                              0,     // StoneUpkeep
                              0);    // FoodUpkeep
         }
 
         public static Costs FarmCosts() {
             return new Costs(0,     // Stone 
-                             -5,    // Wood
-                             -30,    // Gold
-                             -10,    // Workers
+                             0,     // Wood
+                             0,     // Gold
+                             -10,     // Workers
                              0,     // Population
                              0,     // Food
-                             -5,     // GoldUpkeep
+                             0,     // Wheat
+                             0,     // Beer
+                             20,     // WheatUpkeep
+                             0,     // BeerUpkeep
+                             -10,     // GoldUpkeep
                              0,     // WoodUpkeep
                              0,     // StoneUpkeep
-                             30);    // FoodUpkeep
+                             0);    // FoodUpkeep
         }
 
         public static Costs QuarryCosts() {
             return new Costs(0,     // Stone 
-                             -20,    // Wood
-                             -50,   // Gold
-                             -30,     // Workers
+                             0,     // Wood
+                             0,     // Gold
+                             -20,     // Workers
                              0,     // Population
                              0,     // Food
-                             -30,     // GoldUpkeep
-                             -1,     // WoodUpkeep
+                             0,     // Wheat
+                             0,     // Beer
+                             0,     // WheatUpkeep
+                             0,     // BeerUpkeep
+                             -15,     // GoldUpkeep
+                             0,     // WoodUpkeep
                              5,     // StoneUpkeep
-                             0);   // FoodUpkeep
+                             0);    // FoodUpkeep
         }
 
         public static Costs ScientistCosts() {
             return new Costs(0,     // Stone 
-                             -100,    // Wood
-                             -500,   // Gold
-                             0,     // Workers
+                             0,     // Wood
+                             0,     // Gold
+                             -50,     // Workers
                              0,     // Population
                              0,     // Food
-                             -50,     // GoldUpkeep
-                             -10,     // WoodUpkeep
-                             -8,     // StoneUpkeep
-                             -5);   // FoodUpkeep
+                             0,     // Wheat
+                             0,     // Beer
+                             0,     // WheatUpkeep
+                             0,     // BeerUpkeep
+                            -50,     // GoldUpkeep
+                             -5,     // WoodUpkeep
+                             -5,     // StoneUpkeep
+                             0);    // FoodUpkeep
         }
         public static Costs TavernCosts() {
             return new Costs(0,     // Stone 
-                             0,    // Wood
-                             0,   // Gold
-                             0,     // Workers
+                             0,     // Wood
+                             0,     // Gold
+                             -5,     // Workers
                              0,     // Population
                              0,     // Food
-                             0,     // GoldUpkeep
+                             0,     // Wheat
+                             0,     // Beer
+                             -20,     // WheatUpkeep
+                             0,     // BeerUpkeep
+                             -5,     // GoldUpkeep
                              0,     // WoodUpkeep
                              0,     // StoneUpkeep
-                             0);   // FoodUpkeep
+                             40);    // FoodUpkeep
         }
 
         public static Costs BreweryCosts() {
             return new Costs(0,     // Stone 
-                             0,    // Wood
-                             0,   // Gold
-                             0,     // Workers
+                             0,     // Wood
+                             0,     // Gold
+                             -8,     // Workers
                              0,     // Population
                              0,     // Food
-                             0,     // GoldUpkeep
+                             0,     // Wheat
+                             0,     // Beer
+                             -20,     // WheatUpkeep
+                             20,     // BeerUpkeep
+                             -8,     // GoldUpkeep
                              0,     // WoodUpkeep
                              0,     // StoneUpkeep
-                             0);   // FoodUpkeep
+                             0);    // FoodUpkeep
         }
 
         public static Costs StorageCosts() {
             return new Costs(0,     // Stone 
-                             0,    // Wood
-                             0,   // Gold
-                             0,     // Workers
+                             0,     // Wood
+                             0,     // Gold
+                             -10,     // Workers
                              0,     // Population
                              0,     // Food
-                             0,     // GoldUpkeep
+                             0,     // Wheat
+                             0,     // Beer
+                             0,     // WheatUpkeep
+                             0,     // BeerUpkeep
+                             -10,     // GoldUpkeep
                              0,     // WoodUpkeep
                              0,     // StoneUpkeep
-                             0);   // FoodUpkeep
+                             0);    // FoodUpkeep
         }
 
-        int stone;
-        int wood;
-        int gold;
-        int workers;
-        int population;
-        int food;
+        double stone;
+        double wood;
+        double gold;
+        double workers;
+        double population;
+        double food;
+        double beer;
+        double wheat;
 
-        int goldUpkeep;
-        int woodUpkeep;
-        int stoneUpkeep;
-        int foodUpkeep;
+        double wheatUpkeep;
+        double beerUpkeep;
+        double goldUpkeep;
+        double woodUpkeep;
+        double stoneUpkeep;
+        double foodUpkeep;
 
-        public Costs(int stone, int wood, int gold, int workers, int population, int food, int goldUpkeep, int woodUpkeep, int stoneUpkeep, int foodUpkeep) {
+        public Costs(double stone, double wood, double gold, double workers, double population, double food, double beer, double wheat, double wheatUpkeep, double beerUpkeep, double goldUpkeep, double woodUpkeep, double stoneUpkeep, double foodUpkeep) {
             this.stone = stone;
             this.wood = wood;
             this.gold = gold;
             this.workers = workers;
             this.population = population;
             this.food = food;
+            this.beer = beer;
+            this.wheat = wheat;
+            this.wheatUpkeep = wheatUpkeep;
+            this.beerUpkeep = beerUpkeep;
             this.goldUpkeep = goldUpkeep;
             this.woodUpkeep = woodUpkeep;
             this.stoneUpkeep = stoneUpkeep;
             this.foodUpkeep = foodUpkeep;
         }
 
-        public int Stone { get => stone; set => stone = value; }
-        public int Wood { get => wood; set => wood = value; }
-        public int Gold { get => gold; set => gold = value; }
-        public int Workers { get => workers; set => workers = value; }
-        public int Population { get => population; set => population = value; }
-        public int Food { get => food; set => food = value; }
-        public int GoldUpkeep { get => goldUpkeep; set => goldUpkeep = value; }
-        public int WoodUpkeep { get => woodUpkeep; set => woodUpkeep = value; }
-        public int StoneUpkeep { get => stoneUpkeep; set => stoneUpkeep = value; }
-        public int FoodUpkeep { get => foodUpkeep; set => foodUpkeep = value; }
-
+        public double Stone { get => stone; set => stone = value; }
+        public double Wood { get => wood; set => wood = value; }
+        public double Gold { get => gold; set => gold = value; }
+        public double Workers { get => workers; set => workers = value; }
+        public double Population { get => population; set => population = value; }
+        public double Food { get => food; set => food = value; }
+        public double GoldUpkeep { get => goldUpkeep; set => goldUpkeep = value; }
+        public double WoodUpkeep { get => woodUpkeep; set => woodUpkeep = value; }
+        public double StoneUpkeep { get => stoneUpkeep; set => stoneUpkeep = value; }
+        public double FoodUpkeep { get => foodUpkeep; set => foodUpkeep = value; }
+        public double Beer { get => beer; set => beer = value; }
+        public double Wheat { get => wheat; set => wheat = value; }
+        public double BeerUpkeep { get => beerUpkeep; set => beerUpkeep = value; }
+        public double WheatUpkeep { get => wheatUpkeep; set => wheatUpkeep = value; }
     }
 }

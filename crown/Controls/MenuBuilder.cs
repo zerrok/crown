@@ -25,7 +25,9 @@ namespace crown {
             float smallX = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Pop).Size.X;
             float bigX = menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Workers).Size.X;
             float offsetX = smallX;
-
+            /**
+             * Resources on top of the screen
+             */
             element = new UIElement(new Vector2(offsetX, 0), menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Workers), UIElement.ElementType.Resources, UIElement.Resource.Workers);
             uiElements.Add(element);
 
@@ -42,9 +44,20 @@ namespace crown {
             uiElements.Add(element);
 
             offsetX += bigX;
+            element = new UIElement(new Vector2(offsetX, 0), menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Wheat), UIElement.ElementType.Resources, UIElement.Resource.Wheat);
+            uiElements.Add(element);
+            offsetX += bigX;
+
+            element = new UIElement(new Vector2(offsetX, 0), menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Beer), UIElement.ElementType.Resources, UIElement.Resource.Beer);
+            uiElements.Add(element);
+            offsetX += bigX;
+
             element = new UIElement(new Vector2(offsetX, 0), menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Food), UIElement.ElementType.Resources, UIElement.Resource.Food);
             uiElements.Add(element);
 
+            /**
+             * For Selected Buildings, etc.
+             */
             offsetX = 0;
             int yPos = menuYPosition - 120;
             element = new UIElement(new Vector2(offsetX, yPos), menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Workers), UIElement.ElementType.MenuSelection, UIElement.Resource.Workers);
@@ -64,6 +77,14 @@ namespace crown {
             offsetX += bigX;
 
             element = new UIElement(new Vector2(offsetX, yPos), menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Food), UIElement.ElementType.MenuSelection, UIElement.Resource.Food);
+            uiElements.Add(element);
+            offsetX += bigX;
+
+            element = new UIElement(new Vector2(offsetX, yPos), menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Beer), UIElement.ElementType.MenuSelection, UIElement.Resource.Beer);
+            uiElements.Add(element);
+            offsetX += bigX;
+
+            element = new UIElement(new Vector2(offsetX, yPos), menuTileSheet.Sprite(TexturePackerMonoGameDefinitions.menuAtlas.Wheat), UIElement.ElementType.MenuSelection, UIElement.Resource.Wheat);
             uiElements.Add(element);
             offsetX += bigX;
 
