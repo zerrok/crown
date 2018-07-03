@@ -29,7 +29,14 @@ namespace crown {
             lastDirection = currentDirection;
         }
 
-        public void Movement() {
+        // TODO: Movement to destination
+        /**
+         * Ziel über x y delta festlegen, also das nächste gebäude
+         * listen erstellen mit den möglichen wegen, die kürzeste verwenden
+         * es ist eine liste mit directions, die abgearbeitet wird, am ende despawnen
+         */
+
+        public void IdleMovement() {
             List<Direction> possible = new List<Direction>();
             if (lastDirection == Direction.Init) {
                 SetNextDirection(possible);

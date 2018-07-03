@@ -258,7 +258,7 @@ namespace crown {
                     }
 
                 foreach (Citizen citizen in citizens)
-                    citizen.Movement();
+                    citizen.IdleMovement();
             }
         }
 
