@@ -6,7 +6,7 @@
                              0,     // Wood
                              0,     // Gold
                              2,     // Workers
-                             0,     // Population
+                             2,     // Population
                              0,     // Food
                              0,     // Wheat
                              0,     // Beer
