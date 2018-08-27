@@ -142,6 +142,21 @@ namespace crown {
                 tile.IsClear = false;
 
                 RemoveIntersectingTrees(rectangle);
+
+                if (type != Actions.House) {
+                    // We need to determine 2 paths
+                    // 1. The path of an idle citizen to this new building which gets assigned to the citizen directly
+                    if (citizens.Count > 0) {
+                        foreach (Citizen citizen in citizens) {
+                            if (citizen.IsIdle) {
+                                citizen.SetNewDestination(rectangle);
+                                break;
+                            }
+                        }
+                    }
+
+                    // 2. The shortest path to the nearest Storage/Town hall which gets assigned to the building, so that each worker of that building has it
+                }
             }
         }
 

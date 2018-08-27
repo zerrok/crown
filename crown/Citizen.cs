@@ -12,10 +12,22 @@ namespace crown {
         SpriteFrame spriteFrame;
         Direction lastDirection;
         Direction currentDirection;
+        Queue<Direction> path;
+        Rectangle destination;
+        bool isIdle;
+
         int steps;
         int speed;
 
         public enum Direction { Init, Left, Right, Up, Down };
+
+        public SpriteFrame SpriteFrame { get => spriteFrame; set => spriteFrame = value; }
+        public Vector2 Pos { get => pos; set => pos = value; }
+        public int Steps { get => steps; set => steps = value; }
+        public Rectangle Rect { get => rect; set => rect = value; }
+        public Queue<Direction> Paths { get => path; set => path = value; }
+        public bool IsIdle { get => isIdle; set => isIdle = value; }
+        public Rectangle Destination { get => destination; set => destination = value; }
 
         public Citizen(Vector2 pos, SpriteFrame spriteFrame) {
             this.pos = pos;
@@ -27,26 +39,23 @@ namespace crown {
             steps = 0;
             speed = 1;
             lastDirection = currentDirection;
+            isIdle = true;
         }
 
-        // TODO: Movement to destination
-        /**
-         * Ziel über x y delta festlegen, also das nächste gebäude
-         * listen erstellen mit den möglichen wegen, die kürzeste verwenden
-         * es ist eine liste mit directions, die abgearbeitet wird, am ende despawnen
-         */
+        public void Movement() {
+            // We can only calulate the paths if step count is 0, so idle movement is still enabled until all the steps are done! 
+            if (isIdle || steps != 0)
+                IdleMovement();
 
-        public void IdleMovement() {
-            List<Direction> possible = new List<Direction>();
-            if (lastDirection == Direction.Init) {
-                SetNextDirection(possible);
+
+            if (!isIdle && path == null && steps == 0) {
+                // Determine new path
+                path = new Queue<Direction>();
             }
-            // Walk the size of one texture in a direction
-            if (steps < tileSize)
-                currentDirection = lastDirection;
-            else {
-                SetNextDirection(possible);
-                steps = 0;
+
+            if (!isIdle && path != null) {
+                // Set the next direction
+                speed = 0;
             }
 
             if (currentDirection == Direction.Right) {
@@ -70,7 +79,21 @@ namespace crown {
             lastDirection = currentDirection;
         }
 
-        private void SetNextDirection(List<Direction> possible) {
+        private void IdleMovement() {
+            List<Direction> possible = new List<Direction>();
+            if (lastDirection == Direction.Init) {
+                SetNextIdleDirection(possible);
+            }
+            // Walk the size of one texture in a direction
+            if (steps < tileSize)
+                currentDirection = lastDirection;
+            else {
+                SetNextIdleDirection(possible);
+                steps = 0;
+            }
+        }
+
+        private void SetNextIdleDirection(List<Direction> possible) {
             int x = 0;
             int y = 0;
             // Get the road which the citizen is walking on
@@ -124,9 +147,12 @@ namespace crown {
                 currentDirection = Direction.Up;
         }
 
-        public SpriteFrame SpriteFrame { get => spriteFrame; set => spriteFrame = value; }
-        public Vector2 Pos { get => pos; set => pos = value; }
-        public int Steps { get => steps; set => steps = value; }
-        public Rectangle Rect { get => rect; set => rect = value; }
+        internal void SetNewDestination(Rectangle rectangle) {
+            // We have to store the destination 
+            destination = rectangle;
+            // Then turn off idling, so the path will be calculated when the citizen stopped his last 128 pixel step
+            isIdle = false;
+        }
+
     }
 }
