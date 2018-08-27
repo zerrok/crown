@@ -51,6 +51,7 @@ namespace crown {
             if (!isIdle && path == null && steps == 0) {
                 // Determine new path
                 path = new Queue<Direction>();
+                // TODO: Calculate shortest path from current coordinates to the destination rectangle
             }
 
             if (!isIdle && path != null) {
