@@ -93,15 +93,16 @@ namespace crown
             // We will move this during the pathfinding 
             Rectangle pathTangle = new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
 
-            // TODO this is just a placeholder
             // First we look which way to go with the start and endpoint
             Road startPoint = null;
             Road endPoint = null;
             DetermineStartAndEndPoint(pathTangle, ref startPoint, ref endPoint);
 
             if (startPoint != null && endPoint != null) {
+                // Calculate the steps it takes in each direction to get the starting direction
                 int xSteps = ((int)endPoint.Coords.X - (int)startPoint.Coords.X) / tileSize;
                 int ySteps = ((int)endPoint.Coords.Y - (int)startPoint.Coords.Y) / tileSize;
+                //TODO:  Right now we just fill the queue with the directions it takes  - need to implement a way to stay on the path and determine the shortest path
                 if (xSteps > 0)
                     for (int x = xSteps; x > 0; x--)
                         path.Enqueue(Direction.Right);
