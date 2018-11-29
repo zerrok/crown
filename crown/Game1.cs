@@ -7,16 +7,19 @@ using TexturePackerLoader;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace crown {
+namespace crown
+{
 
-    public enum Actions {
+    public enum Actions
+    {
         // Buttons only
         Main, Start, Quit, Continue,
         // Buttons, buildings and mouseactions
         Farm, House, Townhall, Nothing, Road, Woodcutter, Quarry, Storage, Scientist, Tavern, Brewery
     }
 
-    public class Game1 : Game {
+    public class Game1 : Game
+    {
 
         public static GraphicsDeviceManager graphics;
         public static SpriteRender spriteRender;
@@ -229,7 +232,7 @@ namespace crown {
         private void MenuControls(Point mousePoint) {
             foreach (Button button in buttons)
                 if (button.Rect.Contains(mousePoint)) {
-                        mouseAction = button.Action;
+                    mouseAction = button.Action;
                 }
         }
 

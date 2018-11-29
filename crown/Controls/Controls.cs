@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using static crown.Game1;
 
-namespace crown {
-    public class Controls {
+namespace crown
+{
+    public class Controls
+    {
 
         public static Actions BuildStuff(Actions mouseAction, Vector2 mousePositionInWorld) {
             foreach (Tile tile in tileMap)

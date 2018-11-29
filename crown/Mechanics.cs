@@ -3,14 +3,16 @@ using static crown.Game1;
 using Microsoft.Xna.Framework;
 using crown.Terrain;
 
-namespace crown {
+namespace crown
+{
 
-    public class Mechanics {
+    public class Mechanics
+    {
 
         double gold;
         double wood;
         double stone;
-        double wheat; 
+        double wheat;
         double beer;
         double population;
         double food;

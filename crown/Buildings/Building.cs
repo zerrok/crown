@@ -2,8 +2,10 @@
 using TexturePackerLoader;
 using static crown.Game1;
 
-namespace crown {
-    abstract public class Building {
+namespace crown
+{
+    abstract public class Building
+    {
 
         abstract public void Update();
         abstract public void UpdateSprite();
