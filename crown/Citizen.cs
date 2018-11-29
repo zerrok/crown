@@ -5,8 +5,10 @@ using Microsoft.Xna.Framework;
 using TexturePackerLoader;
 using static crown.Game1;
 
-namespace crown {
-    public class Citizen {
+namespace crown
+{
+    public class Citizen
+    {
         Vector2 pos;
         Rectangle rect;
         SpriteFrame spriteFrame;
@@ -29,7 +31,8 @@ namespace crown {
         public bool IsIdle { get => isIdle; set => isIdle = value; }
         public Rectangle Destination { get => destination; set => destination = value; }
 
-        public Citizen(Vector2 pos, SpriteFrame spriteFrame) {
+        public Citizen(Vector2 pos, SpriteFrame spriteFrame)
+        {
             this.pos = pos;
             this.spriteFrame = spriteFrame;
             int randomDir = random.Next(1, 5);
@@ -42,36 +45,43 @@ namespace crown {
             isIdle = true;
         }
 
-        public void Movement() {
+        public void Movement()
+        {
             // We can only calulate the paths if step count is 0, so idle movement is still enabled until all the steps are done! 
             if (isIdle || steps != 0)
                 IdleMovement();
 
 
-            if (!isIdle && path == null && steps == 0) {
+            if (!isIdle && path == null && steps == 0)
+            {
                 // Determine new path
                 path = new Queue<Direction>();
                 // TODO: Calculate shortest path from current coordinates to the destination rectangle
             }
 
-            if (!isIdle && path != null) {
+            if (!isIdle)
+            {
                 // Set the next direction
                 speed = 0;
             }
 
-            if (currentDirection == Direction.Right) {
+            if (currentDirection == Direction.Right)
+            {
                 pos.X += speed;
                 rect.X += speed;
             }
-            if (currentDirection == Direction.Left) {
+            if (currentDirection == Direction.Left)
+            {
                 pos.X -= speed;
                 rect.X -= speed;
             }
-            if (currentDirection == Direction.Up) {
+            if (currentDirection == Direction.Up)
+            {
                 pos.Y -= speed;
                 rect.Y -= speed;
             }
-            if (currentDirection == Direction.Down) {
+            if (currentDirection == Direction.Down)
+            {
                 pos.Y += speed;
                 rect.Y += speed;
             }
@@ -80,53 +90,75 @@ namespace crown {
             lastDirection = currentDirection;
         }
 
-        private void IdleMovement() {
+        internal void SetNewDestination(Rectangle rectangle)
+        {
+            // We have to store the destination 
+            destination = rectangle;
+            // Then turn off idling, so the path will be calculated when the citizen stopped his last 128 pixel step
+            isIdle = false;
+        }
+
+        private void IdleMovement()
+        {
             List<Direction> possible = new List<Direction>();
-            if (lastDirection == Direction.Init) {
+            if (lastDirection == Direction.Init)
+            {
                 SetNextIdleDirection(possible);
             }
             // Walk the size of one texture in a direction
             if (steps < tileSize)
                 currentDirection = lastDirection;
-            else {
+            else
+            {
                 SetNextIdleDirection(possible);
                 steps = 0;
             }
         }
 
-        private void SetNextIdleDirection(List<Direction> possible) {
+        private void SetNextIdleDirection(List<Direction> possible)
+        {
             int x = 0;
             int y = 0;
             // Get the road which the citizen is walking on
             foreach (Road road in roads)
-                if (road != null && road.Rect.Contains(pos)) {
+                if (road != null && road.Rect.Contains(pos))
+                {
                     x = (int)road.Coords.X / tileSize;
                     y = (int)road.Coords.Y / tileSize;
                 }
 
             // Now look if the citizen would be on another road in 128 steps
-            if (x > 0 && y > 0 && x < roads.GetUpperBound(0) && y < roads.GetUpperBound(1)) {
+            if (x > 0 && y > 0 && x < roads.GetUpperBound(0) && y < roads.GetUpperBound(1))
+            {
                 CheckForFutureIntersection(possible, x, y);
-            } else {
+            }
+            else
+            {
                 ReverseDirection();
             }
 
-            if (possible.Count > 0) {
-                if (possible.Contains(lastDirection) && possible.Count > 2 && random.Next(0, 20) > 5) {
+            if (possible.Count > 0)
+            {
+                if (possible.Contains(lastDirection) && possible.Count > 2 && random.Next(0, 20) > 5)
+                {
                     // Chance to change direction at an intersection
                     Direction dirToRemove = possible.Find(direction => direction.Equals(lastDirection));
                     possible.Remove(dirToRemove);
                     currentDirection = possible[random.Next(0, possible.Count)];
-                } else if (possible.Contains(lastDirection) && random.Next(0, 25000) > 5) {
+                }
+                else if (possible.Contains(lastDirection) && random.Next(0, 25000) > 5)
+                {
                     // Keep current direction
                     currentDirection = lastDirection;
-                } else
+                }
+                else
                     currentDirection = possible[random.Next(0, possible.Count)];
 
             }
         }
 
-        private void CheckForFutureIntersection(List<Direction> possible, int x, int y) {
+        private void CheckForFutureIntersection(List<Direction> possible, int x, int y)
+        {
             if (roads[x + 1, y] != null && roads[x + 1, y].Rect.Intersects(new Rectangle(rect.X + tileSize, rect.Y, rect.Width, rect.Height)))
                 possible.Add(Direction.Right);
             if (roads[x - 1, y] != null && roads[x - 1, y].Rect.Intersects(new Rectangle(rect.X - tileSize, rect.Y, rect.Width, rect.Height)))
@@ -137,7 +169,8 @@ namespace crown {
                 possible.Add(Direction.Down);
         }
 
-        private void ReverseDirection() {
+        private void ReverseDirection()
+        {
             if (lastDirection == Direction.Right)
                 currentDirection = Direction.Left;
             if (lastDirection == Direction.Left)
@@ -146,13 +179,6 @@ namespace crown {
                 currentDirection = Direction.Down;
             if (lastDirection == Direction.Down)
                 currentDirection = Direction.Up;
-        }
-
-        internal void SetNewDestination(Rectangle rectangle) {
-            // We have to store the destination 
-            destination = rectangle;
-            // Then turn off idling, so the path will be calculated when the citizen stopped his last 128 pixel step
-            isIdle = false;
         }
 
     }

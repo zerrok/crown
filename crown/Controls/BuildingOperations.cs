@@ -5,10 +5,13 @@ using System.Collections.Generic;
 using TexturePackerLoader;
 using static crown.Game1;
 
-namespace crown {
-    public class BuildingOperations {
+namespace crown
+{
+    public class BuildingOperations
+    {
 
-        public static void BuildRoad(Tile tile, bool isFirstRoad) {
+        public static void BuildRoad(Tile tile, bool isFirstRoad)
+        {
             bool isAllowed = true;
 
             if (tile.IsClear) {
@@ -38,7 +41,8 @@ namespace crown {
             }
         }
 
-        public static void BuildTownHall(Tile tile, Costs costs) {
+        public static void BuildTownHall(Tile tile, Costs costs)
+        {
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize * 2, tileSize * 2);
             int tilePosX = (tile.Rect.X) / tileSize + 1;
@@ -77,7 +81,8 @@ namespace crown {
             }
         }
 
-        internal static void BuildQuarry(Tile tile, Actions type, Costs costs) {
+        internal static void BuildQuarry(Tile tile, Actions type, Costs costs)
+        {
             foreach (Interactive inter in interactives) {
                 if (inter.Type == Interactive.IntType.STONE) {
                     if (new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize * 2, tileSize * 2).Intersects(inter.Rect)) {
@@ -88,7 +93,8 @@ namespace crown {
             }
         }
 
-        public static void BuildLargeBuilding(Tile tile, Actions type, Costs costs) {
+        public static void BuildLargeBuilding(Tile tile, Actions type, Costs costs)
+        {
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize * 2, tileSize * 2);
             int tilePosX = (tile.Rect.X) / tileSize + 1;
@@ -121,10 +127,13 @@ namespace crown {
                 tile.IsClear = false;
 
                 RemoveIntersectingTrees(rectangle);
+
+                CitizenPathActions(costs, rectangle);
             }
         }
 
-        public static void BuildSmallBuilding(Tile tile, Actions type, Costs costs) {
+        public static void BuildSmallBuilding(Tile tile, Actions type, Costs costs)
+        {
             bool isAllowed = true;
             Rectangle rectangle = new Rectangle(tile.Rect.X, tile.Rect.Y, tileSize, tileSize);
 
@@ -146,21 +155,29 @@ namespace crown {
                 if (type != Actions.House) {
                     // We need to determine 2 paths
                     // 1. The path of an idle citizen to this new building which gets assigned to the citizen directly
-                    if (citizens.Count > 0) {
-                        foreach (Citizen citizen in citizens) {
-                            if (citizen.IsIdle) {
-                                citizen.SetNewDestination(rectangle);
-                                break;
-                            }
-                        }
-                    }
+                    CitizenPathActions(costs, rectangle);
 
                     // 2. The shortest path to the nearest Storage/Town hall which gets assigned to the building, so that each worker of that building has it
                 }
             }
         }
 
-        private static Building GetLargeBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Actions type, Costs costs) {
+        private static void CitizenPathActions(Costs costs, Rectangle rectangle)
+        {
+            if (citizens.Count > 0) {
+                for (double i = costs.Workers; i < 0; i++) {
+                    foreach (Citizen citizen in citizens) {
+                        if (citizen.IsIdle) {
+                            citizen.SetNewDestination(rectangle);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private static Building GetLargeBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Actions type, Costs costs)
+        {
             if (type == Actions.Farm)
                 return new Farm(spriteFrame, pos, rect, type, costs);
             if (type == Actions.Scientist)
@@ -177,7 +194,8 @@ namespace crown {
             return null;
         }
 
-        private static Building GetSmallBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Actions type, Costs costs) {
+        private static Building GetSmallBuilding(SpriteFrame spriteFrame, Vector2 pos, Rectangle rect, Actions type, Costs costs)
+        {
             if (type == Actions.House)
                 return new House(spriteFrame, pos, rect, type, costs);
             if (type == Actions.Woodcutter)
@@ -185,7 +203,8 @@ namespace crown {
 
             return null;
         }
-        public static bool CheckCosts(Costs costs, bool isAllowed) {
+        public static bool CheckCosts(Costs costs, bool isAllowed)
+        {
             // Check if the costs are okay
             if (mechanics.Gold + costs.Gold < 0 ||
                 mechanics.Stone + costs.Stone < 0 ||
@@ -195,7 +214,8 @@ namespace crown {
             return isAllowed;
         }
 
-        public static void RemoveIntersectingTrees(Rectangle rectangle) {
+        public static void RemoveIntersectingTrees(Rectangle rectangle)
+        {
             List<Interactive> interactivesToRemove = new List<Interactive>();
             foreach (Interactive inter in interactives) {
                 if (inter.Rect.Intersects(rectangle) && inter.Type == Interactive.IntType.TREE) {
@@ -206,7 +226,8 @@ namespace crown {
                 interactives.Remove(interactives.Find(interactive => interactive.Equals(inter)));
         }
 
-        public static bool CheckIntersections(bool isAllowed, Rectangle rectangle) {
+        public static bool CheckIntersections(bool isAllowed, Rectangle rectangle)
+        {
             foreach (Building building in mechanics.Buildings) {
                 if (building.Rect.Intersects(rectangle))
                     isAllowed = false;
@@ -220,7 +241,8 @@ namespace crown {
             return isAllowed;
         }
 
-        public static bool IsBesidesRoad(bool isAllowed, Rectangle rectangle, bool isSmall) {
+        public static bool IsBesidesRoad(bool isAllowed, Rectangle rectangle, bool isSmall)
+        {
             int xPos = rectangle.X / tileSize;
             int yPos = rectangle.Y / tileSize;
             if (isSmall) {
@@ -245,7 +267,8 @@ namespace crown {
             return isAllowed;
         }
 
-        public static bool RoadsBuilt(bool isAllowed) {
+        public static bool RoadsBuilt(bool isAllowed)
+        {
             // Everything except the town hall has to be connected to roads
             // So check if there even are roads
             bool foundRoad = false;
@@ -258,7 +281,8 @@ namespace crown {
             return isAllowed;
         }
 
-        public static void ReplaceRoads(Tile tile, SpriteFrame spriteFrame) {
+        public static void ReplaceRoads(Tile tile, SpriteFrame spriteFrame)
+        {
             if (roads != null) {
                 foreach (Road road in roads) {
                     if (road != null) {
