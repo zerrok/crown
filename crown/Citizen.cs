@@ -99,23 +99,50 @@ namespace crown
             DetermineStartAndEndPoint(pathTangle, ref startPoint, ref endPoint);
 
             if (startPoint != null && endPoint != null) {
-                // Calculate the steps it takes in each direction to get the starting direction
-                int xSteps = ((int)endPoint.Coords.X - (int)startPoint.Coords.X) / tileSize;
-                int ySteps = ((int)endPoint.Coords.Y - (int)startPoint.Coords.Y) / tileSize;
-                //TODO:  Right now we just fill the queue with the directions it takes  - need to implement a way to stay on the path and determine the shortest path
-                if (xSteps > 0)
-                    for (int x = xSteps; x > 0; x--)
-                        path.Enqueue(Direction.Right);
-                if (xSteps < 0)
-                    for (int x = xSteps; x < 0; x++)
-                        path.Enqueue(Direction.Left);
-                if (ySteps > 0)
-                    for (int y = ySteps; y > 0; y--)
-                        path.Enqueue(Direction.Down);
-                if (ySteps < 0)
-                    for (int y = ySteps; y < 0; y++)
-                        path.Enqueue(Direction.Up);
+                // Possible next roads for the starting point
+                List<Road> possibleRoads = getPossibleRoads(startPoint);
+                List<List<Road>> roadLists = new List<List<Road>>();
+
+                foreach (Road possibleRoad in possibleRoads) {
+                    // We need a list for each possible road added to the list, so we can add new possible
+                    // roads to each list after each fork in the road
+                    List<Road> roadPath = new List<Road>();
+                    roadPath.Add(possibleRoad);
+                    roadLists.Add(roadPath);
+                }
+
+                foreach (List<Road> list in roadLists) {
+                    // Get the possible roads for the last element in each list
+                    possibleRoads = getPossibleRoads(list[list.Count - 1]);
+                    // Remove last element, because walking back is not allowed
+                    possibleRoads.Remove(list[list.Count - 1]);
+
+                    // TODO: add one possible road to the list, 
+                    // then for each other possible road, copy the list
+                    // the copied list has to be added to the roadLists list for the next iteration
+                    Road test = new Road(new Vector2(), new Rectangle()); // TODO: Remove this, this is only for the debug breakpoint
+                }
+
+                // Letzte Liste loop path.enqueue(direction.x)
             }
+        }
+
+        private List<Road> getPossibleRoads(Road road) {
+            List<Road> possible = new List<Road>();
+            Road road1 = roads[(int)road.Coords.X / tileSize + 1, (int)road.Coords.Y / tileSize];
+            Road road2 = roads[(int)road.Coords.X / tileSize - 1, (int)road.Coords.Y / tileSize];
+            Road road3 = roads[(int)road.Coords.X / tileSize, (int)road.Coords.Y / tileSize - 1];
+            Road road4 = roads[(int)road.Coords.X / tileSize, (int)road.Coords.Y / tileSize + 1];
+            if (road1 != null && road1.Rect.Intersects(new Rectangle(road.Rect.X + tileSize, road.Rect.Y, road.Rect.Width, road.Rect.Height)))
+                possible.Add(road1);
+            if (road2 != null && road2.Rect.Intersects(new Rectangle(road.Rect.X - tileSize, road.Rect.Y, road.Rect.Width, road.Rect.Height)))
+                possible.Add(road2);
+            if (road3 != null && road3.Rect.Intersects(new Rectangle(road.Rect.X, road.Rect.Y - tileSize, road.Rect.Width, road.Rect.Height)))
+                possible.Add(road3);
+            if (road4 != null && road4.Rect.Intersects(new Rectangle(road.Rect.X, road.Rect.Y + tileSize, road.Rect.Width, road.Rect.Height)))
+                possible.Add(road4);
+
+            return possible;
         }
 
         private void DetermineStartAndEndPoint(Rectangle pathTangle, ref Road startPoint, ref Road endPoint) {
