@@ -95,51 +95,59 @@ namespace crown
                     return;
 
                 // Possible next roads for the starting point
-                List<Road> possibleRoads = getPossibleRoads(startPoint);
                 List<List<Road>> roadLists = new List<List<Road>>();
 
-                foreach (Road possibleRoad in possibleRoads) {
-                    // We need a list for each possible road added to the list, so we can add new possible
-                    // roads to each list after each fork in the road
-                    List<Road> roadList = new List<Road>();
-                    roadList.Add(possibleRoad);
-                    roadLists.Add(roadList);
-                }
+                // Add starting road tile to the list first
+                roadLists.Add(new List<Road>() { startPoint });
 
                 // Now we try to go through every possible direction that was found until the endpoint is reached or no more possible roads are detected
                 // in that case we just throw the stupid thing away I guess
                 for (int i = 0; i < roadLists.Count; i++) {
                     Boolean gotToEndpoint = false;
+
+                    Console.WriteLine("List No. " + (i + 1));
+
+                    int roadDebugCount = 1;
                     while (!gotToEndpoint) {
                         if (DoesListContainRoadCoords(roadLists[i], endPoint)) {
+                            Console.WriteLine("REACHED END!");
                             gotToEndpoint = true;
                             break;
                         }
+                        if (roadDebugCount == 1) {
+                            Console.WriteLine("Startpoint (X/Y): " + startPoint.Coords.X / tileSize + "/" + startPoint.Coords.Y / tileSize + ".");
+                            Console.WriteLine("Endpoint (X/Y): " + endPoint.Coords.X / tileSize + "/" + endPoint.Coords.Y / tileSize + ".");
+                        }
+                        Console.WriteLine("Road No. " + roadDebugCount++);
                         // This is the road list we handle this runthrough
                         List<Road> currRoadList = roadLists[i];
                         // We have to look at the possible roads for the last added item to the list
                         List<Road> posRoads = getPossibleRoads(currRoadList[currRoadList.Count - 1]);
 
+
+
                         // Remove duplicates so the search does not go backwards
                         foreach (Road road in currRoadList) {
-                            if (posRoads.Contains(road))
+                            if (posRoads.Contains(road)) {
                                 posRoads.Remove(road);
+                                Console.WriteLine("-->REMOVED Road (X/Y): " + road.Coords.X / tileSize + "/" + road.Coords.Y / tileSize + ".");
+                            }
                         }
-
                         // We have to put one of the possible roads into the roadLists list, and we need possible new lists for more possible roads
-                        if (posRoads.Count < 1 || DoesListContainRoadCoords(posRoads, startPoint)) {
+                        if (posRoads.Count < 1) {
                             gotToEndpoint = true;
                             // Remove lists which have no endpoint, then continue with next iteration
                             roadLists.RemoveAt(i);
+                            Console.WriteLine("Deleted this list.");
                             i--;
                             continue;
                         } else {
                             roadLists[i].Add(posRoads[0]);
+                            Console.WriteLine("---->Added Road (X/Y): " + posRoads[0].Coords.X / tileSize + "/" + posRoads[0].Coords.Y / tileSize + ".");
                             if (posRoads.Count > 1) {
                                 CreateRoadListCopies(roadLists, currRoadList, posRoads);
                             }
                         }
-                        // TODO: Look at bug when citizens get no routes
                     }
                 }
 
@@ -150,7 +158,7 @@ namespace crown
         }
 
         private static void CreateRoadListCopies(List<List<Road>> roadLists, List<Road> rL, List<Road> possiRoads) {
-            for (int x = 1; x < possiRoads.Count - 1; x++) {
+            for (int x = 1; x < possiRoads.Count; x++) {
                 // Add remaining possible roads to a list which is copied from the current road list
                 List<Road> copy = new List<Road>();
                 foreach (Road roadCopy in rL) {
@@ -164,9 +172,10 @@ namespace crown
         private bool DoesListContainRoadCoords(List<Road> rL, Road road) {
             bool contains = false;
             foreach (Road r in rL) {
-                if (r.Coords.X == road.Coords.X && r.Coords.Y == road.Coords.Y)
+                if (r.Coords.X == road.Coords.X && r.Coords.Y == road.Coords.Y) {
                     contains = true;
-                else
+                    break;
+                } else
                     contains = false;
             }
             return contains;
@@ -195,7 +204,7 @@ namespace crown
                 if (road != null) {
                     // Determine start point
                     if (road.Rect.Contains(new Vector2(pathTangle.X, pathTangle.Y))) {
-                        startPoint = new Road(road.Coords, road.Rect);
+                        startPoint = road;
                     }
                     // Determine end point, which is a road next to the destination
                     if (road.Rect.Intersects(new Rectangle(destination.X + tileSize, destination.Y, destination.Width, destination.Height))
