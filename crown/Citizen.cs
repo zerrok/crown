@@ -119,15 +119,12 @@ namespace crown
                             Console.WriteLine("Endpoint (X/Y): " + endPoint.Coords.X / tileSize + "/" + endPoint.Coords.Y / tileSize + ".");
                         }
                         Console.WriteLine("Road No. " + roadDebugCount++);
-                        // This is the road list we handle this runthrough
-                        List<Road> currRoadList = roadLists[i];
+
                         // We have to look at the possible roads for the last added item to the list
-                        List<Road> posRoads = getPossibleRoads(currRoadList[currRoadList.Count - 1]);
-
-
+                        List<Road> posRoads = getPossibleRoads(roadLists[i][roadLists[i].Count - 1]);
 
                         // Remove duplicates so the search does not go backwards
-                        foreach (Road road in currRoadList) {
+                        foreach (Road road in roadLists[i]) {
                             if (posRoads.Contains(road)) {
                                 posRoads.Remove(road);
                                 Console.WriteLine("-->REMOVED Road (X/Y): " + road.Coords.X / tileSize + "/" + road.Coords.Y / tileSize + ".");
@@ -143,9 +140,9 @@ namespace crown
                             continue;
                         } else {
                             roadLists[i].Add(posRoads[0]);
-                            Console.WriteLine("---->Added Road (X/Y): " + posRoads[0].Coords.X / tileSize + "/" + posRoads[0].Coords.Y / tileSize + ".");
+                            Console.WriteLine("---->Added Road (X/Y): " + posRoads[0].Coords.X / tileSize + "/" + posRoads[0].Coords.Y / tileSize + ". <-----");
                             if (posRoads.Count > 1) {
-                                CreateRoadListCopies(roadLists, currRoadList, posRoads);
+                                CreateRoadListCopies(roadLists, roadLists[i], posRoads);
                             }
                         }
                     }
@@ -157,13 +154,14 @@ namespace crown
             }
         }
 
-        private static void CreateRoadListCopies(List<List<Road>> roadLists, List<Road> rL, List<Road> possiRoads) {
+        private static void CreateRoadListCopies(List<List<Road>> roadLists, List<Road> listToCopy, List<Road> possiRoads) {
             for (int x = 1; x < possiRoads.Count; x++) {
                 // Add remaining possible roads to a list which is copied from the current road list
                 List<Road> copy = new List<Road>();
-                foreach (Road roadCopy in rL) {
+                foreach (Road roadCopy in listToCopy) {
                     copy.Add(roadCopy);
                 }
+                List<Road> copyPossRoads = new List<Road>();
                 copy.Add(possiRoads[x]);
                 roadLists.Add(copy);
             }
